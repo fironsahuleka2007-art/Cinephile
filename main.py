@@ -60,7 +60,7 @@ class MainApp(ctk.CTk):
     def _initialize_data(self):
         """Fungsi latar belakang untuk scraping data awal"""
         # Scrape 20 film terbaik (bisa diubah angkanya)
-        hasil = self.scraper.scrape_top_movies(limit=20) 
+        hasil = self.scraper.scrape_top_movies()
         
         if hasil:
             self.movie_list = hasil

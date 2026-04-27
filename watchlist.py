@@ -19,6 +19,7 @@ class WatchlistPage(ctk.CTkFrame):
         super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
         self.app = app 
         self.filter = "all"
+        self.bind("<Visibility>", lambda e: self._refresh())
         
         # Cek User yang sedang login dari session.json
         self.current_user = "guest"
@@ -89,6 +90,7 @@ class WatchlistPage(ctk.CTkFrame):
         ctk.CTkButton(row, text="Add", width=60, fg_color=GREEN, hover_color="#2f855a", command=self._add_movie).pack(side="left", padx=10)
 
     def _refresh(self):
+        self.watchlist_data = self._load_data()
         for w in self.movie_area.winfo_children(): w.destroy()
             
         filtered = [m for m in self.watchlist_data if (self.filter == "all" or m.get("status", "Plan to Watch") == self.filter)]

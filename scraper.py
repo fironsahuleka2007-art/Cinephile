@@ -18,7 +18,7 @@ class MovieScraper:
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--log-level=3")
-        chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+        chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
 
         print("Menyiapkan WebDriver...")
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -31,7 +31,8 @@ class MovieScraper:
         detail = {
             "synopsis": "No synopsis available.",
             "genre": "N/A",
-            "platforms": "Not available online"
+            "platforms": "Not Available Online",
+            "year": "Unknown"
         }
         try:
             search_url = f"https://www.justwatch.com/id/search?q={urllib.parse.quote(title)}"
@@ -43,15 +44,12 @@ class MovieScraper:
             self.driver.get(first_result.get_attribute("href"))
             time.sleep(2) 
 
-            # 1. AMBIL SYNOPSIS (Selector Spesifik Inspect Element)
+            # 1. AMBIL SYNOPSIS
             try:
                 synopsis_el = self.driver.find_element(By.CSS_SELECTOR, "#synopsis p, p.text-wrap-pre-line.mt-0")
-                text = synopsis_el.text.strip()
-                
-                if text: 
-                    detail["synopsis"] = text
-            except Exception as e:
-                print(f"Sinopsis tidak ditemukan untuk '{title}': {e}")
+                if synopsis_el.text.strip(): 
+                    detail["synopsis"] = synopsis_el.text.strip()
+            except: pass
 
             # 2. AMBIL GENRE
             try:
@@ -62,47 +60,32 @@ class MovieScraper:
                         value_div = parent.find_element(By.CSS_SELECTOR, "div.detail-infos__value")
                         detail["genre"] = value_div.text.strip()
                         break
-            except Exception:
-                pass
+            except: pass
 
-            # 3. AMBIL PLATFORM (Netflix, Disney+, dll)
-            # 1. Minta Selenium mencari semua gambar yang punya class "provider-icon"
-            logo_elements = self.driver.find_elements(By.CSS_SELECTOR, "img.provider-icon")
+            # 3. AMBIL TAHUN (Sebagai Backup kalau IMDb gagal)
+            try:
+                year_el = self.driver.find_element(By.CSS_SELECTOR, "div.title-block span.text-muted")
+                year_text = year_el.text.replace("(", "").replace(")", "").strip()
+                if year_text.isdigit():
+                    detail["year"] = year_text
+            except: pass
 
-            nama_platform_list = []
-            logo_url_list = []
-
-            # 2. Lakukan perulangan untuk mengekstrak data dari masing-masing gambar
-            for logo in logo_elements:
-                # Ambil teks nama platformnya
-                nama_platform = logo.get_attribute("alt")
-                
-                # Ambil link gambar logonya (kalau kamu mau simpan/download logonya juga)
-                link_logo = logo.get_attribute("src")
-                
-                if nama_platform:
-                    # Menghindari duplikat (misal ada 2 tombol Netflix di satu halaman)
-                    if nama_platform not in nama_platform_list:
+            # 4. AMBIL PLATFORM (MURNI TEKS)
+            try:
+                logo_elements = self.driver.find_elements(By.CSS_SELECTOR, "img.provider-icon")
+                nama_platform_list = []
+                for logo in logo_elements:
+                    nama_platform = logo.get_attribute("alt")
+                    if nama_platform and nama_platform not in nama_platform_list:
                         nama_platform_list.append(nama_platform)
-                        logo_url_list.append(link_logo)
+                
+                if nama_platform_list:
+                    detail["platforms"] = ", ".join(nama_platform_list)
+            except: pass
 
-            # Gabungkan nama-nama platform jadi satu teks utuh, misal: "Netflix, Disney+, HBO"
-            platform_string = ", ".join(nama_platform_list)
-
-            print(f"Platform yang tersedia: {platform_string}")
-
-            # --- TAMBAHAN PENTING DI SINI ---
-            if platform_string:
-                detail["platforms"] = platform_string
-            
-            # Kalau kamu mau simpan link logonya sekalian buat UI nanti, bisa tambah ini:
-            detail["logo_urls"] = logo_url_list 
-            
         except Exception as e:
-            # Opsional: biar ketahuan kalau JustWatch-nya error/filmnya gak ketemu
-            print(f"Info JustWatch tidak ditemukan: {e}")
+            print(f"Info JustWatch tidak ditemukan untuk '{title}': {e}")
 
-        # Wajib! Kembalikan 'detail' yang sudah diisi lengkap ke fungsi pemanggil
         return detail
 
     def _get_movie_details(self, url):
@@ -145,8 +128,13 @@ class MovieScraper:
                     
                     detail["description"] = jw_data["synopsis"]
                     detail["platform_string"] = jw_data["platforms"]
+                    
                     if jw_data.get("genre") != "N/A":
                         detail["genre"] = jw_data["genre"]
+                        
+                    # Fix Tahun: Gunakan tahun JustWatch kalau IMDb gagal
+                    if detail.get("year") == "Unknown" and jw_data.get("year") != "Unknown":
+                        detail["year"] = jw_data["year"]
                     
                     # Download Poster
                     img_url = detail.get("poster_url")
