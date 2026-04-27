@@ -58,7 +58,6 @@ class DashboardPage(ctk.CTkFrame):
                                         fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
         
-        # UBAH BAGIAN INI: Memanggil handle_local_search dengan teks dari entry
         search_btn = ctk.CTkButton(search_frame, text="🔍", width=35, height=28, 
                                 fg_color=ACCENT, hover_color="#C62828",
                                 command=lambda: self.app.handle_local_search(self.search_entry.get()))
@@ -144,7 +143,6 @@ class DashboardPage(ctk.CTkFrame):
         header_frame.pack(fill="x", padx=40, pady=(10, 5))
         
         header_font = ("Trebuchet MS", 12, "bold")
-        # Lebar kolom disesuaikan & diberi padding (jarak) antar kolom
         ctk.CTkLabel(header_frame, text="Film", font=header_font, text_color=TEXT_GRAY, width=240, anchor="w").grid(row=0, column=0, sticky="w", padx=(0, 15))
         ctk.CTkLabel(header_frame, text="Year", font=header_font, text_color=TEXT_GRAY, width=60, anchor="w").grid(row=0, column=1, sticky="w", padx=(0, 15))
         ctk.CTkLabel(header_frame, text="Mood", font=header_font, text_color=TEXT_GRAY, width=160, anchor="w").grid(row=0, column=2, sticky="w", padx=(0, 15))
@@ -161,11 +159,9 @@ class DashboardPage(ctk.CTkFrame):
             row.pack(fill="x", padx=40, pady=12)
             row.configure(cursor="hand2")
 
-            # wraplength agar judul panjang otomatis turun ke bawah
             lbl_title = ctk.CTkLabel(row, text=movie.get("title", "Unknown"), font=row_font, text_color=COL_FILM, width=240, anchor="w", justify="left", wraplength=230)
             lbl_title.grid(row=0, column=0, sticky="nw", padx=(0, 15))
             
-            # Membersihkan anomali angka pada tahun (seperti 1'1974)
             bersih_tahun = str(movie.get("year", "N/A")).replace("1'", "")
             lbl_year = ctk.CTkLabel(row, text=bersih_tahun, font=row_font, text_color=COL_YEAR, width=60, anchor="w")
             lbl_year.grid(row=0, column=1, sticky="nw", padx=(0, 15))
@@ -173,7 +169,6 @@ class DashboardPage(ctk.CTkFrame):
             lbl_mood = ctk.CTkLabel(row, text=movie.get("genre", "N/A"), font=row_font, text_color=COL_MOOD, width=160, anchor="w", justify="left", wraplength=150)
             lbl_mood.grid(row=0, column=2, sticky="nw", padx=(0, 15))
             
-            # Ambil synopsis, potong jika terlalu panjang agar tidak merusak UI
             raw_syn = movie.get("description", movie.get("synopsis", "No synopsis available."))
             if len(raw_syn) > 130:
                 raw_syn = raw_syn[:127] + "..."

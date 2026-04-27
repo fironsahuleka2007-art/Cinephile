@@ -1,5 +1,8 @@
 import customtkinter as ctk
 import math
+from PIL import Image
+import urllib.request
+import io
 
 class MovieDetailPage(ctk.CTkFrame):
     def __init__(self, master, app, movie_data=None):
@@ -21,12 +24,11 @@ class MovieDetailPage(ctk.CTkFrame):
             weight = math.exp(-(distance ** 2) / 2.0) 
             import random
             noise = random.uniform(0.8, 1.2)
-            distribution[score] = weight * noise
+            distribution[score] = weight * noise     
 
         total_weight = sum(distribution.values())
         for score in distribution:
             distribution[score] = distribution[score] / total_weight
-            
         return distribution
 
     def _build_ui(self):
@@ -36,8 +38,8 @@ class MovieDetailPage(ctk.CTkFrame):
         nav_widget.pack_propagate(False)
 
         ctk.CTkButton(nav_widget, text="← Back to Dashboard", width=120, height=30, 
-                      fg_color="transparent", text_color="#FF8C00", font=("Trebuchet MS", 12, "bold"),
-                      command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=10, pady=10)
+                    fg_color="transparent", text_color="#FF8C00", font=("Trebuchet MS", 12, "bold"),
+                    command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=10, pady=10)
 
         self.scroll = ctk.CTkScrollableFrame(self, fg_color="#141414", corner_radius=0)
         self.scroll.pack(fill="both", expand=True)
@@ -85,17 +87,45 @@ class MovieDetailPage(ctk.CTkFrame):
         ctk.CTkLabel(left_mid, text=f"{stars} {rating_val}/10", font=("Helvetica", 20, "bold"), text_color="#FF3333").pack(anchor="w", pady=(15, 0))
 
         # Kanan: Where To Watch (Badges)
+        # Kanan: Where To Watch (Badges/Logos)
         right_mid = ctk.CTkFrame(mid_frame, fg_color="transparent")
         right_mid.pack(side="right", fill="y", anchor="e")
         
         ctk.CTkLabel(right_mid, text="Where To Watch:", font=("Helvetica", 14, "bold"), text_color="white").pack(anchor="e", pady=(0, 10))
         
-        platform_str = self.movie.get("platform_string", "")
-        platforms = [p.strip() for p in platform_str.split(",")] if platform_str else ["Not Available Online"]
         plat_row = ctk.CTkFrame(right_mid, fg_color="transparent")
         plat_row.pack(anchor="e")
-        for p in platforms[:4]:  # Tampilkan max 4 platform biar rapi
-            if p: ctk.CTkButton(plat_row, text=p, fg_color="#222", border_color="white", border_width=1, text_color="white", hover=False, corner_radius=20, height=35, width=60).pack(side="left", padx=5)
+
+        # Ambil data teks platform dan data link logo dari database
+        platform_str = self.movie.get("platform_string", "")
+        platforms = [p.strip() for p in platform_str.split(",")] if platform_str else []
+        logo_urls = self.movie.get("logo_urls", [])
+
+        # Skenario 1: Kalau ada link logonya
+        if logo_urls:
+            for i, url in enumerate(logo_urls[:4]):
+                try:
+                    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                    raw_data = urllib.request.urlopen(req, timeout=5).read()
+                    image = Image.open(io.BytesIO(raw_data))
+                    logo_img = ctk.CTkImage(light_image=image, dark_image=image, size=(40, 40))
+                    ctk.CTkLabel(plat_row, text="", image=logo_img).pack(side="left", padx=5)
+                
+                except Exception as e:
+                    print(f"❌ Gagal load logo dari {url}: {e}") 
+                    
+                    fallback_text = platforms[i] if i < len(platforms) else "Unknown"
+                    ctk.CTkButton(plat_row, text=fallback_text, fg_color="#222", hover=False, corner_radius=20, height=35).pack(side="left", padx=5)
+        
+        # Skenario 3: Kalau gak ada link logonya, tapi ada teks platformnya
+        elif platforms:
+            for p in platforms[:4]:
+                if p: 
+                    ctk.CTkButton(plat_row, text=p, fg_color="#222", border_color="white", border_width=1, text_color="white", hover=False, corner_radius=20, height=35).pack(side="left", padx=5)
+        
+        # Skenario 4: Kosong sama sekali
+        else:
+            ctk.CTkLabel(plat_row, text="Not Available Online", text_color="gray").pack()
 
         # 5. DYNAMIC CHART SECTION (Horizontal, Red Bars)
         chart_frame = ctk.CTkFrame(content_frame, fg_color="transparent")

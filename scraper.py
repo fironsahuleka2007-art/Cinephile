@@ -45,11 +45,13 @@ class MovieScraper:
 
             # 1. AMBIL SYNOPSIS (Selector Spesifik Inspect Element)
             try:
-                synopsis_el = self.driver.find_element(By.CSS_SELECTOR, "article.article-block p")
+                synopsis_el = self.driver.find_element(By.CSS_SELECTOR, "#synopsis p, p.text-wrap-pre-line.mt-0")
                 text = synopsis_el.text.strip()
-                if text: detail["synopsis"] = text
-            except Exception:
-                pass
+                
+                if text: 
+                    detail["synopsis"] = text
+            except Exception as e:
+                print(f"Sinopsis tidak ditemukan untuk '{title}': {e}")
 
             # 2. AMBIL GENRE
             try:
@@ -64,23 +66,44 @@ class MovieScraper:
                 pass
 
             # 3. AMBIL PLATFORM (Netflix, Disney+, dll)
-            try:
-                # Mengambil gambar icon platform di area streaming
-                platform_elements = self.driver.find_elements(By.CSS_SELECTOR, "img.offer__icon")
-                platforms_list = []
-                for el in platform_elements:
-                    alt_text = el.get_attribute("alt")
-                    if alt_text and alt_text not in platforms_list:
-                        platforms_list.append(alt_text)
-                
-                if platforms_list:
-                    detail["platforms"] = ", ".join(platforms_list)
-            except Exception:
-                pass
+            # 1. Minta Selenium mencari semua gambar yang punya class "provider-icon"
+            logo_elements = self.driver.find_elements(By.CSS_SELECTOR, "img.provider-icon")
 
-            return detail
+            nama_platform_list = []
+            logo_url_list = []
+
+            # 2. Lakukan perulangan untuk mengekstrak data dari masing-masing gambar
+            for logo in logo_elements:
+                # Ambil teks nama platformnya
+                nama_platform = logo.get_attribute("alt")
+                
+                # Ambil link gambar logonya (kalau kamu mau simpan/download logonya juga)
+                link_logo = logo.get_attribute("src")
+                
+                if nama_platform:
+                    # Menghindari duplikat (misal ada 2 tombol Netflix di satu halaman)
+                    if nama_platform not in nama_platform_list:
+                        nama_platform_list.append(nama_platform)
+                        logo_url_list.append(link_logo)
+
+            # Gabungkan nama-nama platform jadi satu teks utuh, misal: "Netflix, Disney+, HBO"
+            platform_string = ", ".join(nama_platform_list)
+
+            print(f"Platform yang tersedia: {platform_string}")
+
+            # --- TAMBAHAN PENTING DI SINI ---
+            if platform_string:
+                detail["platforms"] = platform_string
+            
+            # Kalau kamu mau simpan link logonya sekalian buat UI nanti, bisa tambah ini:
+            detail["logo_urls"] = logo_url_list 
+            
         except Exception as e:
-            return detail
+            # Opsional: biar ketahuan kalau JustWatch-nya error/filmnya gak ketemu
+            print(f"Info JustWatch tidak ditemukan: {e}")
+
+        # Wajib! Kembalikan 'detail' yang sudah diisi lengkap ke fungsi pemanggil
+        return detail
 
     def _get_movie_details(self, url):
         try:

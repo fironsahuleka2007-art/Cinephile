@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 from styles import ENTRY_STYLE, TEXT_GRAY
 
 # ==========================================
-# 1. LOGIKA DATABASE & SESSION (JSON)
+# 1. DATABASE & SESSION (JSON)
 # ==========================================
 class UserDB:
     def __init__(self, db_file="users.json", session_file="session.json"):

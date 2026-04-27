@@ -104,16 +104,12 @@ class MainApp(ctk.CTk):
             self.current_page_instance.pack(fill="both", expand=True)
 
     def handle_local_search(self, query):
-        """Mencari film secara lokal dari data yang sudah di-scrape"""
         if not query.strip():
             return
             
         print(f"Mencari '{query}' di database lokal...")
-        
-        # Pindah ke halaman Movie Table
         self.show_page("movietable")
-        
-        # Panggil fungsi filter di Movie Table
+
         if hasattr(self, 'current_page_instance') and self.current_page_instance.__class__.__name__ == "MovietablePage":
             self.current_page_instance.filter_data(query)
 
@@ -123,23 +119,17 @@ class MainApp(ctk.CTk):
             
             if "error" in hasil:
                 print(f"❌ Scraping Gagal: {hasil['error']}")
-                # Kamu bisa menambahkan notifikasi error di sini
             else:
                 print(f"✅ Data Ditemukan: {hasil['title']}")
-                # Pindah ke halaman detail film menggunakan data asli hasil scraping
-                # Harus menggunakan .after agar thread-safe
                 self.after(0, lambda: self.show_page("moviedetail", data=hasil))
 
-        # Jalankan di thread terpisah agar UI tidak freeze
         threading.Thread(target=run_scraping, daemon=True).start()
 
     def logout(self):
-        """Menghapus sesi dan kembali ke login"""
         self.auth.db.clear_session()
         self.show_page("login")
     
     def on_closing(self):
-        """Menutup browser Selenium sebelum aplikasi benar-benar keluar"""
         print("Closing application and browser...")
         try:
             self.scraper.close()
@@ -148,7 +138,6 @@ class MainApp(ctk.CTk):
         self.destroy()
 
     def show_toast(self, message, target=None):
-        """Custom notification (Opsional)"""
         print(f"🔔 {message}")
         if target:
             self.show_page(target)
