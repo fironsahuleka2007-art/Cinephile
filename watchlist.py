@@ -6,6 +6,7 @@ from tkinter import messagebox
 # Tema disamakan dengan Dashboard biar ga belang
 BG_MAIN    = "#1A1A1A"
 BG_NAV     = "#111111"
+ACCENT     = "#E53935"
 BG_CARD    = "#2A2A2A"
 ORANGE     = "#FF8C00"
 TEXT_WHITE = "#FFFFFF"

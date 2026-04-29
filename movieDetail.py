@@ -10,6 +10,17 @@ class MovieDetailPage(ctk.CTkFrame):
         super().__init__(master, fg_color="#141414", corner_radius=0)
         self.app = app
         self.movie = movie_data if movie_data else {}
+        
+        # Ambil data user agar tidak Guest
+        self.username = "Guest"
+        try:
+            if os.path.exists("session.json"):
+                with open("session.json", "r") as f:
+                    data = json.load(f)
+                    self.username = data.get("username", data.get("active_user", "Guest"))
+        except:
+            pass
+
         self._build_ui()
 
     def _generate_dynamic_chart(self, rating_str):
@@ -32,16 +43,7 @@ class MovieDetailPage(ctk.CTkFrame):
 
     def _add_to_watchlist(self, status):
         """Menyimpan film ke watchlist yang dinamis berdasarkan user login"""
-        current_user = "guest"
-        try:
-            if os.path.exists("session.json"):
-                with open("session.json", "r") as f:
-                    session_data = json.load(f)
-                    current_user = session_data.get("username", "guest")
-        except:
-            pass
-        
-        watchlist_file = f"watchlist_{current_user}.json"
+        watchlist_file = f"watchlist_{self.username}.json"
         
         if os.path.exists(watchlist_file):
             with open(watchlist_file, "r", encoding="utf-8") as f:
@@ -67,40 +69,63 @@ class MovieDetailPage(ctk.CTkFrame):
         with open(watchlist_file, "w", encoding="utf-8") as f:
             json.dump(watchlist, f, indent=4)
         
-        if hasattr(self.app, 'watchlist_data'):
-            self.app.watchlist_data = watchlist
-
         self.add_btn.configure(text=f"✓ Added as {status}", fg_color="#28a745", hover_color="#218838")
-        print(f"✅ Berhasil menyimpan {self.movie.get('title')} sebagai '{status}' ke {watchlist_file}")
+
+    def _build_nav(self):
+        """Membangun Navbar dengan Menu di TENGAH Presisi"""
+        nav = ctk.CTkFrame(self, fg_color="#111111", height=60, corner_radius=0)
+        nav.pack(fill="x", side="top")
+        nav.pack_propagate(False)
+
+        # Logo / Brand (Kiri)
+        ctk.CTkLabel(nav, text="CINEPHILE", font=("Trebuchet MS", 20, "bold"), text_color="#E53935").pack(side="left", padx=30)
+
+        # --- CONTAINER TENGAH ---
+        pill = ctk.CTkFrame(nav, fg_color="#1E1E1E", height=34, corner_radius=17)
+        pill.place(relx=0.5, rely=0.5, anchor="center") # INI YANG BIKIN KE TENGAH
+
+        nav_items = [
+            ("Home", "dashboard", 70),
+            ("Genre Analysis", "genreanalyze", 110),
+            ("Movie Table", "movietable", 92),
+            ("Watchlist", "watchlist", 80)
+        ]
+
+        for text, page, w in nav_items:
+            btn = ctk.CTkButton(pill, text=text, width=w, height=28, fg_color="transparent", 
+                                text_color="#AAAAAA", font=("Trebuchet MS", 11, "bold"), 
+                                corner_radius=16, hover_color="#3A3A3A",
+                                command=lambda p=page: self.app.show_page(p))
+            btn.pack(side="left", padx=2, pady=3)
+
+        # User Profile (Kanan)
+        user_frame = ctk.CTkFrame(nav, fg_color="transparent")
+        user_frame.pack(side="right", padx=30)
+        ctk.CTkLabel(user_frame, text=self.username, font=("Trebuchet MS", 12, "bold"), text_color="#FFFFFF").pack(side="right")
+        ctk.CTkLabel(user_frame, text="👤", font=("Arial", 16)).pack(side="right", padx=10)
 
     def _build_ui(self):
-        # NAVBAR
-        nav_widget = ctk.CTkFrame(self, fg_color="#111111", height=50, corner_radius=0)
-        nav_widget.pack(fill="x", side="top")
-        nav_widget.pack_propagate(False)
+        # Render Navbar
+        self._build_nav()
 
-        ctk.CTkButton(nav_widget, text="← Back to Dashboard", width=120, height=30, 
-                    fg_color="transparent", text_color="#FF8C00", font=("Trebuchet MS", 12, "bold"),
-                    command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=10, pady=10)
-
+        # Konten Utama dengan Scroll
         self.scroll = ctk.CTkScrollableFrame(self, fg_color="#141414", corner_radius=0)
         self.scroll.pack(fill="both", expand=True)
 
-        # 1. HEADER & TITLE
+        # 1. HEADER & TITLE (DI TENGAH)
         title = self.movie.get("title", "Unknown Title")
         year = self.movie.get("year", "N/A")
-        
         title_text = f"{title} ({year})" if year != "N/A" else title
         ctk.CTkLabel(self.scroll, text=title_text, font=("Georgia", 44, "italic", "bold"), 
-                     text_color="white", wraplength=900).pack(pady=(40, 10))
+                     text_color="white", wraplength=900, anchor="center").pack(pady=(40, 10), anchor="center")
 
-        # 2. MAIN POSTER
+        # 2. MAIN POSTER (DI TENGAH)
         poster_path = self.movie.get("poster_local", "")
         if poster_path and os.path.exists(poster_path):
             try:
                 img = Image.open(poster_path)
                 poster_img = ctk.CTkImage(light_image=img, dark_image=img, size=(300, 450))
-                ctk.CTkLabel(self.scroll, text="", image=poster_img).pack(pady=20)
+                ctk.CTkLabel(self.scroll, text="", image=poster_img).pack(pady=20, anchor="center")
             except: pass
 
         content_frame = ctk.CTkFrame(self.scroll, fg_color="transparent")
@@ -110,7 +135,7 @@ class MovieDetailPage(ctk.CTkFrame):
         synopsis_frame = ctk.CTkFrame(content_frame, fg_color="transparent")
         synopsis_frame.pack(fill="x", pady=20)
         ctk.CTkLabel(synopsis_frame, text="Synopsis", font=("Helvetica", 18, "bold"), 
-                     text_color="#FF8C00", width=150, anchor="nw").pack(side="left")
+                     text_color="#FF8C00", width=120, anchor="nw").pack(side="left")
         
         synopsis_text = self.movie.get("synopsis", self.movie.get("description", "No synopsis available."))
         ctk.CTkLabel(synopsis_frame, text=synopsis_text, font=("Helvetica", 15), 
@@ -118,7 +143,7 @@ class MovieDetailPage(ctk.CTkFrame):
 
         ctk.CTkFrame(content_frame, fg_color="#333", height=1).pack(fill="x", pady=20)
 
-        # 4. GENRE, RATING & WHERE TO WATCH (TEXT ONLY)
+        # 4. GENRE & RATING
         mid_frame = ctk.CTkFrame(content_frame, fg_color="transparent")
         mid_frame.pack(fill="x", pady=10)
 
@@ -137,6 +162,7 @@ class MovieDetailPage(ctk.CTkFrame):
         ctk.CTkLabel(left_mid, text=f"★ {rating_val}/10", font=("Helvetica", 24, "bold"), 
                      text_color="#FF3333").pack(anchor="w", pady=(10, 0))
 
+        # Platforms
         right_mid = ctk.CTkFrame(mid_frame, fg_color="transparent")
         right_mid.pack(side="right", fill="y", anchor="e")
         ctk.CTkLabel(right_mid, text="Where To Watch:", font=("Helvetica", 14, "bold"), text_color="white").pack(anchor="e")
@@ -144,19 +170,16 @@ class MovieDetailPage(ctk.CTkFrame):
         plat_row = ctk.CTkFrame(right_mid, fg_color="transparent")
         plat_row.pack(anchor="e", pady=5)
         
-        # --- PERUBAHAN PLATFORM JADI TEKS ---
         platform_str = self.movie.get("platform_string", "")
         platforms = [p.strip() for p in platform_str.split(",")] if platform_str else []
-        
         if platforms:
             for p in platforms[:4]:
-                if p:
-                    ctk.CTkButton(plat_row, text=p, fg_color="#222", text_color="white", hover=False, 
-                                  corner_radius=20, height=30).pack(side="left", padx=2)
+                ctk.CTkButton(plat_row, text=p, fg_color="#222", text_color="white", hover=False, 
+                              corner_radius=20, height=30).pack(side="left", padx=2)
         else:
             ctk.CTkLabel(plat_row, text="Not Available Online", text_color="gray").pack(side="right")
 
-        # 5. CHART & WATCHLIST MANAGER
+        # 5. CHART & WATCHLIST
         split_frame = ctk.CTkFrame(content_frame, fg_color="transparent")
         split_frame.pack(fill="x", pady=(40, 20), anchor="w")
 
@@ -180,18 +203,13 @@ class MovieDetailPage(ctk.CTkFrame):
         wl_inner.pack(padx=30, pady=30, fill="both", expand=True)
 
         ctk.CTkLabel(wl_inner, text="Manage Watchlist", font=("Helvetica", 24, "bold"), text_color="white").pack(anchor="w", pady=(0, 20))
-        ctk.CTkLabel(wl_inner, text="Track your movies by selecting a status below:", font=("Helvetica", 14), text_color="gray", wraplength=300, justify="left").pack(anchor="w", pady=(0, 20))
-
         self.status_var = ctk.StringVar(value="Plan to Watch")
-        self.status_menu = ctk.CTkOptionMenu(wl_inner, 
-                                            values=["Watched", "Watching", "Plan to Watch"],
-                                            variable=self.status_var,
-                                            fg_color="#333", button_color="#444", button_hover_color="#555",
-                                            width=250, height=40, font=("Helvetica", 14))
+        self.status_menu = ctk.CTkOptionMenu(wl_inner, values=["Watched", "Watching", "Plan to Watch"],
+                                            variable=self.status_var, fg_color="#333", button_color="#444", 
+                                            width=250, height=40)
         self.status_menu.pack(anchor="w", pady=(0, 20))
 
-        self.add_btn = ctk.CTkButton(wl_inner, text="+ Update Watchlist", 
-                                     fg_color="#FF8C00", text_color="black", hover_color="#e07b00", 
+        self.add_btn = ctk.CTkButton(wl_inner, text="+ Update Watchlist", fg_color="#FF8C00", text_color="black", 
                                      font=("Helvetica", 15, "bold"), height=45, width=250,
                                      command=lambda: self._add_to_watchlist(self.status_var.get()))
         self.add_btn.pack(anchor="w")
@@ -218,9 +236,10 @@ class MovieDetailPage(ctk.CTkFrame):
                         btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
                     except: pass
 
-        # 7. WATCHLIST BANNER
-        banner = ctk.CTkFrame(self.scroll, fg_color="#FF8C00", corner_radius=0, height=150)
-        banner.pack(fill="x", pady=(50, 0)); banner.pack_propagate(False)
-        ctk.CTkLabel(banner, text="Don't forget your Watchlist!", font=("Georgia", 28, "italic"), text_color="black").pack(pady=(30, 0))
-        ctk.CTkButton(banner, text="View Watchlist", fg_color="#1A1A1A", corner_radius=5, 
-                      command=lambda: self.app.show_page("watchlist")).pack(pady=15)
+        # 7. BANNER FOOTER
+        banner = ctk.CTkFrame(self.scroll, fg_color="#FF8C00", corner_radius=0, height=120)
+        banner.pack(fill="x", pady=(50, 0))
+        banner.pack_propagate(False)
+        ctk.CTkLabel(banner, text="Ready to track more movies?", font=("Georgia", 24, "italic"), text_color="black").pack(pady=(20, 5))
+        ctk.CTkButton(banner, text="Back to Dashboard", fg_color="#1A1A1A", 
+                      command=lambda: self.app.show_page("dashboard")).pack()

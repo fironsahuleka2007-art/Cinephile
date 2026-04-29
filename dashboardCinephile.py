@@ -1,8 +1,10 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk, ImageOps
 import os
+import json
 import tkinter.font as tkfont
 import tkinter as tk
+from tkinter import messagebox
 
 # ── Konstanta Warna & Font ───────────────────────────────────────────────────
 BG_MAIN    = "#1A1A1A"
@@ -24,7 +26,29 @@ class DashboardPage(ctk.CTkFrame):
     def __init__(self, master, app):
         super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
         self.app = app
+        self._load_user_data()
         self._build_ui()
+
+    def _load_user_data(self):
+        """Memuat session user dan menghitung statistik watchlist"""
+        self.username = "Guest"
+        try:
+            if os.path.exists("session.json"):
+                with open("session.json", "r") as f:
+                    self.username = json.load(f).get("username", "Guest")
+        except: pass
+
+        self.stats = {"Watched": 0, "Watching": 0, "Plan to Watch": 0}
+        wl_file = f"watchlist_{self.username}.json"
+        if os.path.exists(wl_file):
+            try:
+                with open(wl_file, "r") as f:
+                    data = json.load(f)
+                    for m in data:
+                        status = m.get("status")
+                        if status in self.stats: 
+                            self.stats[status] += 1
+            except: pass
 
     def _build_ui(self):
         self._build_nav()
@@ -40,25 +64,39 @@ class DashboardPage(ctk.CTkFrame):
         self._build_footer()
 
     def _build_nav(self):
-        nav = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0, height=44)
+        nav = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0, height=60)
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        # ── KIRI: Logo / Log Out ──
-        logout_btn = ctk.CTkLabel(nav, text="◎ Log Out", cursor="hand2", font=("Trebuchet MS", 12, "bold"), text_color=ACCENT)
-        logout_btn.pack(side="left", padx=16, pady=8)
-        logout_btn.bind("<Button-1>", lambda e: self.app.logout())
+        # ── KIRI: PROFILE CONTAINER (PENGGANTI LOGOUT BIASA) ──
+        self.profile_container = ctk.CTkFrame(nav, fg_color="transparent", cursor="hand2")
+        self.profile_container.pack(side="left", padx=20, pady=10)
+        
+        initial = self.username[0].upper() if self.username else "G"
+        self.avatar = ctk.CTkLabel(self.profile_container, text=initial, width=36, height=36, 
+                                   corner_radius=18, fg_color=ACCENT, text_color="white", 
+                                   font=("Trebuchet MS", 16, "bold"))
+        self.avatar.pack(side="left")
+        
+        self.user_lbl = ctk.CTkLabel(self.profile_container, text=f"  {self.username} ▼", 
+                                     font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE)
+        self.user_lbl.pack(side="left")
+
+        # Bind event klik ke fungsi menu popup
+        self.profile_container.bind("<Button-1>", lambda e: self._show_profile_menu())
+        self.avatar.bind("<Button-1>", lambda e: self._show_profile_menu())
+        self.user_lbl.bind("<Button-1>", lambda e: self._show_profile_menu())
 
         # ── KANAN: Kotak Pencarian (Local Search) ──
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
-        search_frame.pack(side="right", padx=16)
+        search_frame.pack(side="right", padx=20, pady=10)
 
         self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search Local Database...", 
-                                        width=200, height=28, font=("Trebuchet MS", 11),
+                                        width=200, height=32, font=("Trebuchet MS", 12),
                                         fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
         
-        search_btn = ctk.CTkButton(search_frame, text="🔍", width=35, height=28, 
+        search_btn = ctk.CTkButton(search_frame, text="🔍", width=40, height=32, 
                                 fg_color=ACCENT, hover_color="#C62828",
                                 command=lambda: self.app.handle_local_search(self.search_entry.get()))
         search_btn.pack(side="left")
@@ -67,27 +105,65 @@ class DashboardPage(ctk.CTkFrame):
         pill_outer = ctk.CTkFrame(nav, fg_color="transparent")
         pill_outer.place(relx=0.5, rely=0.5, anchor="center")
         
-        pill = ctk.CTkFrame(pill_outer, fg_color=BG_TAB, corner_radius=20, height=30)
+        pill = ctk.CTkFrame(pill_outer, fg_color=BG_TAB, corner_radius=20, height=34)
         pill.pack()
 
-        # Tombol Home (MERAH)
-        btn_home = ctk.CTkButton(pill, text="Home", width=60, height=26, fg_color=ACCENT, hover_color="#C62828", text_color=TEXT_WHITE, font=("Trebuchet MS", 10, "bold"), corner_radius=16)
-        btn_home.pack(side="left", padx=(3, 1), pady=2)
+        btn_home = ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color=ACCENT, hover_color="#C62828", text_color=TEXT_WHITE, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_home.pack(side="left", padx=(3, 1), pady=3)
 
-        # Tombol Genre Analysis (ABU)
-        btn_genre = ctk.CTkButton(pill, text="Genre Analysis", width=110, height=26, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 10, "bold"), corner_radius=16)
-        btn_genre.pack(side="left", padx=1, pady=2)
+        btn_genre = ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_genre.pack(side="left", padx=1, pady=3)
         btn_genre.configure(command=lambda: self.app.show_page("genreanalyze"))
 
-        # Tombol Movie Table (ABU) - Fungsi Pindah Halaman
-        btn_table = ctk.CTkButton(pill, text="Movie Table", width=92, height=26, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 10, "bold"), corner_radius=16)
-        btn_table.pack(side="left", padx=(1, 3), pady=2)
+        btn_table = ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_table.pack(side="left", padx=(1, 3), pady=3)
         btn_table.configure(command=lambda: self.app.show_page("movietable")) 
 
-        # Tombol Watchlist 
-        btn_watchlist = ctk.CTkButton(pill, text="Watchlist", width=80, height=26, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 10, "bold"), corner_radius=16)
-        btn_watchlist.pack(side="left", padx=(1, 3), pady=2)
+        btn_watchlist = ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_watchlist.pack(side="left", padx=(1, 3), pady=3)
         btn_watchlist.configure(command=lambda: self.app.show_page("watchlist"))
+
+    # ── FITUR PROFILE MENU DROPDOWN (MENYATU DI DALAM PAGE) ──
+    def _show_profile_menu(self):
+        # Jika dropdown sudah ada dan sedang tampil, sembunyikan (Toggle tutup)
+        if hasattr(self, 'dropdown_menu') and self.dropdown_menu.winfo_ismapped():
+            self.dropdown_menu.place_forget()
+            return
+
+        # Jika belum ada, kita buat framenya
+        if not hasattr(self, 'dropdown_menu'):
+            self.dropdown_menu = ctk.CTkFrame(self, fg_color="#1E1E1E", width=220, corner_radius=10, 
+                                            border_width=1, border_color="#333333")
+            
+            # Header
+            ctk.CTkLabel(self.dropdown_menu, text=f"Hello, {self.username}!", 
+                        font=("Trebuchet MS", 16, "bold"), text_color="#FFFFFF").pack(pady=(15, 10))
+            
+            # Stats Watchlist
+            stats_frame = ctk.CTkFrame(self.dropdown_menu, fg_color="#2A2A2A", corner_radius=6)
+            stats_frame.pack(fill="x", padx=15, pady=10)
+            ctk.CTkLabel(stats_frame, text=f"👁 Watched: {self.stats.get('Watched', 0)}").pack(anchor="w", padx=10, pady=2)
+            ctk.CTkLabel(stats_frame, text=f"▶ Watching: {self.stats.get('Watching', 0)}").pack(anchor="w", padx=10, pady=2)
+            ctk.CTkLabel(stats_frame, text=f"🗓 Planned: {self.stats.get('Plan to Watch', 0)}").pack(anchor="w", padx=10, pady=(2, 10))
+            
+            # Logout Button (Switch Theme udah ilang bersih)
+            ctk.CTkButton(self.dropdown_menu, text="Logout", fg_color="#E53935", hover_color="#C62828", 
+                        font=("Trebuchet MS", 12, "bold"), command=self._confirm_logout).pack(fill="x", padx=15, pady=(5, 15))
+
+        # Menampilkan dropdown persis di bawah container profil
+        self.dropdown_menu.place(x=20, y=65)
+        self.dropdown_menu.lift()
+
+    def _toggle_theme(self):
+        if self.theme_switch.get() == 1: ctk.set_appearance_mode("dark")
+        else: ctk.set_appearance_mode("light")
+
+    def _confirm_logout(self):
+        if messagebox.askyesno("Logout", "Yakin ingin keluar dari akun?"):
+            self.dropdown_menu.destroy()
+            if os.path.exists("session.json"):
+                os.remove("session.json")
+            self.app.show_page("login")
 
     # ── BAGIAN HERO (Carousel Gambar) ──────────────────────────────────────────
     def _build_hero(self):

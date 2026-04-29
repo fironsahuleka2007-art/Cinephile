@@ -56,8 +56,9 @@ class UserDB:
 
     # --- Fitur Remember Me (Sesi) ---
     def save_session(self, username):
+        # FIX: Tambahin "username" supaya file lain kayak watchlist ngenalin datanya
         with open(self.session_file, "w", encoding="utf-8") as f:
-            json.dump({"active_user": username}, f)
+            json.dump({"active_user": username, "username": username}, f)
 
     def get_session(self):
         if os.path.exists(self.session_file):
@@ -105,6 +106,9 @@ class AuthPages:
     # HALAMAN LOGIN
     # ------------------------------------------
     def render_login(self):
+        # Pastikan layar bersih sebelum render
+        for child in self.master.winfo_children(): child.destroy()
+        
         container = ctk.CTkFrame(self.master, fg_color="transparent")
         container.place(relx=0.5, rely=0.5, anchor="center")
         self.create_round_logo(container, 140)
@@ -116,7 +120,7 @@ class AuthPages:
         self.login_pass_entry = ctk.CTkEntry(container, placeholder_text="Password", show="*", **ENTRY_STYLE)
         self.login_pass_entry.pack(pady=10)
         
-        # Checkbox Remember Me
+        # Checkbox Remember Me (Balik lagi!)
         self.remember_var = ctk.IntVar(value=0)
         remember_cb = ctk.CTkCheckBox(container, text="Remember Me", variable=self.remember_var, 
                                     text_color=TEXT_GRAY, fg_color="#631d2a", hover_color="#4a151f")
@@ -129,6 +133,7 @@ class AuthPages:
         reg_btn = ctk.CTkLabel(container, text="Don't have an account? Create one", cursor="hand2", text_color=TEXT_GRAY)
         reg_btn.pack(); reg_btn.bind("<Button-1>", lambda e: self.app.show_page("register"))
 
+        # Forgot Password (Balik lagi!)
         forgot_btn = ctk.CTkLabel(container, text="Forgot your password?", cursor="hand2", text_color=TEXT_GRAY)
         forgot_btn.pack(); forgot_btn.bind("<Button-1>", lambda e: self.app.show_page("forgot_password"))
 
@@ -142,8 +147,8 @@ class AuthPages:
 
         success, message = self.db.login_user(username, password)
         if success:
-            if self.remember_var.get() == 1:
-                self.db.save_session(username)
+            # FIX: Selalu simpan session saat berhasil login biar ga Guest
+            self.db.save_session(username)
             self.app.show_toast(message, target="dashboard")
         else:
             self.app.show_toast(message)
@@ -152,6 +157,7 @@ class AuthPages:
     # HALAMAN REGISTER
     # ------------------------------------------
     def render_register(self):
+        for child in self.master.winfo_children(): child.destroy()
         container = ctk.CTkFrame(self.master, fg_color="transparent")
         container.place(relx=0.5, rely=0.5, anchor="center")
         self.create_round_logo(container, 100)
@@ -190,6 +196,7 @@ class AuthPages:
     # HALAMAN FORGOT PASSWORD
     # ------------------------------------------
     def render_forgot_password(self):
+        for child in self.master.winfo_children(): child.destroy()
         container = ctk.CTkFrame(self.master, fg_color="transparent")
         container.place(relx=0.5, rely=0.5, anchor="center")
         self.create_round_logo(container, 100)

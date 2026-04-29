@@ -1,57 +1,68 @@
 import customtkinter as ctk
+import json
+import os
 from tkinter import messagebox
-from styles import *
 
-class ProfilePage(ctk.CTkFrame):
-    def __init__(self, master, app):
-        super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
+class ProfileWidget(ctk.CTkFrame):
+    def __init__(self, master, app, **kwargs):
+        super().__init__(master, fg_color="transparent", **kwargs)
         self.app = app
         
-        # Ambil data user yang login (asumsi dari AuthPages/Database)
-        self.user_data = self.app.auth.db.get_session() or {"username": "User", "email": "user@example.com"}
+        # 1. Ambil Nama User dari Session
+        self.username = "Guest"
+        try:
+            if os.path.exists("session.json"):
+                with open("session.json", "r") as f:
+                    data = json.load(f)
+                    self.username = data.get("username", "Guest")
+        except: pass
 
-        self._build_ui()
+        # Container Utama (Horizontal)
+        self.container = ctk.CTkFrame(self, fg_color="transparent")
+        self.container.pack(padx=5, pady=5)
 
-    def _build_ui(self):
-        # 1. Navigasi (Sama kayak Dashboard)
-        self._build_nav()
+        # 2. Avatar Bulat (Inisial Nama)
+        initial = self.username[0].upper() if self.username else "G"
+        self.avatar = ctk.CTkLabel(
+            self.container, 
+            text=initial, 
+            width=35, 
+            height=35, 
+            corner_radius=17,
+            fg_color="#E50914", # Warna Merah Netflix
+            text_color="white",
+            font=("Helvetica", 14, "bold")
+        )
+        self.avatar.pack(side="left", padx=(0, 10))
 
-        # 2. Main Content
-        content = ctk.CTkFrame(self, fg_color="transparent")
-        content.pack(pady=60)
+        # 3. Nama User & Tombol Dropdown/Logout
+        self.user_info = ctk.CTkLabel(
+            self.container, 
+            text=self.username, 
+            font=("Helvetica", 13, "bold"),
+            text_color="white"
+        )
+        self.user_info.pack(side="left", padx=(0, 15))
 
-        # Avatar Bulat (Simulasi)
-        avatar = ctk.CTkFrame(content, width=120, height=120, fg_color=BG_TAB, corner_radius=60)
-        avatar.pack(pady=20)
-        ctk.CTkLabel(avatar, text="👤", font=("Arial", 60)).place(relx=0.5, rely=0.5, anchor="center")
+        self.logout_btn = ctk.CTkButton(
+            self.container,
+            text="Logout",
+            width=70,
+            height=28,
+            fg_color="#333",
+            hover_color="#E50914",
+            text_color="white",
+            font=("Helvetica", 11, "bold"),
+            command=self._confirm_logout
+        )
+        self.logout_btn.pack(side="left")
 
-        # Username & Email
-        ctk.CTkLabel(content, text=self.user_data['username'], font=("Helvetica", 28, "bold"), text_color=TEXT_WHITE).pack()
-        ctk.CTkLabel(content, text=self.user_data['email'], font=("Trebuchet MS", 14), text_color=TEXT_GRAY).pack(pady=(0, 30))
-
-        # Box Statistik
-        stats_frame = ctk.CTkFrame(content, fg_color=BG_NAV, corner_radius=12, width=400, height=100)
-        stats_frame.pack(pady=10, padx=20)
-        stats_frame.pack_propagate(False)
-        
-        # Contoh Isi Statistik
-        ctk.CTkLabel(stats_frame, text="12\nWatchlist", font=("Helvetica", 14, "bold"), text_color=TEXT_WHITE).pack(side="left", expand=True)
-        ctk.CTkLabel(stats_frame, text="Epic\nTop Genre", font=("Helvetica", 14, "bold"), text_color=TEXT_WHITE).pack(side="left", expand=True)
-
-        # Tombol Log Out
-        logout_btn = ctk.CTkButton(content, text="LOG OUT", fg_color=ACCENT, hover_color="#C62828", 
-                                font=("Trebuchet MS", 12, "bold"), width=200, height=40,
-                                command=self.confirm_logout)
-        logout_btn.pack(pady=40)
-
-    def _build_nav(self):
-        # (Copy paste struktur nav dari GenreAnalyze, tapi tandai tombol 'Profile' yang aktif)
-        nav = ctk.CTkFrame(self, fg_color=BG_NAV, height=44)
-        nav.pack(fill="x", side="top")
-        # ... (Struktur navigasi lainnya sama seperti sebelumnya)
-
-    def confirm_logout(self):
-        # VALIDASI LOGOUT
-        jawaban = messagebox.askyesno("Konfirmasi Log Out", "Apakah kamu yakin ingin keluar dari Cinephile?")
+    def _confirm_logout(self):
+        # VALIDASI: Pop up konfirmasi sebelum keluar
+        jawaban = messagebox.askyesno(
+            "Konfirmasi Logout", 
+            f"Halo {self.username}, apakah kamu yakin ingin keluar dari aplikasi?"
+        )
         if jawaban:
-            self.app.logout()
+            print(f"User {self.username} logged out.")
+            self.app.logout() # Memanggil fungsi logout di main.py
