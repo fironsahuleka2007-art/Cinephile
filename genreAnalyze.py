@@ -85,7 +85,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=1)
         ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=3)
 
-#ini ysng baru
+#ini yang Baru
     def create_hero_section(self):
         ctk.CTkLabel(self.body, text="Genre Analyze", font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE).pack(pady=(60, 20))
 
