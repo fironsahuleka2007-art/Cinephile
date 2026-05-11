@@ -28,7 +28,7 @@ class MainApp(ctk.CTk):
         self.search_query_pending = None
         self.movie_list = []
         self.db_path = "data_film.json"
-        self.scraper = MovieScraper()
+        self.scraper = None  # Lazy-load: Chrome hanya nyala saat scraping
         self.current_page_instance = None
 
         # Load Data Lokal
@@ -63,12 +63,15 @@ class MainApp(ctk.CTk):
             threading.Thread(target=self._initialize_data, daemon=True).start()
 
     def _initialize_data(self):
+        self.scraper = MovieScraper()  # baru dibuat saat benar-benar dibutuhkan
         hasil = self.scraper.scrape_top_movies()
         if hasil:
             self.movie_list = hasil
             with open(self.db_path, "w", encoding="utf-8") as f:
                 json.dump(self.movie_list, f, indent=4)
             print("✅ Database Ready!")
+        self.scraper.close()
+        self.scraper = None
 
     def show_page(self, page_name, data=None):
         for widget in self.container.winfo_children():
@@ -83,7 +86,8 @@ class MainApp(ctk.CTk):
         elif page_name == "dashboard":
             self.current_page_instance = DashboardPage(self.container, self)
         elif page_name == "movietable":
-            self.current_page_instance = MovietablePage(self.container, self)
+            genre_filter = data if isinstance(data, str) else None
+            self.current_page_instance = MovietablePage(self.container, self, genre_filter=genre_filter)
         elif page_name == "genreanalyze":
             self.current_page_instance = GenreAnalyzePage(self.container, self)
         elif page_name == "moviedetail":
@@ -112,7 +116,9 @@ class MainApp(ctk.CTk):
             self.show_page("movietable")
 
     def on_closing(self):
-        try: self.scraper.close()
+        try:
+            if self.scraper:
+                self.scraper.close()
         except: pass
         self.destroy()
 
