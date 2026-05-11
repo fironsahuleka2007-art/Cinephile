@@ -139,6 +139,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
                          "frequently, providing insights through an easy-to-read graphical interface.")
         ctk.CTkLabel(desc_frame, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_WHITE, justify="left").pack(side="left", padx=40)
 
+#ini ysng baru
     def _animate_carousel(self):
         """Geser carousel ke kiri tiap 30ms"""
         try:
