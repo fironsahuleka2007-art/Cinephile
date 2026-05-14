@@ -56,7 +56,23 @@ class MovieDetailPage(ctk.CTkFrame):
                 pass
         return 0, ""
 
+    def _on_status_change(self, value):
+        if value == "Plan to Watch":
+            self.selected_stars = 0
+            for i, btn in enumerate(self.star_buttons):
+                btn.configure(state="disabled", text="☆", text_color="#2A2A2A")
+        else:
+            for btn in self.star_buttons:
+                btn.configure(state="normal", text_color="#555555")
+            for i, btn in enumerate(self.star_buttons):
+                if i < self.selected_stars:
+                    btn.configure(text="★", text_color="#FF8C00")
+                else:
+                    btn.configure(text="☆", text_color="#555555")
+
     def _set_stars(self, count):
+        if self.status_var.get() == "Plan to Watch":
+            return
         self.selected_stars = count
         for i, btn in enumerate(self.star_buttons):
             if i < count:
@@ -113,15 +129,18 @@ class MovieDetailPage(ctk.CTkFrame):
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
+        # ── Logo (pack LEFT dulu) ──
         ctk.CTkLabel(nav, text="CINEPHILE", font=("Trebuchet MS", 20, "bold"),
                      text_color="#E53935").pack(side="left", padx=30)
 
+        # ── User Info (pack RIGHT dulu) ──
         user_frame = ctk.CTkFrame(nav, fg_color="transparent")
         user_frame.pack(side="right", padx=30)
         ctk.CTkLabel(user_frame, text=self.username, font=("Trebuchet MS", 12, "bold"),
                      text_color="#FFFFFF").pack(side="right")
         ctk.CTkLabel(user_frame, text="👤", font=("Arial", 16)).pack(side="right", padx=10)
 
+        # ── Nav Pills (CENTER — pakai place agar betul-betul tengah) ──
         center_frame = ctk.CTkFrame(nav, fg_color="transparent")
         center_frame.pack(side="left", fill="both", expand=True)
 
@@ -129,18 +148,23 @@ class MovieDetailPage(ctk.CTkFrame):
         pill.place(relx=0.5, rely=0.5, anchor="center")
 
         nav_items = [
-            ("Home", "dashboard", 70),
+            ("Home",           "dashboard",    70),
             ("Genre Analysis", "genreanalyze", 110),
-            ("Movie Table", "movietable", 92),
-            ("Watchlist", "watchlist", 80)
+            ("Movie Table",    "movietable",   92),
+            ("Watchlist",      "watchlist",    80),
         ]
 
-        for text, page, w in nav_items:
-            btn = ctk.CTkButton(pill, text=text, width=w, height=32, fg_color="transparent",
-                                text_color="#AAAAAA", font=("Trebuchet MS", 11, "bold"),
-                                corner_radius=20, hover_color="#3A3A3A",
-                                command=lambda p=page: self.app.show_page(p))
-            btn.pack(side="left", padx=4, pady=4)
+        for i, (text, page, w) in enumerate(nav_items):
+            padx_left  = 6 if i == 0 else 2
+            padx_right = 6 if i == len(nav_items) - 1 else 2
+            btn = ctk.CTkButton(
+                pill, text=text, width=w, height=32,
+                fg_color="transparent", text_color="#AAAAAA",
+                font=("Trebuchet MS", 11, "bold"),
+                corner_radius=20, hover_color="#3A3A3A",
+                command=lambda p=page: self.app.show_page(p)
+            )
+            btn.pack(side="left", padx=(padx_left, padx_right), pady=4)
 
     def _build_ui(self):
         self._build_nav()
@@ -283,7 +307,8 @@ class MovieDetailPage(ctk.CTkFrame):
         self.status_menu = ctk.CTkOptionMenu(
             wl_inner, values=["Watched", "Watching", "Plan to Watch"],
             variable=self.status_var, fg_color="#333", button_color="#444",
-            width=250, height=40
+            width=250, height=40,
+            command=self._on_status_change
         )
         self.status_menu.pack(anchor="w", pady=(0, 20))
 
@@ -313,6 +338,8 @@ class MovieDetailPage(ctk.CTkFrame):
         existing_rating, existing_review = self._load_existing_review()
         if existing_rating > 0:
             self._set_stars(existing_rating)
+
+        self._on_status_change(self.status_var.get())
 
         ctk.CTkLabel(wl_inner, text="Notes / Review:",
                      font=("Helvetica", 13), text_color="#AAAAAA").pack(anchor="w", pady=(5, 5))
