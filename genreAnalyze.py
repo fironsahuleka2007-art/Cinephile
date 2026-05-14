@@ -85,7 +85,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
-        self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search Local...", width=150, height=32, fg_color="#222", border_color="#444")
+        self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search...", width=150, height=32, fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
         ctk.CTkButton(search_frame, text="🔍", width=40, height=32, fg_color=ACCENT,
                       command=lambda: self.app.handle_local_search(self.search_entry.get())).pack(side="left")
@@ -100,10 +100,6 @@ class GenreAnalyzePage(ctk.CTkFrame):
         ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=1)
         ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=3)
 
-<<<<<<< HEAD
-#ini yang Baru
-=======
->>>>>>> 7ba6b212b42839c662cf74d8985a0c833e481908
     def create_hero_section(self):
         ctk.CTkLabel(self.body, text="Genre Analyze", font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE).pack(pady=(60, 20))
 
@@ -178,12 +174,17 @@ class GenreAnalyzePage(ctk.CTkFrame):
             ctk.CTkFrame(row, width=bar_w, height=20, fg_color=ACCENT, corner_radius=2).pack(side="left")
 
     def create_overview(self, parent):
-        ctk.CTkLabel(parent, text="OVERVIEW", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_GRAY).pack(anchor="w", pady=(0, 10))
-        overview_text = ("Genre Analysis helps you understand your cinematic preferences by examining the\n"
-                         "distribution of genres in your collection. It highlights which genres appear most\n"
-                         "frequently, providing insights through an easy-to-read graphical interface.")
-        ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_WHITE, justify="left").pack(anchor="w")
-
+        ctk.CTkLabel(parent, text="OVERVIEW", font=("Trebuchet MS", 14, "bold"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 10))
+        
+        overview_text = (
+            "Genre Analysis helps you understand your cinematic preferences by examining the "
+            "distribution of genres in your collection. It highlights which genres appear most "
+            "frequently, providing insights through an easy-to-read graphical interface."
+        )
+        
+        
+        ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_GRAY, justify="left", wraplength=280).pack(anchor="w", pady=(10, 0))
+    
     def create_top_recommendations(self):
         top_3 = self.analyzed_data[:3]
         movie_list = getattr(self.app, "movie_list", [])
@@ -193,7 +194,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
             cat_frame.pack(fill="x", padx=150, pady=40)
 
             ctk.CTkLabel(cat_frame, text=name, font=("Helvetica", 32, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
-            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 13), text_color=TEXT_GRAY, wraplength=650, justify="left").pack(anchor="w", pady=(10, 15))
+            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 16), text_color=TEXT_GRAY, wraplength=650, width=350, justify="left").pack(anchor="w", pady=(10, 15))
             ctk.CTkLabel(cat_frame, text=f"Featured {name} Titles", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 15))
 
             p_frame = ctk.CTkFrame(cat_frame, fg_color="transparent")
