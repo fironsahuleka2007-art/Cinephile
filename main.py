@@ -3,10 +3,10 @@ import json
 import os
 import threading
 
-# Import langsung dari folder yang sama
 from loginPage import AuthPages
 from movieTable import MovietablePage
 from dashboardCinephile import DashboardPage
+from profilePage import ProfilePage
 from genreAnalyze import GenreAnalyzePage
 from movieDetail import MovieDetailPage
 from watchlist import WatchlistPage
@@ -33,7 +33,6 @@ class MainApp(ctk.CTk):
 
         self.auth = AuthPages(self.container, self)
         
-        # Cek Session (Login otomatis)
         active_user = None
         if os.path.exists("session.json"):
             try:
@@ -68,15 +67,19 @@ class MainApp(ctk.CTk):
             widget.destroy()
 
         if page_name == "login":
+            self.geometry("1100x850") # Reset geometri ke standar
             self.auth.render_login()
         elif page_name == "register":
+            # Geometri dipanjangin biar form register muat, handled in loginPage render_register
             self.auth.render_register()
         elif page_name == "dashboard":
+            self.geometry("1100x850") # Reset geometri ke standar
             self.current_page_instance = DashboardPage(self.container, self)
+        elif page_name == "profile":
+            self.geometry("1100x850") # Reset geometri ke standar
+            self.current_page_instance = ProfilePage(self.container, self)
         elif page_name == "movietable":
-            # Filter otomatis kalau kita ngeklik dari halaman genre
-            genre_filter = data if isinstance(data, str) else None
-            self.current_page_instance = MovietablePage(self.container, self, genre_filter=genre_filter)
+            self.current_page_instance = MovietablePage(self.container, self)
         elif page_name == "genreanalyze":
             self.current_page_instance = GenreAnalyzePage(self.container, self)
         elif page_name == "moviedetail":
@@ -88,14 +91,13 @@ class MainApp(ctk.CTk):
             self.current_page_instance.pack(fill="both", expand=True)
 
     def show_toast(self, message, target=None):
-        print(f"🔔 {message}")
+        # Toast sederhana via console untuk sementara, atau implementasikan UI popup
+        print(f"Toas Notification: {message}")
         if target:
             self.show_page(target)
 
-    # ========================================================
-    # LOGIKA ANIMASI TRANSISI (WELCOME -> DASHBOARD)
-    # ========================================================
     def show_welcome_transition(self, username):
+        # Animasi welcome kamu yang lama, tapi pastiin reset geometri
         for widget in self.container.winfo_children():
             widget.destroy()
             
@@ -137,11 +139,8 @@ class MainApp(ctk.CTk):
     def handle_local_search(self, query):
         if not query: return
         query = query.lower().strip()
-        if self.current_page_instance.__class__.__name__ == "MovietablePage":
-            self.current_page_instance.filter_data(query)
-        else:
-            self.search_query_pending = query 
-            self.show_page("movietable")
+        self.search_query_pending = query 
+        self.show_page("movietable")
 
     def on_closing(self):
         try: self.scraper.close()

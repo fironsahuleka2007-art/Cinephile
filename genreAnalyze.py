@@ -65,7 +65,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         self.create_hero_section()
 
-        # ── KONTAINER 2 KOLOM (KIRI & KANAN) ─────────────────────────────────
+        # ── KONTAINER 2 KOLOM ──
         split_frame = ctk.CTkFrame(self.body, fg_color="transparent")
         split_frame.pack(fill="x", padx=100, pady=40)
 
@@ -74,9 +74,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         right_frame = ctk.CTkFrame(split_frame, fg_color="transparent")
         right_frame.pack(side="right", fill="both", expand=True, padx=(40, 0))
-        # ────────────────────────────────────────────────────────────────────
 
-        # Memasukkan elemen ke masing-masing sisi
         self.create_genre_graphics(parent=left_frame)
         self.create_overview(parent=right_frame)
 
@@ -89,7 +87,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        # ── Search Bar (pack RIGHT) ──
+        # Search Bar (Kanan)
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
         self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search...", width=150, height=32, fg_color="#222", border_color="#444")
@@ -99,10 +97,11 @@ class GenreAnalyzePage(ctk.CTkFrame):
             command=lambda: self.app.handle_local_search(self.search_entry.get())
         ).pack(side="left")
 
-        # ── Nav Pills (BENAR-BENAR CENTER pakai place) ──
+        # Nav Pills (Tengah - Fix Kedouble)
         pill = ctk.CTkFrame(nav, fg_color="#2E2E2E", corner_radius=20, height=34)
         pill.place(relx=0.5, rely=0.5, anchor="center")
 
+        # Tombol Navigasi (Hanya Satu Set)
         ctk.CTkButton(
             pill, text="Home", width=70, height=28,
             fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16,
@@ -130,15 +129,9 @@ class GenreAnalyzePage(ctk.CTkFrame):
             command=lambda: self.app.show_page("watchlist")
         ).pack(side="left", padx=(2, 6), pady=3)
 
-        ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=3)
-        ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=("Trebuchet MS", 11, "bold")).pack(side="left", padx=1)
-        ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=1)
-        ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=3)
-
     def create_hero_section(self):
         ctk.CTkLabel(self.body, text="Genre Analyze", font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE).pack(pady=(60, 20))
 
-        # ── POSTER CAROUSEL ANIMASI ──────────────────────────────────────────
         movie_list = getattr(self.app, "movie_list", [])
         self._carousel_movies = [m for m in movie_list if m.get("poster_local") and os.path.exists(m.get("poster_local", ""))]
 
@@ -172,10 +165,8 @@ class GenreAnalyzePage(ctk.CTkFrame):
             self._carousel_half_w = self._carousel_item_w * len(sample)
             self._anim_offset = 0
             self._animate_carousel()
-        # ────────────────────────────────────────────────────────────────────
 
     def _animate_carousel(self):
-        """Geser carousel ke kiri tiap 30ms"""
         try:
             if not self._carousel_frame.winfo_exists():
                 return
@@ -217,7 +208,6 @@ class GenreAnalyzePage(ctk.CTkFrame):
             "distribution of genres in your collection. It highlights which genres appear most "
             "frequently, providing insights through an easy-to-read graphical interface."
         )
-        
         
         ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_GRAY, justify="left", wraplength=280).pack(anchor="w", pady=(10, 0))
     
