@@ -11,16 +11,16 @@ TEXT_GRAY  = "#AAAAAA"
 POSTER_W = 360
 POSTER_H = 480
 
-# Font Styles - Diperbesar dikit biar padat
-FONT_TITLE_H  = ("Arial Black", 48, "bold")
-FONT_NAV      = ("Trebuchet MS", 12, "bold")
-FONT_CAPTION  = ("Trebuchet MS", 12, "bold")
-FONT_YEAR     = ("Trebuchet MS", 11)
-FONT_BTN      = ("Trebuchet MS", 12, "bold")
-FONT_FOOTER   = ("Trebuchet MS", 10)
+# Font Styles
+FONT_TITLE_H  = ("Arial Black", 46, "bold")
+FONT_NAV      = ("Trebuchet MS", 10, "bold")
+FONT_CAPTION  = ("Trebuchet MS", 11, "bold")
+FONT_YEAR     = ("Trebuchet MS", 10)
+FONT_BTN      = ("Trebuchet MS", 11, "bold")
+FONT_FOOTER   = ("Trebuchet MS", 9)
 
 ENTRY_STYLE = {
-    "width": 340, "height": 48, "corner_radius": 15, 
+    "width": 320, "height": 45, "corner_radius": 15, 
     "fg_color": "transparent", "border_color": "white", 
-    "border_width": 2, "text_color": "white", "font": ("Inter", 14)
+    "border_width": 2, "text_color": "white", "font": ("Inter", 13)
 }

@@ -1,9 +1,26 @@
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageTk, ImageOps
 import os
 import json
-from collections import Counter
-from styles import *
+import tkinter.font as tkfont
+import tkinter as tk
+from tkinter import messagebox
+
+# ── Konstanta Warna & Font ───────────────────────────────────────────────────
+BG_MAIN    = "#1A1A1A"
+BG_NAV     = "#111111"
+BG_TAB     = "#2E2E2E"
+BG_LIGHT   = "#F4F4F4"  # Background terang untuk tabel
+ACCENT     = "#E53935"
+TEXT_WHITE = "#FFFFFF"
+TEXT_GRAY  = "#AAAAAA"
+TEXT_DARK  = "#111111"
+
+# Warna teks khusus tabel sesuai desain Figma
+COL_FILM     = "#7A1C1C"  # Merah gelap
+COL_YEAR     = "#111111"  # Hitam
+COL_MOOD     = "#2A368F"  # Biru gelap
+COL_SYNOPSIS = "#8A4B1A"  # Cokelat gelap
 
 class DashboardPage(ctk.CTkFrame):
     def __init__(self, master, app):
@@ -13,6 +30,7 @@ class DashboardPage(ctk.CTkFrame):
         self._build_ui()
 
     def _load_user_data(self):
+        """Memuat session user dan menghitung statistik watchlist"""
         self.username = "Guest"
         try:
             if os.path.exists("session.json"):
@@ -28,37 +46,20 @@ class DashboardPage(ctk.CTkFrame):
                     data = json.load(f)
                     for m in data:
                         status = m.get("status")
-                        if status in self.stats: self.stats[status] += 1
+                        if status in self.stats: 
+                            self.stats[status] += 1
             except: pass
-
-    def _get_insights(self):
-        """Menghitung visualisasi statistik dari database film"""
-        movies = getattr(self.app, "movie_list", [])
-        if not movies:
-            return {"top_year": "N/A", "top_genre": "N/A", "total": 0}
-
-        # 1. Menghitung Peak Year (Tahun dengan film terbanyak)
-        years = [m.get("year") for m in movies if m.get("year") and str(m.get("year")).isdigit()]
-        top_year = Counter(years).most_common(1)[0][0] if years else "N/A"
-
-        # 2. Menghitung Top Genre
-        genres = []
-        for m in movies:
-            g_str = m.get("genre", "")
-            if g_str and g_str not in ["Unknown", "N/A"]:
-                genres.extend([g.strip() for g in g_str.split(",")])
-        top_genre = Counter(genres).most_common(1)[0][0] if genres else "N/A"
-
-        return {"top_year": top_year, "top_genre": top_genre, "total": len(movies)}
 
     def _build_ui(self):
         self._build_nav()
+        
+        # Scrollable Body
         self.body = ctk.CTkScrollableFrame(self, fg_color=BG_MAIN, scrollbar_button_color="#444", scrollbar_button_hover_color=ACCENT)
         self.body.pack(fill="both", expand=True, side="top")
-        
+
         self._build_hero()
-        self._build_insights_section() # FITUR BARU: Data Visualisasi
         self._build_movie_list()
+        self._build_tagline()
         self._build_watchlist_banner()
         self._build_footer()
 
@@ -67,122 +68,228 @@ class DashboardPage(ctk.CTkFrame):
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
+        # ── KIRI: PROFILE CONTAINER (PENGGANTI LOGOUT BIASA) ──
         self.profile_container = ctk.CTkFrame(nav, fg_color="transparent", cursor="hand2")
         self.profile_container.pack(side="left", padx=20, pady=10)
         
         initial = self.username[0].upper() if self.username else "G"
-        self.avatar = ctk.CTkLabel(self.profile_container, text=initial, width=36, height=36, corner_radius=18, fg_color=ACCENT, text_color="white", font=("Trebuchet MS", 16, "bold"))
+        self.avatar = ctk.CTkLabel(self.profile_container, text=initial, width=36, height=36, 
+                                   corner_radius=18, fg_color=ACCENT, text_color="white", 
+                                   font=("Trebuchet MS", 16, "bold"))
         self.avatar.pack(side="left")
-        self.user_lbl = ctk.CTkLabel(self.profile_container, text=f"  {self.username} ▼", font=("Trebuchet MS", 14, "bold"), text_color=TEXT_WHITE)
+        
+        self.user_lbl = ctk.CTkLabel(self.profile_container, text=f"  {self.username} ▼", 
+                                     font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE)
         self.user_lbl.pack(side="left")
 
+        # Bind event klik ke fungsi menu popup
+        self.profile_container.bind("<Button-1>", lambda e: self._show_profile_menu())
+        self.avatar.bind("<Button-1>", lambda e: self._show_profile_menu())
+        self.user_lbl.bind("<Button-1>", lambda e: self._show_profile_menu())
+
+        # ── KANAN: Kotak Pencarian (Local Search) ──
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
-        self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search Local...", width=200, height=32, font=("Trebuchet MS", 12), fg_color="#222", border_color="#444")
-        self.search_entry.pack(side="left", padx=5)
-        ctk.CTkButton(search_frame, text="🔍", width=40, height=32, fg_color=ACCENT, command=lambda: self.app.handle_local_search(self.search_entry.get())).pack(side="left")
 
+        self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search Local Database...", 
+                                        width=200, height=32, font=("Trebuchet MS", 12),
+                                        fg_color="#222", border_color="#444")
+        self.search_entry.pack(side="left", padx=5)
+        
+        search_btn = ctk.CTkButton(search_frame, text="🔍", width=40, height=32, 
+                                fg_color=ACCENT, hover_color="#C62828",
+                                command=lambda: self.app.handle_local_search(self.search_entry.get()))
+        search_btn.pack(side="left")
+
+        # ── TENGAH: Pill Tabs ──
         pill_outer = ctk.CTkFrame(nav, fg_color="transparent")
         pill_outer.place(relx=0.5, rely=0.5, anchor="center")
+        
         pill = ctk.CTkFrame(pill_outer, fg_color=BG_TAB, corner_radius=20, height=34)
         pill.pack()
 
-        ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=FONT_BTN).pack(side="left", padx=(3, 1), pady=3)
-        ctk.CTkButton(pill, text="Genre Analysis", width=120, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=FONT_BTN, command=lambda: self.app.show_page("genreanalyze")).pack(side="left", padx=1, pady=3)
-        ctk.CTkButton(pill, text="Movie Table", width=100, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=FONT_BTN, command=lambda: self.app.show_page("movietable")).pack(side="left", padx=(1, 3), pady=3)
-        ctk.CTkButton(pill, text="Watchlist", width=90, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=FONT_BTN, command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=(1, 3), pady=3)
+        btn_home = ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color=ACCENT, hover_color="#C62828", text_color=TEXT_WHITE, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_home.pack(side="left", padx=(3, 1), pady=3)
 
-        self.logout_btn = ctk.CTkButton(self.profile_container, text="Logout", width=60, height=24, fg_color="#333", hover_color="#c0392b", font=("Trebuchet MS", 10), command=self._handle_logout)
-        self.logout_btn.pack(side="left", padx=15)
+        btn_genre = ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_genre.pack(side="left", padx=1, pady=3)
+        btn_genre.configure(command=lambda: self.app.show_page("genreanalyze"))
 
-    def _handle_logout(self):
-        if os.path.exists("session.json"): os.remove("session.json")
-        self.app.show_page("login")
+        btn_table = ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_table.pack(side="left", padx=(1, 3), pady=3)
+        btn_table.configure(command=lambda: self.app.show_page("movietable")) 
 
+        btn_watchlist = ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", hover_color="#3A3A3A", text_color=TEXT_GRAY, font=("Trebuchet MS", 11, "bold"), corner_radius=16)
+        btn_watchlist.pack(side="left", padx=(1, 3), pady=3)
+        btn_watchlist.configure(command=lambda: self.app.show_page("watchlist"))
+
+    # ── FITUR PROFILE MENU DROPDOWN (MENYATU DI DALAM PAGE) ──
+    def _show_profile_menu(self):
+        # Jika dropdown sudah ada dan sedang tampil, sembunyikan (Toggle tutup)
+        if hasattr(self, 'dropdown_menu') and self.dropdown_menu.winfo_ismapped():
+            self.dropdown_menu.place_forget()
+            return
+
+        # Jika belum ada, kita buat framenya
+        if not hasattr(self, 'dropdown_menu'):
+            self.dropdown_menu = ctk.CTkFrame(self, fg_color="#1E1E1E", width=220, corner_radius=10, 
+                                            border_width=1, border_color="#333333")
+            
+            # Header
+            ctk.CTkLabel(self.dropdown_menu, text=f"Hello, {self.username}!", 
+                        font=("Trebuchet MS", 16, "bold"), text_color="#FFFFFF").pack(pady=(15, 10))
+            
+            # Stats Watchlist
+            stats_frame = ctk.CTkFrame(self.dropdown_menu, fg_color="#2A2A2A", corner_radius=6)
+            stats_frame.pack(fill="x", padx=15, pady=10)
+            ctk.CTkLabel(stats_frame, text=f"👁 Watched: {self.stats.get('Watched', 0)}").pack(anchor="w", padx=10, pady=2)
+            ctk.CTkLabel(stats_frame, text=f"▶ Watching: {self.stats.get('Watching', 0)}").pack(anchor="w", padx=10, pady=2)
+            ctk.CTkLabel(stats_frame, text=f"🗓 Planned: {self.stats.get('Plan to Watch', 0)}").pack(anchor="w", padx=10, pady=(2, 10))
+            
+            # Logout Button (Switch Theme udah ilang bersih)
+            ctk.CTkButton(self.dropdown_menu, text="Logout", fg_color="#E53935", hover_color="#C62828", 
+                        font=("Trebuchet MS", 12, "bold"), command=self._confirm_logout).pack(fill="x", padx=15, pady=(5, 15))
+
+        # Menampilkan dropdown persis di bawah container profil
+        self.dropdown_menu.place(x=20, y=65)
+        self.dropdown_menu.lift()
+
+    def _toggle_theme(self):
+        if self.theme_switch.get() == 1: ctk.set_appearance_mode("dark")
+        else: ctk.set_appearance_mode("light")
+
+    def _confirm_logout(self):
+        if messagebox.askyesno("Logout", "Yakin ingin keluar dari akun?"):
+            self.dropdown_menu.destroy()
+            if os.path.exists("session.json"):
+                os.remove("session.json")
+            self.app.show_page("login")
+
+    # ── BAGIAN HERO (Carousel Gambar) ──────────────────────────────────────────
     def _build_hero(self):
-        hero_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        hero_frame.pack(fill="x", pady=(20, 10))
-        hero_path = os.path.join("assets", "heroes", "hero1.jpeg")
-        if os.path.exists(hero_path):
+        self.hero_frame = ctk.CTkFrame(self.body, fg_color="#2A2A2A", corner_radius=15, height=450)
+        self.hero_frame.pack(fill="x")
+        self.hero_frame.pack_propagate(False)
+
+        self.hero_images_list = ["hero1.jpeg", "hero2.jpeg", "hero3.jpeg"] 
+        self.current_hero_index = 0
+
+        self.hero_label = ctk.CTkLabel(self.hero_frame, text="")
+        self.hero_label.pack(expand=True, fill="both")
+
+        self._update_hero_image()
+        self._start_carousel()
+
+    def _update_hero_image(self):
+        img_name = self.hero_images_list[self.current_hero_index]
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        img_path = os.path.join(base_dir, img_name)
+        
+        if os.path.exists(img_path):
             try:
-                # Dikecilin sizenya sedikit biar padet
-                img = ctk.CTkImage(Image.open(hero_path), size=(1100, 260))
-                ctk.CTkLabel(hero_frame, text="", image=img).pack()
-            except: pass
+                raw_img = Image.open(img_path)
+                try:
+                    resample_method = Image.Resampling.LANCZOS
+                except AttributeError:
+                    resample_method = Image.LANCZOS
+                
+                fitted_img = ImageOps.fit(raw_img, (1400, 450), method=resample_method)
+                ctk_img = ctk.CTkImage(light_image=fitted_img, dark_image=fitted_img, size=(1400, 450))
+                self.hero_label.configure(image=ctk_img, text="")
+            except Exception as e:
+                print(f"❌ Error saat memuat gambar {img_path}: {e}")
+                self.hero_label.configure(image="", text=f"Gagal memuat {img_name}")
         else:
-            ctk.CTkLabel(hero_frame, text="Welcome to Cinephile", font=("Helvetica", 32, "bold"), text_color="white").pack(pady=50)
+            self.hero_label.configure(text=f"Gambar {img_name} tidak ditemukan", font=("Trebuchet MS", 14))
 
-    def _build_insights_section(self):
-        """Fitur untuk memaksimalkan visualisasi data (Saran Dosen/PM)"""
-        insights = self._get_insights()
-        
-        insight_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        insight_frame.pack(fill="x", padx=40, pady=15)
-        
-        ctk.CTkLabel(insight_frame, text="Database Insights", font=("Helvetica", 24, "bold"), text_color="white").pack(anchor="w", pady=(0, 10))
-        
-        cards_container = ctk.CTkFrame(insight_frame, fg_color="transparent")
-        cards_container.pack(fill="x")
-        
-        # 4 Card Box agar penuh dan padat
-        self._create_stat_card(cards_container, "Total Movies", str(insights["total"]), "🎬", "#2d5a27")
-        self._create_stat_card(cards_container, "Peak Year", str(insights["top_year"]), "📅", "#8A4B1A")
-        self._create_stat_card(cards_container, "Top Genre", str(insights["top_genre"]), "🔥", "#2A368F")
-        wl_total = sum(self.stats.values())
-        self._create_stat_card(cards_container, "Your Watchlist", f"{wl_total} Titles", "📌", "#c0392b")
-
-    def _create_stat_card(self, parent, title, value, icon, color):
-        card = ctk.CTkFrame(parent, fg_color=color, corner_radius=12, height=90)
-        card.pack(side="left", fill="x", expand=True, padx=8)
-        card.pack_propagate(False)
-        
-        ctk.CTkLabel(card, text=icon, font=("Arial", 36)).pack(side="left", padx=15)
-        info = ctk.CTkFrame(card, fg_color="transparent")
-        info.pack(side="left", fill="y", pady=12)
-        ctk.CTkLabel(info, text=title, font=("Trebuchet MS", 13), text_color="#DDDDDD", anchor="w").pack(fill="x")
-        ctk.CTkLabel(info, text=value, font=("Arial Black", 20, "bold"), text_color="white", anchor="w").pack(fill="x")
+    def _start_carousel(self):
+        if not self.winfo_exists():
+            return
+        self.current_hero_index = (self.current_hero_index + 1) % len(self.hero_images_list)
+        self._update_hero_image()
+        self.after(3000, self._start_carousel)
 
     def _build_movie_list(self):
-        title_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        title_frame.pack(fill="x", padx=40, pady=(15, 10))
-        ctk.CTkLabel(title_frame, text="Trending Now", font=("Helvetica", 24, "bold"), text_color="white").pack(side="left")
+        list_container = ctk.CTkFrame(self.body, fg_color=BG_LIGHT, corner_radius=10)
+        list_container.pack(fill="x", padx=10, pady=(0, 20))
 
-        scroll_h = ctk.CTkScrollableFrame(self.body, orientation="horizontal", height=290, fg_color="transparent")
-        scroll_h.pack(fill="x", padx=30)
+        ctk.CTkLabel(list_container, text="Top 10\nMovies", font=("Helvetica", 60, "bold"), text_color=TEXT_DARK, justify="left", anchor="w").pack(fill="x", padx=40, pady=(40, 20))
+
+        header_frame = ctk.CTkFrame(list_container, fg_color="transparent")
+        header_frame.pack(fill="x", padx=40, pady=(10, 5))
         
-        movies = getattr(self.app, "movie_list", [])
-        for m in movies[:10]:
-            card = ctk.CTkFrame(scroll_h, fg_color="transparent", width=150, height=260)
-            card.pack(side="left", padx=10)
-            card.pack_propagate(False)
+        header_font = ("Trebuchet MS", 12, "bold")
+        ctk.CTkLabel(header_frame, text="Film", font=header_font, text_color=TEXT_GRAY, width=240, anchor="w").grid(row=0, column=0, sticky="w", padx=(0, 15))
+        ctk.CTkLabel(header_frame, text="Year", font=header_font, text_color=TEXT_GRAY, width=60, anchor="w").grid(row=0, column=1, sticky="w", padx=(0, 15))
+        ctk.CTkLabel(header_frame, text="Mood", font=header_font, text_color=TEXT_GRAY, width=160, anchor="w").grid(row=0, column=2, sticky="w", padx=(0, 15))
+        ctk.CTkLabel(header_frame, text="Synopsis", font=header_font, text_color=TEXT_GRAY, anchor="e").grid(row=0, column=3, sticky="e")
+        header_frame.columnconfigure(3, weight=1)
 
-            def go_to_detail(e, md=m): self.app.show_page("moviedetail", data=md)
+        ctk.CTkFrame(list_container, fg_color="#DDDDDD", height=2).pack(fill="x", padx=40, pady=5)
+
+        movies_data = self.app.movie_list[:10] 
+        row_font = ("Trebuchet MS", 13, "bold")
+
+        for movie in movies_data:
+            row = ctk.CTkFrame(list_container, fg_color="transparent")
+            row.pack(fill="x", padx=40, pady=12)
+            row.configure(cursor="hand2")
+
+            lbl_title = ctk.CTkLabel(row, text=movie.get("title", "Unknown"), font=row_font, text_color=COL_FILM, width=240, anchor="w", justify="left", wraplength=230)
+            lbl_title.grid(row=0, column=0, sticky="nw", padx=(0, 15))
             
-            poster_path = m.get("poster_local", "")
-            if poster_path and os.path.exists(poster_path):
-                try:
-                    img = ctk.CTkImage(Image.open(poster_path), size=(145, 210))
-                    lbl = ctk.CTkLabel(card, text="", image=img, cursor="hand2")
-                    lbl.pack(); lbl.bind("<Button-1>", go_to_detail)
-                except: pass
+            bersih_tahun = str(movie.get("year", "N/A")).replace("1'", "")
+            lbl_year = ctk.CTkLabel(row, text=bersih_tahun, font=row_font, text_color=COL_YEAR, width=60, anchor="w")
+            lbl_year.grid(row=0, column=1, sticky="nw", padx=(0, 15))
             
-            lbl_t = ctk.CTkLabel(card, text=m.get("title", "Unknown"), font=("Trebuchet MS", 13, "bold"), text_color="white", anchor="w")
-            lbl_t.pack(fill="x", pady=(5,0)); lbl_t.bind("<Button-1>", go_to_detail)
+            lbl_mood = ctk.CTkLabel(row, text=movie.get("genre", "N/A"), font=row_font, text_color=COL_MOOD, width=160, anchor="w", justify="left", wraplength=150)
+            lbl_mood.grid(row=0, column=2, sticky="nw", padx=(0, 15))
+            
+            raw_syn = movie.get("description", movie.get("synopsis", "No synopsis available."))
+            if len(raw_syn) > 130:
+                raw_syn = raw_syn[:127] + "..."
+                
+            lbl_synopsis = ctk.CTkLabel(row, text=raw_syn, font=("Trebuchet MS", 12), text_color=COL_SYNOPSIS, justify="right", wraplength=380)
+            lbl_synopsis.grid(row=0, column=3, sticky="ne")
+            
+            row.columnconfigure(3, weight=1)
+
+            klik_detail = lambda e, m=movie: self.app.show_page("moviedetail", m)
+            row.bind("<Button-1>", klik_detail)
+            lbl_title.bind("<Button-1>", klik_detail)
+            lbl_year.bind("<Button-1>", klik_detail)
+            lbl_mood.bind("<Button-1>", klik_detail)
+            lbl_synopsis.bind("<Button-1>", klik_detail)
+
+            ctk.CTkFrame(list_container, fg_color="#DDDDDD", height=1).pack(fill="x", padx=40, pady=5)
+
+    def _build_tagline(self):
+        families = tkfont.families()
+        tagline_font = ("Instrument Serif", 24, "italic") if "Instrument Serif" in families else ("Georgia", 24, "italic")
+        tl = ctk.CTkFrame(self.body, fg_color=BG_MAIN, height=100)
+        tl.pack(fill="x")
+        tl.pack_propagate(False)
+        ctk.CTkLabel(tl, text="a passionate enthusiast — a passionate enthusiast — a passionate", font=tagline_font, text_color=TEXT_WHITE).pack(expand=True)
 
     def _build_watchlist_banner(self):
         wrapper = ctk.CTkFrame(self.body, fg_color=BG_MAIN)
-        wrapper.pack(fill="x", padx=30, pady=20)
-        banner = ctk.CTkFrame(wrapper, fg_color="#FF8C00", corner_radius=15, height=140) 
+        wrapper.pack(fill="x", padx=20, pady=12)
+        banner = ctk.CTkFrame(wrapper, fg_color="#FF8C00", corner_radius=0, height=200) 
         banner.pack(fill="x")
         banner.pack_propagate(False)
+
         content = ctk.CTkFrame(banner, fg_color="transparent")
         content.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(content, text="Manage your watchlist today!", font=("Georgia", 26, "italic", "bold"), text_color="#111111").pack()
-        ctk.CTkButton(content, text="Go to Watchlist", fg_color="#111111", text_color="white", font=FONT_BTN, width=180, height=35, command=lambda: self.app.show_page("watchlist")).pack(pady=10)
+        ctk.CTkLabel(content, text="Don't forget your watchlist!", font=("Georgia", 36, "italic"), text_color="#111111").pack(pady=(0,5))
+        ctk.CTkLabel(content, text="Update it and discover what to watch next.", font=("Trebuchet MS", 14, "bold"), text_color="#222222").pack(pady=(0, 20))
+        ctk.CTkButton(content, text="Go to Watchlist", fg_color="#111111", hover_color="#333333", 
+                    text_color=TEXT_WHITE, font=("Trebuchet MS", 12, "bold"), width=160, height=40, 
+                    corner_radius=0, command=lambda: self.app.show_page("watchlist")).pack()
 
     def _build_footer(self):
-        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=130)
-        footer.pack(fill="x", pady=(10, 0))
+        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=170)
+        footer.pack(fill="x", pady=(20, 0))
         footer.pack_propagate(False)
-        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 46, "bold"), text_color=TEXT_WHITE).place(relx=0.05, rely=0.5, anchor="w")
-        ctk.CTkLabel(footer, text="©2026 Cinephile Archive\nCurating cinematic excellence.", font=("Trebuchet MS", 12), text_color=TEXT_GRAY, justify="right").place(relx=0.95, rely=0.5, anchor="e")
+
+        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 60, "bold"), text_color=TEXT_WHITE).place(relx=0.04, rely=0.5, anchor="w")
+        ctk.CTkLabel(footer, text="©2026 Movie Archive\nWords, images, and signals from the edge", font=("Trebuchet MS", 10), text_color=TEXT_GRAY, justify="right").place(relx=0.96, rely=0.8, anchor="e")

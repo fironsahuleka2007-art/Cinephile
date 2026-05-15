@@ -86,7 +86,7 @@ class MovieScraper:
                         break
             except: pass
 
-            # Tahun 
+            # Tahun (backup)
             try:
                 year_el = self.driver.find_element(By.CSS_SELECTOR, "div.title-block span.text-muted")
                 year_text = year_el.text.replace("(", "").replace(")", "").strip()
