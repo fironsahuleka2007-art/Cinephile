@@ -64,7 +64,22 @@ class GenreAnalyzePage(ctk.CTkFrame):
         self.body.pack(fill="both", expand=True, side="top")
 
         self.create_hero_section()
-        self.create_genre_graphics()
+
+        # ── KONTAINER 2 KOLOM (KIRI & KANAN) ─────────────────────────────────
+        split_frame = ctk.CTkFrame(self.body, fg_color="transparent")
+        split_frame.pack(fill="x", padx=100, pady=40)
+
+        left_frame = ctk.CTkFrame(split_frame, fg_color="transparent")
+        left_frame.pack(side="left", fill="both", expand=True)
+
+        right_frame = ctk.CTkFrame(split_frame, fg_color="transparent")
+        right_frame.pack(side="right", fill="both", expand=True, padx=(40, 0))
+        # ────────────────────────────────────────────────────────────────────
+
+        # Memasukkan elemen ke masing-masing sisi
+        self.create_genre_graphics(parent=left_frame)
+        self.create_overview(parent=right_frame)
+
         self.create_top_recommendations()
         self.create_orange_banner()
         self.create_footer()
@@ -77,10 +92,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         # ── Search Bar (pack RIGHT) ──
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
-        self.search_entry = ctk.CTkEntry(
-            search_frame, placeholder_text="Search Local...",
-            width=150, height=32, fg_color="#222", border_color="#444"
-        )
+        self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search...", width=150, height=32, fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
         ctk.CTkButton(
             search_frame, text="🔍", width=40, height=32, fg_color=ACCENT,
@@ -118,46 +130,70 @@ class GenreAnalyzePage(ctk.CTkFrame):
             command=lambda: self.app.show_page("watchlist")
         ).pack(side="left", padx=(2, 6), pady=3)
 
+        ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=3)
+        ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=("Trebuchet MS", 11, "bold")).pack(side="left", padx=1)
+        ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=1)
+        ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=3)
+
     def create_hero_section(self):
-        ctk.CTkLabel(
-            self.body, text="Genre Analyze",
-            font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE
-        ).pack(pady=(60, 20))
-        
-        deco_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        deco_frame.pack(pady=10)
-        for color in ["#2d5a27", "#333333", "#c4a484", "#555555"]:
-            ctk.CTkFrame(
-                deco_frame, width=120, height=90,
-                fg_color=color, corner_radius=8
-            ).pack(side="left", padx=15)
+        ctk.CTkLabel(self.body, text="Genre Analyze", font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE).pack(pady=(60, 20))
 
-        desc_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        desc_frame.pack(fill="x", padx=150, pady=40)
-        ctk.CTkLabel(
-            desc_frame, text="OVERVIEW",
-            font=("Trebuchet MS", 12, "bold"), text_color=TEXT_GRAY
-        ).pack(side="left", anchor="n")
-        
-        overview_text = (
-            "Genre Analysis helps you understand your cinematic preferences by examining the\n"
-            "distribution of genres in your collection. It highlights which genres appear most\n"
-            "frequently, providing insights through an easy-to-read graphical interface."
-        )
-        ctk.CTkLabel(
-            desc_frame, text=overview_text,
-            font=("Trebuchet MS", 13), text_color=TEXT_WHITE,
-            justify="left"
-        ).pack(side="left", padx=40)
+        # ── POSTER CAROUSEL ANIMASI ──────────────────────────────────────────
+        movie_list = getattr(self.app, "movie_list", [])
+        self._carousel_movies = [m for m in movie_list if m.get("poster_local") and os.path.exists(m.get("poster_local", ""))]
 
-    def create_genre_graphics(self):
-        ctk.CTkLabel(
-            self.body, text="Genre Distribution",
-            font=("Georgia", 35, "italic"), text_color=TEXT_WHITE
-        ).pack(pady=(20, 20))
-        
-        graph_box = ctk.CTkFrame(self.body, fg_color="transparent")
-        graph_box.pack(pady=10)
+        outer = ctk.CTkFrame(self.body, fg_color="transparent", height=140)
+        outer.pack(fill="x", pady=10)
+        outer.pack_propagate(False)
+
+        self._carousel_frame = ctk.CTkFrame(outer, fg_color="transparent", height=130)
+        self._carousel_frame.place(x=0, y=5)
+
+        self._carousel_images = []  
+        sample = self._carousel_movies[:12]
+        if not sample:
+            deco_frame = ctk.CTkFrame(self.body, fg_color="transparent")
+            deco_frame.pack(pady=10)
+            for color in ["#2d5a27", "#333333", "#c4a484", "#555555"]:
+                ctk.CTkFrame(deco_frame, width=120, height=90, fg_color=color, corner_radius=8).pack(side="left", padx=15)
+        else:
+            for movie in sample * 2:
+                path = movie.get("poster_local", "")
+                try:
+                    img = ctk.CTkImage(Image.open(path), size=(85, 120))
+                    self._carousel_images.append(img)
+                    lbl = ctk.CTkLabel(self._carousel_frame, text="", image=img, cursor="hand2")
+                    lbl.pack(side="left", padx=6)
+                    lbl.bind("<Button-1>", lambda e, d=movie: self.app.show_page("moviedetail", data=d))
+                except:
+                    pass
+
+            self._carousel_item_w = 85 + 12 
+            self._carousel_half_w = self._carousel_item_w * len(sample)
+            self._anim_offset = 0
+            self._animate_carousel()
+        # ────────────────────────────────────────────────────────────────────
+
+    def _animate_carousel(self):
+        """Geser carousel ke kiri tiap 30ms"""
+        try:
+            if not self._carousel_frame.winfo_exists():
+                return
+        except:
+            return
+
+        self._anim_offset -= 1
+        if abs(self._anim_offset) >= self._carousel_half_w:
+            self._anim_offset = 0
+
+        self._carousel_frame.place(x=self._anim_offset, y=5)
+        self.after(30, self._animate_carousel)
+
+    def create_genre_graphics(self, parent):
+        ctk.CTkLabel(parent, text="Genre Distribution", font=("Georgia", 35, "italic"), text_color=TEXT_WHITE).pack(pady=(0, 20), anchor="w")
+
+        graph_box = ctk.CTkFrame(parent, fg_color="transparent")
+        graph_box.pack(pady=10, anchor="w")
 
         top_10 = self.analyzed_data[:10]
         if not top_10:
@@ -169,20 +205,22 @@ class GenreAnalyzePage(ctk.CTkFrame):
         for genre, count in top_10:
             row = ctk.CTkFrame(graph_box, fg_color="transparent")
             row.pack(fill="x", pady=4)
-            
-            ctk.CTkLabel(
-                row, text=f"{genre} ({count})", width=140, anchor="e",
-                font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE
-            ).pack(side="left", padx=10)
-            
-            bar_w = int((count / max_val) * 400)
-            if bar_w < 5:
-                bar_w = 5
-            ctk.CTkFrame(
-                row, width=bar_w, height=20,
-                fg_color=ACCENT, corner_radius=2
-            ).pack(side="left")
+            ctk.CTkLabel(row, text=f"{genre} ({count})", width=140, anchor="e", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(side="left", padx=(0, 10))
+            bar_w = max(5, int((count / max_val) * 400))
+            ctk.CTkFrame(row, width=bar_w, height=20, fg_color=ACCENT, corner_radius=2).pack(side="left")
 
+    def create_overview(self, parent):
+        ctk.CTkLabel(parent, text="OVERVIEW", font=("Trebuchet MS", 14, "bold"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 10))
+        
+        overview_text = (
+            "Genre Analysis helps you understand your cinematic preferences by examining the "
+            "distribution of genres in your collection. It highlights which genres appear most "
+            "frequently, providing insights through an easy-to-read graphical interface."
+        )
+        
+        
+        ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_GRAY, justify="left", wraplength=280).pack(anchor="w", pady=(10, 0))
+    
     def create_top_recommendations(self):
         top_3 = self.analyzed_data[:3]
         movie_list = getattr(self.app, "movie_list", [])
@@ -190,21 +228,11 @@ class GenreAnalyzePage(ctk.CTkFrame):
         for index, (name, count) in enumerate(top_3):
             cat_frame = ctk.CTkFrame(self.body, fg_color="transparent")
             cat_frame.pack(fill="x", padx=150, pady=40)
-            
-            ctk.CTkLabel(
-                cat_frame, text=name,
-                font=("Helvetica", 32, "bold"), text_color=TEXT_WHITE
-            ).pack(anchor="w")
-            ctk.CTkLabel(
-                cat_frame, text=self.get_genre_description(name),
-                font=("Trebuchet MS", 13), text_color=TEXT_GRAY,
-                wraplength=650, justify="left"
-            ).pack(anchor="w", pady=(10, 15))
-            ctk.CTkLabel(
-                cat_frame, text=f"Featured {name} Titles",
-                font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE
-            ).pack(anchor="w", pady=(0, 15))
-            
+
+            ctk.CTkLabel(cat_frame, text=name, font=("Helvetica", 32, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
+            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 16), text_color=TEXT_GRAY, wraplength=650, width=350, justify="left").pack(anchor="w", pady=(10, 15))
+            ctk.CTkLabel(cat_frame, text=f"Featured {name} Titles", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 15))
+
             p_frame = ctk.CTkFrame(cat_frame, fg_color="transparent")
             p_frame.pack(anchor="w")
             
