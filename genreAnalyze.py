@@ -90,7 +90,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         # Isi Kolom Kiri
         self.create_genre_graphics(left_col)
-        self.create_top_recommendations(left_col) # Pindah ke sini agar tidak terdorong grafik kanan
+        self.create_top_recommendations(left_col) 
 
         # Isi Kolom Kanan
         self.create_overview_section(right_col)
@@ -159,12 +159,29 @@ class GenreAnalyzePage(ctk.CTkFrame):
         top_10 = self.analyzed_data[:10]
         if not top_10: return
         max_val = top_10[0][1]
+        
         for genre, count in top_10:
-            row = ctk.CTkFrame(graph_box, fg_color="transparent")
+            row = ctk.CTkFrame(graph_box, fg_color="transparent", cursor="hand2")
             row.pack(fill="x", pady=4)
-            ctk.CTkLabel(row, text=f"{genre} ({count})", width=120, anchor="e", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(side="left", padx=(0, 10))
+            
+            # Teks Genre (Bisa diklik)
+            lbl = ctk.CTkLabel(row, text=f"{genre} ({count})", width=120, anchor="e", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE, cursor="hand2")
+            lbl.pack(side="left", padx=(0, 10))
+            
+            # Batang Grafik (Bisa diklik)
             bar_w = max(5, int((count / max_val) * 350))
-            ctk.CTkFrame(row, width=bar_w, height=20, fg_color=ACCENT, corner_radius=2).pack(side="left")
+            bar = ctk.CTkFrame(row, width=bar_w, height=20, fg_color=ACCENT, corner_radius=2, cursor="hand2")
+            bar.pack(side="left")
+
+            # --- FUNGSI KLIK PINDAH & FILTER ---
+            def go_to_table(event, target_genre=genre):
+                # Memanggil routing & pencarian milik main.py
+                self.app.handle_local_search(target_genre)
+
+            # Menyambungkan event klik ke elemen UI
+            row.bind("<Button-1>", go_to_table)
+            lbl.bind("<Button-1>", go_to_table)
+            bar.bind("<Button-1>", go_to_table)
 
     def create_overview_section(self, parent):
         ctk.CTkLabel(parent, text="OVERVIEW", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_GRAY).pack(anchor="w", pady=(5, 5))
@@ -210,7 +227,6 @@ class GenreAnalyzePage(ctk.CTkFrame):
             ctk.CTkLabel(row, text=f"{genre} ({count})", font=("Trebuchet MS", 11), text_color=TEXT_WHITE).pack(side="left")
 
     def create_top_recommendations(self, parent):
-        # Garis pemisah
         ctk.CTkFrame(parent, height=1, fg_color="#333").pack(fill="x", pady=40)
         
         top_3 = self.analyzed_data[:3]
