@@ -1,0 +1,2502 @@
+[
+    {
+        "title": "The Shawshank Redemption",
+        "year": "1994",
+        "genre": "Drama",
+        "rating": "9.3",
+        "status": "Plan to Watch",
+        "description": "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/The_Shawshank_Redemption.jpg"
+    },
+    {
+        "title": "The Godfather",
+        "year": "1972",
+        "genre": "Crime, Drama",
+        "rating": "9.2",
+        "status": "Plan to Watch",
+        "description": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
+        "platform_string": "Apple TV Store, HBO Max, Crunchyroll",
+        "poster_local": "posters/The_Godfather.jpg"
+    },
+    {
+        "title": "The Dark Knight",
+        "year": "2008",
+        "genre": "Action, Crime, Drama",
+        "rating": "9.1",
+        "status": "Plan to Watch",
+        "description": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max, Crunchyroll",
+        "poster_local": "posters/The_Dark_Knight.jpg"
+    },
+    {
+        "title": "The Godfather Part II",
+        "year": "1974",
+        "genre": "Crime, Drama",
+        "rating": "9",
+        "status": "Plan to Watch",
+        "description": "In the continuing saga of the Corleone crime family, a young Vito Corleone grows up in Sicily and in 1910s New York. In the 1950s, Michael Corleone attempts to expand the family business into Las Vegas, Hollywood and Cuba.",
+        "platform_string": "Apple TV Store, HBO Max, Crunchyroll",
+        "poster_local": "posters/The_Godfather_Part_II.jpg"
+    },
+    {
+        "title": "12 Angry Men",
+        "year": "1957",
+        "genre": "Crime, Drama",
+        "rating": "9",
+        "status": "Plan to Watch",
+        "description": "The defense and the prosecution have rested and the jury is filing into the jury room to decide if a young Spanish-American is guilty or innocent of murdering his father. What begins as an open and shut case soon becomes a mini-drama of each of the jurors' prejudices and preconceptions about the trial, the accused, and each other.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/12_Angry_Men.jpg"
+    },
+    {
+        "title": "The Lord of the Rings: The Return of the King",
+        "year": "2003",
+        "genre": "Adventure, Drama, Fantasy",
+        "rating": "9",
+        "status": "Plan to Watch",
+        "description": "As armies mass for a final battle that will decide the fate of the world--and powerful, ancient forces of Light and Dark compete to determine the outcome--one member of the Fellowship of the Ring is revealed as the noble heir to the throne of the Kings of Men. Yet, the sole hope for triumph over evil lies with a brave hobbit, Frodo, who, accompanied by his loyal friend Sam and the hideous, wretched Gollum, ventures deep into the very dark heart of Mordor on his seemingly impossible quest to destroy the Ring of Power.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Catchplay, Crunchyroll, HBO Max",
+        "poster_local": "posters/The_Lord_of_the_Rings_The_Return_of_the_King.jpg"
+    },
+    {
+        "title": "Schindler's List",
+        "year": "1994",
+        "genre": "Biography, Drama, History",
+        "rating": "9",
+        "status": "Plan to Watch",
+        "description": "The true story of how businessman Oskar Schindler saved over a thousand Jewish lives from the Nazis while they worked as slaves in his factory during World War II.",
+        "platform_string": "fuboTV, MGM+ Amazon Channel, Apple TV Store, JustWatch, Amazon Video, Crunchyroll",
+        "poster_local": "posters/Schindleraposs_List.jpg"
+    },
+    {
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "year": "2001",
+        "genre": "Adventure, Drama, Fantasy",
+        "rating": "8.9",
+        "status": "Plan to Watch",
+        "description": "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Catchplay, Crunchyroll, HBO Max",
+        "poster_local": "posters/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring.jpg"
+    },
+    {
+        "title": "Pulp Fiction",
+        "year": "1994",
+        "genre": "Crime, Drama",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
+        "platform_string": "Apple TV Store, HBO Max, Crunchyroll",
+        "poster_local": "posters/Pulp_Fiction.jpg"
+    },
+    {
+        "title": "Il buono, il brutto, il cattivo",
+        "year": "1967",
+        "genre": "Adventure, Drama, Western",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "While the Civil War rages on between the Union and the Confederacy, three men – a quiet loner, a ruthless hitman, and a Mexican bandit – comb the American Southwest in search of a strongbox containing $200,000 in stolen gold.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/Il_buono_il_brutto_il_cattivo.jpg"
+    },
+    {
+        "title": "The Lord of the Rings: The Two Towers",
+        "year": "2002",
+        "genre": "Adventure, Drama, Fantasy",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "Frodo Baggins and the other members of the Fellowship continue on their sacred quest to destroy the One Ring--but on separate paths. Their destinies lie at two towers--Orthanc Tower in Isengard, where the corrupt wizard Saruman awaits, and Sauron's fortress at Barad-dur, deep within the dark lands of Mordor. Frodo and Sam are trekking to Mordor to destroy the One Ring of Power while Gimli, Legolas and Aragorn search for the orc-captured Merry and Pippin. All along, nefarious wizard Saruman awaits the Fellowship members at the Orthanc Tower in Isengard.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Catchplay, Crunchyroll, HBO Max",
+        "poster_local": "posters/The_Lord_of_the_Rings_The_Two_Towers.jpg"
+    },
+    {
+        "title": "Forrest Gump",
+        "year": "1994",
+        "genre": "Drama, Romance",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/Forrest_Gump.jpg"
+    },
+    {
+        "title": "Fight Club",
+        "year": "1999",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
+        "platform_string": "Disney+, Netflix, Crunchyroll",
+        "poster_local": "posters/Fight_Club.jpg"
+    },
+    {
+        "title": "Inception",
+        "year": "2010",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO, but his tragic past may doom the project and his team to disaster.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max, Crunchyroll",
+        "poster_local": "posters/Inception.jpg"
+    },
+    {
+        "title": "Star Wars: Episode V - The Empire Strikes Back",
+        "year": "1980",
+        "genre": "Action, Adventure, Fantasy",
+        "rating": "8.7",
+        "status": "Plan to Watch",
+        "description": "The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
+        "platform_string": "Disney+, Crunchyroll",
+        "poster_local": "posters/Star_Wars_Episode_V__The_Empire_Strikes_Back.jpg"
+    },
+    {
+        "title": "The Matrix",
+        "year": "1999",
+        "genre": "Action, Sci-Fi",
+        "rating": "8.7",
+        "status": "Plan to Watch",
+        "description": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+        "platform_string": "Apple TV Store, Catchplay, Crunchyroll",
+        "poster_local": "posters/The_Matrix.jpg"
+    },
+    {
+        "title": "GoodFellas",
+        "year": "1990",
+        "genre": "Biography, Crime, Drama",
+        "rating": "8.7",
+        "status": "Plan to Watch",
+        "description": "The true story of Henry Hill, a half-Irish, half-Sicilian Brooklyn kid who is adopted by neighbourhood gangsters at an early age and climbs the ranks of a Mafia family under the guidance of Jimmy Conway.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/GoodFellas.jpg"
+    },
+    {
+        "title": "Interstellar",
+        "year": "2014",
+        "genre": "Adventure, Drama, Sci-Fi",
+        "rating": "8.7",
+        "status": "Plan to Watch",
+        "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+        "platform_string": "Apple TV Store, Catchplay, Crunchyroll",
+        "poster_local": "posters/Interstellar.jpg"
+    },
+    {
+        "title": "One Flew Over the Cuckoo's Nest",
+        "year": "1975",
+        "genre": "Drama",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "A petty criminal fakes insanity to serve his sentence in a mental ward rather than prison. He soon finds himself as a leader to the other patients—and an enemy to the cruel, domineering nurse who runs the ward.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/One_Flew_Over_the_Cuckooaposs_Nest.jpg"
+    },
+    {
+        "title": "Se7en",
+        "year": "1995",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Somerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
+        "platform_string": "Apple TV Store, Catchplay, Crunchyroll",
+        "poster_local": "posters/Se7en.jpg"
+    },
+    {
+        "title": "It's a Wonderful Life",
+        "year": "1947",
+        "genre": "Drama, Family, Fantasy",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "George Bailey has spent his entire life giving to the people of Bedford Falls. All that prevents rich skinflint Mr. Potter from taking over the entire town is George's modest building and loan company. But on Christmas Eve the business's $8,000 is lost and George's troubles begin.",
+        "platform_string": "Amazon Prime Video, Amazon Prime Video with Ads, JustWatch TV, Apple TV Store, JustWatch",
+        "poster_local": "posters/Itaposs_a_Wonderful_Life.jpg"
+    },
+    {
+        "title": "The Silence of the Lambs",
+        "year": "1991",
+        "genre": "Crime, Drama, Horror",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Clarice Starling is a top student at the FBI's training academy. Jack Crawford wants Clarice to interview Dr. Hannibal Lecter, a brilliant psychiatrist who is also a violent psychopath, serving life behind bars for various acts of murder and cannibalism. Crawford believes that Lecter may have insight into a case and that Starling, as an attractive young woman, may be just the bait to draw him out.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Silence_of_the_Lambs.jpg"
+    },
+    {
+        "title": "Shichinin no samurai",
+        "year": "1956",
+        "genre": "Action, Drama",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "A samurai answers a village's request for protection after he falls on hard times. The town needs protection from bandits, so the samurai gathers six others to help him teach the people how to defend themselves, and the villagers provide the soldiers with food.",
+        "platform_string": "HBO Max, HBO Max Amazon Channel, JustWatch",
+        "poster_local": "posters/Shichinin_no_samurai.jpg"
+    },
+    {
+        "title": "Saving Private Ryan",
+        "year": "1998",
+        "genre": "Drama, War",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "As U.S. troops storm the beaches of Normandy, three brothers lie dead on the battlefield, with a fourth trapped behind enemy lines. Ranger captain John Miller and seven men are tasked with penetrating German-held territory and bringing the boy home.",
+        "platform_string": "Netflix, Catchplay, Vidio",
+        "poster_local": "posters/Saving_Private_Ryan.jpg"
+    },
+    {
+        "title": "The Green Mile",
+        "year": "1999",
+        "genre": "Crime, Drama, Fantasy",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/The_Green_Mile.jpg"
+    },
+    {
+        "title": "Cidade de Deus",
+        "year": "2004",
+        "genre": "Crime, Drama",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Twenty years after City of God, Buscapé recounts how conflicts between police, traffickers, and militias impacted the community.",
+        "platform_string": "HBO Max",
+        "poster_local": "posters/Cidade_de_Deus.jpg"
+    },
+    {
+        "title": "La vita è bella",
+        "year": "1997",
+        "genre": "Comedy, Drama, Romance",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/La_vita_è_bella.jpg"
+    },
+    {
+        "title": "Terminator 2: Judgment Day",
+        "year": "1991",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Ten years after the events of the original, a reprogrammed T-800 is sent back in time to protect young John Connor from the shape-shifting T-1000. Together with his mother Sarah, he fights to stop Skynet from triggering a nuclear apocalypse.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/Terminator_2_Judgment_Day.jpg"
+    },
+    {
+        "title": "Back to the Future",
+        "year": "1985",
+        "genre": "Adventure, Comedy, Sci-Fi",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "The teenager Marty McFly accidentally travels with the time machine of his friend, the quirky scientist Dr.Emmett Brown, back in the year 1955. There he accidently prevents, that his future parents fall in love with each other, which puts him at the risk of preventing his own birth. To make matters worse, his mother begins to fall in love with him. He only has one week left to get things right again…",
+        "platform_string": "Amazon Prime Video",
+        "poster_local": "posters/Back_to_the_Future.jpg"
+    },
+    {
+        "title": "Star Wars",
+        "year": "1977",
+        "genre": "Action, Adventure, Fantasy",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Star_Wars.jpg"
+    },
+    {
+        "title": "Sen to Chihiro no kamikakushi",
+        "year": "2003",
+        "genre": "Animation, Adventure, Family",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Sen_to_Chihiro_no_kamikakushi.jpg"
+    },
+    {
+        "title": "The Pianist",
+        "year": "2003",
+        "genre": "Biography, Drama, Music",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "The true story of pianist Władysław Szpilman's experiences in Warsaw during the Nazi occupation. When the Jews of the city find themselves forced into a ghetto, Szpilman finds work playing in a café; and when his family is deported in 1942, he stays behind, works for a while as a laborer, and eventually goes into hiding in the ruins of the war-torn city.",
+        "platform_string": "fuboTV, CuriosityStream Apple TV Channel, JustWatch",
+        "poster_local": "posters/The_Pianist.jpg"
+    },
+    {
+        "title": "Gladiator",
+        "year": "2000",
+        "genre": "Action, Adventure, Drama",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "After the death of Emperor Marcus Aurelius, his devious son takes power and demotes Maximus, one of Rome's most capable generals who Marcus preferred. Eventually, Maximus is forced to become a gladiator and battle to the death against other men for the amusement of paying audiences.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Netflix, Catchplay",
+        "poster_local": "posters/Gladiator.jpg"
+    },
+    {
+        "title": "Gisaengchung",
+        "year": "2019",
+        "genre": "Drama, Thriller",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.",
+        "platform_string": "Kanopy, Amazon Video, JustWatch",
+        "poster_local": "posters/Gisaengchung.jpg"
+    },
+    {
+        "title": "Kill Bill: The Whole Bloody Affair",
+        "year": "2025",
+        "genre": "Action, Crime, Thriller",
+        "rating": "8.8",
+        "status": "Plan to Watch",
+        "description": "The Bride unwaveringly continues on her roaring rampage of revenge against the band of assassins who had tried to kill her and her unborn child. She visits each of her former associates one-by-one, checking off the victims on her Death List Five until there's nothing left to do … but kill Bill.",
+        "platform_string": "Amazon Prime Video, Netflix, Catchplay",
+        "poster_local": "posters/Kill_Bill_The_Whole_Bloody_Affair.jpg"
+    },
+    {
+        "title": "Hotaru no haka",
+        "year": "1989",
+        "genre": "Animation, Drama, War",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "In the final months of World War II, 14-year-old Seita and his sister Setsuko are orphaned when their mother is killed during an air raid in Kobe, Japan. After a falling out with their aunt, they move into an abandoned bomb shelter. With no surviving relatives and their emergency rations depleted, Seita and Setsuko struggle to survive.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Hotaru_no_haka.jpg"
+    },
+    {
+        "title": "Psycho",
+        "year": "1960",
+        "genre": "Drama, Horror, Mystery",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "In the year 2113, people are given brain scans to determine how likely they are to commit a crime. Those who fail are apprehended, or even killed.",
+        "platform_string": "Amazon Prime Video, Crunchyroll",
+        "poster_local": "posters/Psycho.jpg"
+    },
+    {
+        "title": "The Lion King",
+        "year": "1994",
+        "genre": "Animation, Adventure, Drama",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Young lion prince Simba, eager to one day become king of the Pride Lands, grows up under the watchful eye of his father Mufasa; all the while his villainous uncle Scar conspires to take the throne for himself. Amid betrayal and tragedy, Simba must confront his past and find his rightful place in the Circle of Life.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/The_Lion_King.jpg"
+    },
+    {
+        "title": "Seppuku",
+        "year": "1964",
+        "genre": "Drama, Mystery",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "Down-on-his-luck veteran Tsugumo Hanshirō enters the courtyard of the prosperous House of Iyi. Unemployed, and with no family, he hopes to find a place to commit seppuku—and a worthy second to deliver the coup de grâce in his suicide ritual. The senior counselor for the Iyi clan questions the ronin’s resolve and integrity, suspecting Hanshirō of seeking charity rather than an honorable end. What follows is a pair of interlocking stories which lay bare the difference between honor and respect, and promises to examine the legendary foundations of the Samurai code.",
+        "platform_string": "Criterion Channel, Amazon Video, JustWatch, Apple TV Store",
+        "poster_local": "posters/Seppuku.jpg"
+    },
+    {
+        "title": "The Departed",
+        "year": "2006",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "To take down South Boston's Irish Mafia, the police send in one of their own to infiltrate the underworld, not realizing the syndicate has done likewise. While an undercover cop curries favor with the mob kingpin, a career criminal rises through the police ranks. But both sides soon discover there's a mole among them.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/The_Departed.jpg"
+    },
+    {
+        "title": "Whiplash",
+        "year": "2014",
+        "genre": "Drama, Music",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Whiplash.jpg"
+    },
+    {
+        "title": "The Prestige",
+        "year": "2006",
+        "genre": "Drama, Mystery, Sci-Fi",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "A mysterious story of two magicians whose intense rivalry leads them on a life-long battle for supremacy -- full of obsession, deceit and jealousy with dangerous and deadly consequences.",
+        "platform_string": "Apple TV Store, HBO Max",
+        "poster_local": "posters/The_Prestige.jpg"
+    },
+    {
+        "title": "American History X",
+        "year": "1998",
+        "genre": "Crime, Drama",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Derek Vineyard is paroled after serving 3 years in prison for killing two African-American men. Through his brother, Danny Vineyard's narration, we learn that before going to prison, Derek was a skinhead and the leader of a violent white supremacist gang that committed acts of racial crime throughout L.A. and his actions greatly influenced Danny. Reformed and fresh out of prison, Derek severs contact with the gang and becomes determined to keep Danny from going down the same violent path as he did.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/American_History_X.jpg"
+    },
+    {
+        "title": "Léon",
+        "year": "1994",
+        "genre": "Action, Crime, Drama",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Léon, the top hit man in New York, has earned a rep as an effective \"cleaner\". But when his next-door neighbors are wiped out by a loose-cannon DEA agent, he becomes the unwilling custodian of 12-year-old Mathilda. Before long, Mathilda's thoughts turn to revenge, and she considers following in Léon's footsteps.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": ""
+    },
+    {
+        "title": "Spider-Man: Across the Spider-Verse",
+        "year": "2023",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse's very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.",
+        "platform_string": "Apple TV Store, Netflix, Catchplay",
+        "poster_local": "posters/SpiderMan_Across_the_SpiderVerse.jpg"
+    },
+    {
+        "title": "Nuovo Cinema Paradiso",
+        "year": "1990",
+        "genre": "Drama, Romance",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Salvatore, a famous film director, returns to his hometown for the funeral of the local theater's film projectionist, Alfredo. He reminisces about his life as a young boy falling in love with cinema.",
+        "platform_string": "MGM Plus Roku Premium Channel, Kanopy, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Nuovo_Cinema_Paradiso.jpg"
+    },
+    {
+        "title": "Casablanca",
+        "year": "1943",
+        "genre": "Drama, Romance, War",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Casablanca.jpg"
+    },
+    {
+        "title": "Intouchables",
+        "year": "2011",
+        "genre": "Comedy, Drama",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver.",
+        "platform_string": "Kanopy, Hoopla, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Intouchables.jpg"
+    },
+    {
+        "title": "The Usual Suspects",
+        "year": "1995",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Held in an L.A. interrogation room, Verbal Kint attempts to convince the feds that a mythic crime lord, Keyser Soze, not only exists, but was also responsible for drawing him and his four partners into a multi-million dollar heist that ended with an explosion in San Pedro harbor – leaving few survivors. Verbal lures his interrogators with an incredible story of the crime lord's almost supernatural prowess.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/The_Usual_Suspects.jpg"
+    },
+    {
+        "title": "Django Unchained",
+        "year": "2012",
+        "genre": "Drama, Western",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+        "platform_string": "Apple TV Store, Netflix, Catchplay",
+        "poster_local": "posters/Django_Unchained.jpg"
+    },
+    {
+        "title": "Alien",
+        "year": "1979",
+        "genre": "Horror, Sci-Fi",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Alien.jpg"
+    },
+    {
+        "title": "Rear Window",
+        "year": "1954",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": ""
+    },
+    {
+        "title": "Modern Times",
+        "year": "1936",
+        "genre": "Comedy, Drama, Romance",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "Three different, but related, families face trials and tribulations in their own uniquely comedic ways.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Modern_Times.jpg"
+    },
+    {
+        "title": "C'era una volta il West",
+        "year": "1969",
+        "genre": "Drama, Western",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "As the railroad builders advance unstoppably through the Arizona desert on their way to the sea, Jill arrives in the small town of Flagstone with the intention of starting a new life.",
+        "platform_string": "fuboTV, MGM+ Amazon Channel, JustWatch, Apple TV Store",
+        "poster_local": "posters/Caposera_una_volta_il_West.jpg"
+    },
+    {
+        "title": "City Lights",
+        "year": "1931",
+        "genre": "Comedy, Drama, Romance",
+        "rating": "8.5",
+        "status": "Plan to Watch",
+        "description": "A tramp falls in love with a beautiful blind flower girl. His on-and-off friendship with a wealthy man allows him to be the girl's benefactor and suitor.",
+        "platform_string": "KlikFilm",
+        "poster_local": "posters/City_Lights.jpg"
+    },
+    {
+        "title": "Apocalypse Now",
+        "year": "1979",
+        "genre": "Drama, Mystery, War",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Apocalypse Now Redux is a 2001 extended version of Francis Ford Coppola's epic war film Apocalypse Now, which was originally released in 1979. Coppola, along with editor/long-time collaborator Walter Murch, added 49 minutes of scenes that had been cut out of the original film. It represents a significant re-edit of the original version.",
+        "platform_string": "MovieSphere+ Amazon Channel, Kanopy, JustWatch",
+        "poster_local": "posters/Apocalypse_Now.jpg"
+    },
+    {
+        "title": "WALL·E",
+        "year": "2008",
+        "genre": "Animation, Adventure, Family",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "After hundreds of years doing what he was built for, WALL•E— a robot designed to clean up the earth—discovers a new purpose in life when he meets a sleek search robot named EVE. EVE comes to realize that WALL•E has inadvertently stumbled upon the key to the planet's future, and races back to space to report to the humans. Meanwhile, WALL•E chases EVE across the galaxy and sets into motion one of the most imaginative adventures ever brought to the big screen.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/WALLE.jpg"
+    },
+    {
+        "title": "Memento",
+        "year": "2001",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Leonard Shelby is tracking down the man who raped and murdered his wife. The difficulty of locating his wife's killer, however, is compounded by the fact that he suffers from a rare, untreatable form of short-term memory loss. Although he can recall details of life before his accident, Leonard cannot remember what happened fifteen minutes ago, where he's going, or why.",
+        "platform_string": "Amazon Prime Video, HBO Max, Apple TV Store, JustWatch",
+        "poster_local": "posters/Memento.jpg"
+    },
+    {
+        "title": "Dune: Part Two",
+        "year": "2024",
+        "genre": "Action, Adventure, Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
+        "platform_string": "Catchplay, HBO Max",
+        "poster_local": ""
+    },
+    {
+        "title": "Avengers: Infinity War",
+        "year": "2018",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.",
+        "platform_string": "Disney+",
+        "poster_local": ""
+    },
+    {
+        "title": "Raiders of the Lost Ark",
+        "year": "1981",
+        "genre": "Action, Adventure",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "When Dr. Indiana Jones – the tweed-suited professor who just happens to be a celebrated archaeologist – is hired by the government to locate the legendary Ark of the Covenant, he finds himself up against the entire Nazi regime.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/Raiders_of_the_Lost_Ark.jpg"
+    },
+    {
+        "title": "Das Leben der Anderen",
+        "year": "2007",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "In 1984 East Berlin, dedicated Stasi officer Gerd Wiesler begins spying on a famous playwright and his actress-lover Christa-Maria. Wiesler becomes unexpectedly sympathetic to the couple, and faces conflicting loyalties when his superior takes a liking to Christa-Maria.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch, Plex",
+        "poster_local": "posters/Das_Leben_der_Anderen.jpg"
+    },
+    {
+        "title": "Spider-Man: Into the Spider-Verse",
+        "year": "2018",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension.",
+        "platform_string": "Apple TV Store, Netflix, Catchplay, Vidio",
+        "poster_local": "posters/SpiderMan_Into_the_SpiderVerse.jpg"
+    },
+    {
+        "title": "Sunset Blvd.",
+        "year": "1950",
+        "genre": "Drama, Film-Noir",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "A hack screenwriter writes a screenplay for a former silent film star who has faded into Hollywood obscurity.",
+        "platform_string": "fuboTV, MGM+ Amazon Channel, JustWatch, JustWatch TV",
+        "poster_local": "posters/Sunset_Blvd.jpg"
+    },
+    {
+        "title": "Witness for the Prosecution",
+        "year": "1958",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "A veteran British barrister must defend his client in a murder trial that has surprise after surprise.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Witness_for_the_Prosecution.jpg"
+    },
+    {
+        "title": "Paths of Glory",
+        "year": "1957",
+        "genre": "Drama, War",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "A commanding officer defends three scapegoats on trial for a failed offensive that occurred within the French Army in 1916.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Paths_of_Glory.jpg"
+    },
+    {
+        "title": "The Shining",
+        "year": "1980",
+        "genre": "Drama, Horror",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Jack Torrance accepts a caretaker job at the Overlook Hotel, where he, along with his wife Wendy and their son Danny, must live isolated from the rest of the world for the winter. But they aren't prepared for the madness that lurks within.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Shining.jpg"
+    },
+    {
+        "title": "The Great Dictator",
+        "year": "1941",
+        "genre": "Comedy, Drama, War",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Dictator Adenoid Hynkel tries to expand his empire while a poor Jewish barber tries to avoid persecution from Hynkel's regime.",
+        "platform_string": "Plex, KlikFilm",
+        "poster_local": "posters/The_Great_Dictator.jpg"
+    },
+    {
+        "title": "Inglourious Basterds",
+        "year": "2009",
+        "genre": "Adventure, Drama, War",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "In Nazi-occupied France during World War II, a group of Jewish-American soldiers known as \"The Basterds\" are chosen specifically to spread fear throughout the Third Reich by scalping and brutally killing Nazis. The Basterds, lead by Lt. Aldo Raine soon cross paths with a French-Jewish teenage girl who runs a movie theater in Paris which is targeted by the soldiers.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Netflix, Catchplay",
+        "poster_local": "posters/Inglourious_Basterds.jpg"
+    },
+    {
+        "title": "12th Fail",
+        "year": "2023",
+        "genre": "Biography, Drama",
+        "rating": "8.7",
+        "status": "Plan to Watch",
+        "description": "Based on the true story of IPS officer Manoj Kumar Sharma, 12th Fail sheds limelight on fearlessly embracing the idea of restarting the academic journey despite the setbacks and challenges and reclaiming one's destiny at a place where millions of students attempt the world's toughest competitive exam: UPSC.",
+        "platform_string": "Disney+, Netflix",
+        "poster_local": "posters/12th_Fail.jpg"
+    },
+    {
+        "title": "Aliens",
+        "year": "1986",
+        "genre": "Action, Adventure, Horror",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Ripley, the sole survivor of the Nostromo's deadly encounter with the monstrous Alien, returns to Earth after drifting through space in hypersleep for 57 years. Although her story is initially met with skepticism, she agrees to accompany a team of Colonial Marines back to LV-426.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Aliens.jpg"
+    },
+    {
+        "title": "Tengoku to jigoku",
+        "year": "1963",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "A Yokohama shoe executive faces a wrenching choice when kidnappers mistakenly seize his chauffeur’s son but demand the ransom anyway.",
+        "platform_string": "HBO Max, HBO Max Amazon Channel, JustWatch, Apple TV Store, Amazon Video",
+        "poster_local": "posters/Tengoku_to_jigoku.jpg"
+    },
+    {
+        "title": "Avengers: Endgame",
+        "year": "2019",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Avengers_Endgame.jpg"
+    },
+    {
+        "title": "Good Will Hunting",
+        "year": "1998",
+        "genre": "Drama, Romance",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Will Hunting is a headstrong, working-class genius who is failing the lessons of life. After one too many run-ins with the law, Will's last chance is a psychology professor, who might be the only man who can reach him.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Good_Will_Hunting.jpg"
+    },
+    {
+        "title": "The Dark Knight Rises",
+        "year": "2012",
+        "genre": "Action, Crime, Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Following the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent's crimes to protect the late attorney's reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham's finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.",
+        "platform_string": "Apple TV Store, iflix, Catchplay, HBO Max",
+        "poster_local": "posters/The_Dark_Knight_Rises.jpg"
+    },
+    {
+        "title": "Coco",
+        "year": "2017",
+        "genre": "Animation, Adventure, Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Coco.jpg"
+    },
+    {
+        "title": "Amadeus",
+        "year": "1984",
+        "genre": "Biography, Drama, Music",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Disciplined Italian composer Antonio Salieri becomes consumed by jealousy and resentment towards the hedonistic and remarkably talented young Salzburger composer Wolfgang Amadeus Mozart.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Amadeus.jpg"
+    },
+    {
+        "title": "Toy Story",
+        "year": "1995",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": ""
+    },
+    {
+        "title": "Kimi no na wa.",
+        "year": "2017",
+        "genre": "Animation, Drama, Fantasy",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.",
+        "platform_string": "Apple TV Store, Crunchyroll",
+        "poster_local": "posters/Kimi_no_na_wa.jpg"
+    },
+    {
+        "title": "Das Boot",
+        "year": "1982",
+        "genre": "Drama, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "An inexperienced U-boat crew has to survive a secret mission and a young German woman is torn between loyalty for her home country and the French resistance in the WWII drama.",
+        "platform_string": "Hulu, Amazon Video, JustWatch, Apple TV Store",
+        "poster_local": "posters/Das_Boot.jpg"
+    },
+    {
+        "title": "Braveheart",
+        "year": "1995",
+        "genre": "Biography, Drama, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A docudrama telling the story of the events that unfolded when a Scottish army led by Robert Bruce tried to drive the English out of Ireland 700 years ago.",
+        "platform_string": "Curiosity Stream",
+        "poster_local": "posters/Braveheart.jpg"
+    },
+    {
+        "title": "Oldeuboi",
+        "year": "2003",
+        "genre": "Action, Drama, Mystery",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "With no clue how he came to be imprisoned, drugged and tortured for 15 years, a desperate man seeks revenge on his captors.",
+        "platform_string": "Kanopy, Fandango at Home Free, JustWatch",
+        "poster_local": "posters/Oldeuboi.jpg"
+    },
+    {
+        "title": "Mononoke-hime",
+        "year": "1997",
+        "genre": "Animation, Adventure, Fantasy",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Ashitaka, a prince of the disappearing Emishi people, is cursed by a demonized boar god and must journey to the west to find a cure. Along the way, he encounters San, a young human woman fighting to protect the forest, and Lady Eboshi, who is trying to destroy it. Ashitaka must find a way to bring balance to this conflict.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Mononokehime.jpg"
+    },
+    {
+        "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+        "year": "1964",
+        "genre": "Comedy, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "After the insane General Jack D. Ripper initiates a nuclear strike on the Soviet Union, a war room full of politicians, generals and a Russian diplomat all frantically try to stop it.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Dr_Strangelove_or_How_I_Learned_to_Stop_Worrying_and_Love_the_Bomb.jpg"
+    },
+    {
+        "title": "3 Idiots",
+        "year": "2009",
+        "genre": "Comedy, Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "Rascal. Joker. Dreamer. Genius... You've never met a college student quite like \"Rancho.\" From the moment he arrives at India's most prestigious university, Rancho's outlandish schemes turn the campus upside down—along with the lives of his two newfound best friends. Together, they make life miserable for \"Virus,\" the school’s uptight and heartless dean. But when Rancho catches the eye of the dean's daughter, Virus sets his sights on flunking out the \"3 idiots\" once and for all.",
+        "platform_string": "Netflix, Hulu",
+        "poster_local": "posters/3_Idiots.jpg"
+    },
+    {
+        "title": "American Beauty",
+        "year": "1999",
+        "genre": "Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Lester Burnham, a depressed suburban father in a mid-life crisis, decides to turn his hectic life around after developing an infatuation with his daughter's attractive friend.",
+        "platform_string": "Apple TV Store, Vidio, HBO Max",
+        "poster_local": "posters/American_Beauty.jpg"
+    },
+    {
+        "title": "Capharnaüm",
+        "year": "2018",
+        "genre": "Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "After running away from his negligent parents, committing a violent crime and being sentenced to five years in jail, a hardened, streetwise 12-year-old Lebanese boy sues his parents in protest of the life they have given him.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": ""
+    },
+    {
+        "title": "Singin' in the Rain",
+        "year": "1952",
+        "genre": "Comedy, Musical, Romance",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "After a brutal virus wipes out most of the population, two young siblings embark on a perilous search for safety. A Scandinavian thriller series.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Singinapos_in_the_Rain.jpg"
+    },
+    {
+        "title": "Joker",
+        "year": "2019",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max",
+        "poster_local": "posters/Joker.jpg"
+    },
+    {
+        "title": "C'era una volta in America",
+        "year": "1984",
+        "genre": "Crime, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "As the railroad builders advance unstoppably through the Arizona desert on their way to the sea, Jill arrives in the small town of Flagstone with the intention of starting a new life.",
+        "platform_string": "fuboTV, MGM+ Amazon Channel, JustWatch, Apple TV Store",
+        "poster_local": "posters/Caposera_una_volta_in_America.jpg"
+    },
+    {
+        "title": "Star Wars: Episode VI - Return of the Jedi",
+        "year": "1983",
+        "genre": "Action, Adventure, Fantasy",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Luke Skywalker leads a mission to rescue his friend Han Solo from the clutches of Jabba the Hutt, the Emperor prepares to crush the Rebellion with a more powerful Death Star, and the Rebel fleet mounts a massive attack on the space station. Luke Skywalker confronts Darth Vader in a final climactic duel before the evil Emperor.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Star_Wars_Episode_VI__Return_of_the_Jedi.jpg"
+    },
+    {
+        "title": "Idi i smotri",
+        "year": "1985",
+        "genre": "Drama, Thriller, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "The invasion of a village in Belarus by German forces sends young Florya into the forest to join the weary Resistance fighters, against his family's wishes. There he meets a girl, Glasha, who accompanies him back to his village. On returning home, Florya finds his family and fellow peasants massacred. His continued survival amidst the brutal debris of war becomes increasingly nightmarish, a battle between despair and hope.",
+        "platform_string": "Criterion Channel, Amazon Video, Apple TV Store",
+        "poster_local": "posters/Idi_i_smotri.jpg"
+    },
+    {
+        "title": "Requiem for a Dream",
+        "year": "2000",
+        "genre": "Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "The drug-induced utopias of four Coney Island residents are shattered when their addictions run deep.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Requiem_for_a_Dream.jpg"
+    },
+    {
+        "title": "Toy Story 3",
+        "year": "2010",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Woody, Buzz, and the rest of Andy's toys haven't been played with in years. With Andy about to go to college, the gang find themselves accidentally left at a nefarious day care center. The toys must band together to escape and return home to Andy.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Toy_Story_3.jpg"
+    },
+    {
+        "title": "Ikiru",
+        "year": "1956",
+        "genre": "Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Kanji Watanabe is a middle-aged man who has worked in the same monotonous bureaucratic position for decades. Learning he has cancer, he starts to look for the meaning of his life.",
+        "platform_string": "HBO Max, HBO Max Amazon Channel, JustWatch",
+        "poster_local": "posters/Ikiru.jpg"
+    },
+    {
+        "title": "Jagten",
+        "year": "2012",
+        "genre": "Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A teacher lives a lonely life, all the while struggling over his son’s custody. His life slowly gets better as he finds love and receives good news from his son, but his new luck is about to be brutally shattered by an innocent little lie.",
+        "platform_string": "Magnolia Selects Amazon Channel, Kanopy, JustWatch, Amazon Video, Apple TV Store",
+        "poster_local": "posters/Jagten.jpg"
+    },
+    {
+        "title": "Incendies",
+        "year": "2011",
+        "genre": "Drama, Mystery, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A mother's last wishes send twins Jeanne and Simon on a journey to Middle East in search of their tangled roots. Adapted from Wajdi Mouawad's acclaimed play, Incendies tells the powerful and moving tale of two young adults' voyage to the core of deep-rooted hatred, never-ending wars and enduring love.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Incendies.jpg"
+    },
+    {
+        "title": "Eternal Sunshine of the Spotless Mind",
+        "year": "2004",
+        "genre": "Drama, Romance, Sci-Fi",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Joel Barish, heartbroken that his girlfriend underwent a procedure to erase him from her memory, decides to do the same. However, as he watches his memories of her fade away, he realises that he still loves her, and may be too late to correct his mistake.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Eternal_Sunshine_of_the_Spotless_Mind.jpg"
+    },
+    {
+        "title": "The Apartment",
+        "year": "1960",
+        "genre": "Comedy, Drama, Romance",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Bud Baxter is a minor clerk in a huge New York insurance company, until he discovers a quick way to climb the corporate ladder. He lends out his apartment to the executives as a place to take their mistresses. Although he often has to deal with the aftermath of their visits, one night he's left with a major problem to solve.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Apartment.jpg"
+    },
+    {
+        "title": "Lawrence of Arabia",
+        "year": "1962",
+        "genre": "Adventure, Biography, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "During World War I, English officer Thomas Edward 'T.E.' Lawrence sets out to unite and lead the diverse, often warring, Arab tribes to fight the Turks.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/Lawrence_of_Arabia.jpg"
+    },
+    {
+        "title": "Project Hail Mary",
+        "year": "2026",
+        "genre": "Adventure, Comedy, Sci-Fi",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Science teacher Ryland Grace wakes up on a spaceship light years from home with no recollection of who he is or how he got there. As his memory returns, he begins to uncover his mission: solve the riddle of the mysterious substance causing the sun to die out. He must call on his scientific knowledge and unorthodox ideas to save everything on Earth from extinction.",
+        "platform_string": "Apple TV Store, JustWatch",
+        "poster_local": "posters/Project_Hail_Mary.jpg"
+    },
+    {
+        "title": "Heat",
+        "year": "1995",
+        "genre": "Action, Crime, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Obsessive master thief Neil McCauley leads a top-notch crew on various daring heists throughout Los Angeles while determined detective Vincent Hanna pursues him without rest. Each man recognizes and respects the ability and the dedication of the other even though they are aware their cat-and-mouse game may end in violence.",
+        "platform_string": "Disney+, Netflix, Vidio",
+        "poster_local": "posters/Heat.jpg"
+    },
+    {
+        "title": "Scarface",
+        "year": "1983",
+        "genre": "Crime, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "After getting a green card in exchange for assassinating a Cuban government official, Tony Montana stakes a claim on the drug trade in Miami. Viciously murdering anyone who stands in his way, Tony eventually becomes the biggest drug lord in the state, controlling nearly all the cocaine that comes through Miami. But increased pressure from the police, wars with Colombian drug cartels and his own drug-fueled paranoia serve to fuel the flames of his eventual downfall.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Scarface.jpg"
+    },
+    {
+        "title": "Reservoir Dogs",
+        "year": "1992",
+        "genre": "Crime, Thriller",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A botched robbery indicates a police informant, and the pressure mounts in the aftermath at a warehouse. Crime begets violence as the survivors -- veteran Mr. White, newcomer Mr. Orange, psychopathic parolee Mr. Blonde, bickering weasel Mr. Pink and Nice Guy Eddie -- unravel.",
+        "platform_string": "Apple TV Store, Amazon Prime Video",
+        "poster_local": "posters/Reservoir_Dogs.jpg"
+    },
+    {
+        "title": "2001: A Space Odyssey",
+        "year": "1968",
+        "genre": "Adventure, Sci-Fi",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/2001_A_Space_Odyssey.jpg"
+    },
+    {
+        "title": "Up",
+        "year": "2009",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Carl Fredricksen spent his entire life dreaming of exploring the globe and experiencing life to its fullest. But at age 78, life seems to have passed him by, until a twist of fate (and a persistent 8-year old Wilderness Explorer named Russell) gives him a new lease on life.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Up.jpg"
+    },
+    {
+        "title": "Double Indemnity",
+        "year": "1944",
+        "genre": "Crime, Drama, Film-Noir",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "An insurance representative is seduced by a dissatisfied housewife into a scheme of insurance fraud and murder that arouses the suspicion of his colleague, a claims investigator.",
+        "platform_string": "Amazon Prime Video, YouTube TV, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Double_Indemnity.jpg"
+    },
+    {
+        "title": "North by Northwest",
+        "year": "1959",
+        "genre": "Adventure, Drama, Mystery",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Advertising man Roger Thornhill is mistaken for a spy, triggering a deadly cross-country chase.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/North_by_Northwest.jpg"
+    },
+    {
+        "title": "Taare Zameen Par",
+        "year": "2007",
+        "genre": "Drama, Family",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "After a DUI, an arrogant basketball coach must train Neurodivergent adults for community service. His initial prejudice fades as his players show him a new perspective on life.",
+        "platform_string": "Sony Liv",
+        "poster_local": "posters/Taare_Zameen_Par.jpg"
+    },
+    {
+        "title": "Full Metal Jacket",
+        "year": "1987",
+        "genre": "Drama, War",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A pragmatic U.S. Marine observes the dehumanizing effects the U.S.-Vietnam War has on his fellow recruits from their brutal boot camp training to the bloody street fighting in Hue.",
+        "platform_string": "Plex, Spectrum On Demand, JustWatch, Amazon Video",
+        "poster_local": "posters/Full_Metal_Jacket.jpg"
+    },
+    {
+        "title": "M - Eine Stadt sucht einen Mörder",
+        "year": "1931",
+        "genre": "Crime, Mystery, Thriller",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "In this classic German thriller, Hans Beckert, a serial killer who preys on children, becomes the focus of a massive Berlin police manhunt. Beckert's heinous crimes are so repellant and disruptive to city life that he is even targeted by others in the seedy underworld network. With both cops and criminals in pursuit, the murderer soon realizes that people are on his trail, sending him into a tense, panicked attempt to escape justice.",
+        "platform_string": "JustWatch TV, Plex",
+        "poster_local": "posters/M__Eine_Stadt_sucht_einen_Mörder.jpg"
+    },
+    {
+        "title": "Le fabuleux destin d'Amélie Poulain",
+        "year": "2002",
+        "genre": "Comedy, Romance",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "At a tiny Parisian café, the adorable yet painfully shy Amélie accidentally discovers a gift for helping others. Soon Amelie is spending her days as a matchmaker, guardian angel, and all-around do-gooder. But when she bumps into a handsome stranger, will she find the courage to become the star of her very own love story?",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Le_fabuleux_destin_daposAmélie_Poulain.jpg"
+    },
+    {
+        "title": "Citizen Kane",
+        "year": "1941",
+        "genre": "Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Following the death of publishing tycoon Charles Foster Kane, reporters scramble to uncover the meaning of his final utterance: 'Rosebud.'",
+        "platform_string": "Apple TV Store, KlikFilm",
+        "poster_local": "posters/Citizen_Kane.jpg"
+    },
+    {
+        "title": "Vertigo",
+        "year": "1958",
+        "genre": "Mystery, Romance, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "When a high-rise climb goes wrong, best friends Becky and Hunter find themselves stuck at the top of a 2,000-foot TV tower.",
+        "platform_string": "Netflix Standard with Ads, Netflix, JustWatch, Apple TV Store, Amazon Video",
+        "poster_local": "posters/Vertigo.jpg"
+    },
+    {
+        "title": "Jodaeiye Nader az Simin",
+        "year": "2011",
+        "genre": "Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
+        "platform_string": "KlikFilm",
+        "poster_local": "posters/Jodaeiye_Nader_az_Simin.jpg"
+    },
+    {
+        "title": "Die Hard",
+        "year": "1988",
+        "genre": "Action, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "NYPD cop John McClane's plan to reconcile with his estranged wife is thrown for a serious loop when, minutes after he arrives at her office's Christmas Party, the entire building is overtaken by a group of terrorists. With little help from the LAPD, wisecracking McClane sets out to single-handedly rescue the hostages and bring the bad guys down.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Die_Hard.jpg"
+    },
+    {
+        "title": "To Kill a Mockingbird",
+        "year": "1963",
+        "genre": "Crime, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Scout Finch, 6, and her older brother Jem live in sleepy Maycomb, Alabama, spending much of their time with their friend Dill and spying on their reclusive and mysterious neighbor, Boo Radley. When Atticus, their widowed father and a respected lawyer, defends a black man named Tom Robinson against fabricated rape charges, the trial and tangent events expose the children to evils of racism and stereotyping.",
+        "platform_string": "JustWatch TV",
+        "poster_local": "posters/To_Kill_a_Mockingbird.jpg"
+    },
+    {
+        "title": "Indiana Jones and the Last Crusade",
+        "year": "1989",
+        "genre": "Action, Adventure",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In 1938, an art collector appeals to eminent archaeologist Dr. Indiana Jones to embark on a search for the Holy Grail. Indy learns that a medieval historian has vanished while searching for it, and the missing man is his own father, Dr. Henry Jones Sr.. He sets out to rescue his father by following clues in the old man's notebook, which his father had mailed to him before he went missing. Indy arrives in Venice, where he enlists the help of a beautiful academic, Dr. Elsa Schneider, along with Marcus Brody and Sallah. Together they must stop the Nazis from recovering the power of eternal life and taking over the world!",
+        "platform_string": "Apple TV Store, Netflix, Catchplay",
+        "poster_local": "posters/Indiana_Jones_and_the_Last_Crusade.jpg"
+    },
+    {
+        "title": "The Sting",
+        "year": "1973",
+        "genre": "Comedy, Crime, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Two grifters team up to pull off the ultimate con.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/The_Sting.jpg"
+    },
+    {
+        "title": "A Clockwork Orange",
+        "year": "1972",
+        "genre": "Crime, Sci-Fi",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/A_Clockwork_Orange.jpg"
+    },
+    {
+        "title": "Metropolis",
+        "year": "1927",
+        "genre": "Drama, Sci-Fi",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In a futuristic city sharply divided between the rich and the poor, the son of the city's mastermind meets a prophet who predicts the coming of a savior to mediate their differences.",
+        "platform_string": "JustWatch TV, Plex, Artiflix",
+        "poster_local": "posters/Metropolis.jpg"
+    },
+    {
+        "title": "1917",
+        "year": "2020",
+        "genre": "Action, Drama, War",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "At the height of the First World War, two young British soldiers must cross enemy territory and deliver a message that will stop a deadly attack on hundreds of soldiers.",
+        "platform_string": "Netflix Standard with Ads, Netflix, JustWatch",
+        "poster_local": "posters/1917.jpg"
+    },
+    {
+        "title": "Snatch",
+        "year": "2001",
+        "genre": "Comedy, Crime",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Unscrupulous boxing promoters, violent bookies, a Russian gangster, incompetent amateur robbers, and supposedly Jewish jewellers fight to track down a priceless stolen diamond.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Snatch.jpg"
+    },
+    {
+        "title": "The Wolf of Wall Street",
+        "year": "2013",
+        "genre": "Biography, Comedy, Crime",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A New York stockbroker refuses to cooperate in a large securities fraud case involving corruption on Wall Street, corporate banking world and mob infiltration. Based on Jordan Belfort's autobiography.",
+        "platform_string": "Catchplay",
+        "poster_local": "posters/The_Wolf_of_Wall_Street.jpg"
+    },
+    {
+        "title": "Der Untergang",
+        "year": "2005",
+        "genre": "Biography, Drama, History",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In April of 1945, Germany stands at the brink of defeat with the Russian Army closing in from the east and the Allied Expeditionary Force attacking from the west. In Berlin, capital of the Third Reich, Adolf Hitler proclaims that Germany will still achieve victory and orders his generals and advisers to fight to the last man. When the end finally does come, and Hitler lies dead by his own hand, what is left of his military must find a way to end the killing that is the Battle of Berlin, and lay down their arms in surrender.",
+        "platform_string": "Amazon Prime Video, Shout! Factory Amazon Channel, JustWatch",
+        "poster_local": "posters/Der_Untergang.jpg"
+    },
+    {
+        "title": "L.A. Confidential",
+        "year": "1997",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Three detectives in the corrupt and brutal L.A. police force of the 1950s use differing methods to uncover a conspiracy behind the shotgun slayings of the patrons at an all-night diner.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/LA_Confidential.jpg"
+    },
+    {
+        "title": "The Truman Show",
+        "year": "1998",
+        "genre": "Comedy, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In a picture-perfect seaside town, an insurance salesman begins to realize that his entire existence may be staged and observed by a vast unseen audience as part of a long-running real-time reality TV show.",
+        "platform_string": "Apple TV Store, Netflix, HBO Max",
+        "poster_local": "posters/The_Truman_Show.jpg"
+    },
+    {
+        "title": "I Swear",
+        "year": "2026",
+        "genre": "Biography, Drama",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/I_Swear.jpg"
+    },
+    {
+        "title": "Dangal",
+        "year": "2016",
+        "genre": "Action, Biography, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Dangal is an extraordinary true story based on the life of Mahavir Singh and his two daughters, Geeta and Babita Phogat. The film traces the inspirational journey of a father who trains his daughters to become world class wrestlers.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/Dangal.jpg"
+    },
+    {
+        "title": "Ladri di biciclette",
+        "year": "1949",
+        "genre": "Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Ladri_di_biciclette.jpg"
+    },
+    {
+        "title": "Green Book",
+        "year": "2018",
+        "genre": "Biography, Comedy, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Tony Lip, a bouncer in 1962, is hired to drive pianist Don Shirley on a tour through the Deep South in the days when African Americans, forced to find alternate accommodations and services due to segregation laws below the Mason-Dixon Line, relied on a guide called The Negro Motorist Green Book.",
+        "platform_string": "Netflix Standard with Ads, Netflix, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Green_Book.jpg"
+    },
+    {
+        "title": "Shutter Island",
+        "year": "2010",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "World War II soldier-turned-U.S. Marshal Teddy Daniels investigates the disappearance of a patient from a hospital for the criminally insane, but his efforts are compromised by troubling visions and a mysterious doctor.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max",
+        "poster_local": "posters/Shutter_Island.jpg"
+    },
+    {
+        "title": "Oppenheimer",
+        "year": "2023",
+        "genre": "Biography, Drama, History",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bombs that brought an end to World War II.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/Oppenheimer.jpg"
+    },
+    {
+        "title": "Judgment at Nuremberg",
+        "year": "1961",
+        "genre": "Drama, History, War",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "In 1947, four German judges who served on the bench during the Nazi regime face a military tribunal to answer charges of crimes against humanity. Chief Justice Haywood hears evidence and testimony not only from lead defendant Ernst Janning and his defense attorney Hans Rolfe, but also from the widow of a Nazi general, an idealistic U.S. Army captain and reluctant witness Irene Wallner.",
+        "platform_string": "Hoopla, Plex Player, JustWatch, Apple TV Store",
+        "poster_local": "posters/Judgment_at_Nuremberg.jpg"
+    },
+    {
+        "title": "Batman Begins",
+        "year": "2005",
+        "genre": "Action, Crime, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Driven by tragedy, billionaire Bruce Wayne dedicates his life to uncovering and defeating the corruption that plagues his home, Gotham City. Unable to work within the system, he instead creates a new identity, a symbol of fear for the criminal underworld - The Batman.",
+        "platform_string": "Apple TV Store, iflix, Catchplay, HBO Max",
+        "poster_local": "posters/Batman_Begins.jpg"
+    },
+    {
+        "title": "Hamilton",
+        "year": "2020",
+        "genre": "Biography, Drama, History",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "Presenting the tale of American founding father Alexander Hamilton, this filmed version of the original Broadway smash hit is the story of America then, told by America now.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Hamilton.jpg"
+    },
+    {
+        "title": "Per qualche dollaro in più",
+        "year": "1967",
+        "genre": "Drama, Western",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Two bounty hunters both pursue the brutal and sadistic bandit, El Indio, who has a large bounty on his head.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Per_qualche_dollaro_in_più.jpg"
+    },
+    {
+        "title": "Jurassic Park",
+        "year": "1993",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A wealthy entrepreneur secretly creates a theme park featuring living dinosaurs drawn from prehistoric DNA. Before opening day, he invites a team of experts and his two eager grandchildren to experience the park and help calm anxious investors. However, the park is anything but amusing as the security systems go off-line and the dinosaurs escape.",
+        "platform_string": "Apple TV Store, Amazon Prime Video",
+        "poster_local": "posters/Jurassic_Park.jpg"
+    },
+    {
+        "title": "Taxi Driver",
+        "year": "1976",
+        "genre": "Crime, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Suffering from insomnia, disturbed loner Travis Bickle takes a job as a New York City cabbie, haunting the streets nightly, growing increasingly detached from reality as he dreams of cleaning up the filthy city.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/Taxi_Driver.jpg"
+    },
+    {
+        "title": "Some Like It Hot",
+        "year": "1959",
+        "genre": "Comedy, Music, Romance",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In Prohibition-era Chicago, musicians Joe and Jerry witness a mob hit, and flee the state in an all-female band disguised as Josephine and Daphne, but further complications set in.",
+        "platform_string": "Amazon Prime Video",
+        "poster_local": "posters/Some_Like_It_Hot.jpg"
+    },
+    {
+        "title": "There Will Be Blood",
+        "year": "2008",
+        "genre": "Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Ruthless silver miner, turned oil prospector, Daniel Plainview, moves to oil-rich California. Using his son to project a trustworthy, family-man image, Plainview cons local landowners into selling him their valuable properties for a pittance. However, local preacher Eli Sunday suspects Plainview's motives and intentions, starting a slow-burning feud that threatens both their lives.",
+        "platform_string": "fuboTV, MGM+ Amazon Channel, JustWatch",
+        "poster_local": "posters/There_Will_Be_Blood.jpg"
+    },
+    {
+        "title": "The Father",
+        "year": "2021",
+        "genre": "Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A man refuses all assistance from his daughter as he ages. When he tries to understand what is happening around him, he begins to doubt his loved ones, his own mind and even the fabric of his reality.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Father.jpg"
+    },
+    {
+        "title": "The Kid",
+        "year": "1921",
+        "genre": "Comedy, Drama, Family",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A tramp cares for a boy after he's abandoned as a newborn by his mother. Later the mother has a change of heart and aches to be reunited with her son.",
+        "platform_string": "JustWatch TV, KlikFilm",
+        "poster_local": "posters/The_Kid.jpg"
+    },
+    {
+        "title": "All About Eve",
+        "year": "1950",
+        "genre": "Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/All_About_Eve.jpg"
+    },
+    {
+        "title": "The Sixth Sense",
+        "year": "1999",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Following an unexpected tragedy, child psychologist Malcolm Crowe meets a nine year old boy named Cole Sear, who is hiding a dark secret.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/The_Sixth_Sense.jpg"
+    },
+    {
+        "title": "Ran",
+        "year": "1985",
+        "genre": "Action, Drama, War",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Shakespeare's King Lear is reimagined as a singular historical epic set in sixteenth-century Japan where an aging warlord divides his kingdom between his three sons.",
+        "platform_string": "BFI Player Amazon Channel, The Roku Channel, JustWatch, Amazon Video",
+        "poster_local": "posters/Ran.jpg"
+    },
+    {
+        "title": "Casino",
+        "year": "1995",
+        "genre": "Crime, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In Las Vegas, two best friends--a casino executive and a Mafia enforcer--compete for a gambling empire and a fast-living, fast-loving socialite.",
+        "platform_string": "Netflix Standard with Ads, Netflix, JustWatch, Apple TV Store",
+        "poster_local": "posters/Casino.jpg"
+    },
+    {
+        "title": "Shingeki no Kyojin: The Last Attack",
+        "year": "2024",
+        "genre": "Animation, Action, Adventure",
+        "rating": "9",
+        "status": "Plan to Watch",
+        "description": "A colossal-sized omnibus film bringing together the last two episodes of Attack on Titan in the franchise's first-ever theatrical experience. After venturing beyond the walls and separated from his comrades, Eren finds himself inspired by this new truth and plots the \"Rumbling,\" a terrifying plan to eradicate every living thing in the world. With the fate of the world hanging in the balance, a motley crew of Eren's former comrades and enemies scramble to halt his deadly mission. The only question is, can they stop him?",
+        "platform_string": "Crunchyroll, Vidio",
+        "poster_local": "posters/Shingeki_no_Kyojin_The_Last_Attack.jpg"
+    },
+    {
+        "title": "No Country for Old Men",
+        "year": "2007",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Llewelyn Moss stumbles upon dead bodies, $2 million and a hoard of heroin in a Texas desert, but methodical killer Anton Chigurh comes looking for it, with local sheriff Ed Tom Bell hot on his trail. The roles of prey and predator blur as the violent pursuit of money and justice collide.",
+        "platform_string": "Apple TV Store, HBO Max",
+        "poster_local": "posters/No_Country_for_Old_Men.jpg"
+    },
+    {
+        "title": "The Thing",
+        "year": "1982",
+        "genre": "Horror, Mystery, Sci-Fi",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
+        "platform_string": "Criterion Channel, Amazon Video, JustWatch, Apple TV Store",
+        "poster_local": "posters/The_Thing.jpg"
+    },
+    {
+        "title": "Prisoners",
+        "year": "2013",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Keller Dover is facing every parent’s worst nightmare. His six-year-old daughter, Anna, is missing, together with her young friend, Joy, and as minutes turn to hours, panic sets in. The only lead is a dilapidated RV that had earlier been parked on their street.",
+        "platform_string": "Apple TV Store, FilmBox+",
+        "poster_local": "posters/Prisoners.jpg"
+    },
+    {
+        "title": "Top Gun: Maverick",
+        "year": "2022",
+        "genre": "Action, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "After more than thirty years of service as one of the Navy’s top aviators, and dodging the advancement in rank that would ground him, Pete “Maverick” Mitchell finds himself training a detachment of TOP GUN graduates for a specialized mission the likes of which no living pilot has ever seen.",
+        "platform_string": "Apple TV Store, Amazon Prime Video, Catchplay",
+        "poster_local": "posters/Top_Gun_Maverick.jpg"
+    },
+    {
+        "title": "Kill Bill: Vol. 1",
+        "year": "2003",
+        "genre": "Action, Crime, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
+        "platform_string": "Amazon Prime Video, Netflix, Catchplay",
+        "poster_local": "posters/Kill_Bill_Vol_1.jpg"
+    },
+    {
+        "title": "El laberinto del fauno",
+        "year": "2007",
+        "genre": "Drama, Fantasy, War",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "In post–civil war Spain, 10-year-old Ofelia moves with her pregnant mother to live under the control of her cruel stepfather. Drawn into a mysterious labyrinth, she meets a faun who reveals that she may be a lost princess from an underground kingdom. To return to her true father, she must complete a series of surreal and perilous tasks that blur the line between reality and fantasy.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/El_laberinto_del_fauno.jpg"
+    },
+    {
+        "title": "Unforgiven",
+        "year": "1992",
+        "genre": "Drama, Western",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "William Munny is a retired, once-ruthless killer turned gentle widower and hog farmer. To help support his two motherless children, he accepts one last bounty-hunter mission to find the men who brutalized a prostitute. Joined by his former partner and a cocky greenhorn, he takes on a corrupt sheriff.",
+        "platform_string": "Apple TV Store, HBO Max",
+        "poster_local": "posters/Unforgiven.jpg"
+    },
+    {
+        "title": "A Beautiful Mind",
+        "year": "2002",
+        "genre": "Biography, Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "From the heights of notoriety to the depths of depravity, John Forbes Nash Jr. experiences it all. As a brilliant but socially awkward mathematician, he made a groundbreaking discovery early in his career and stands on the brink of international acclaim. But as the handsome and arrogant Nash accepts secret work in cryptography, he becomes entangled in a mysterious conspiracy. His life takes a nightmarish turn and he soon finds himself on a painful and harrowing journey of self-discovery.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/A_Beautiful_Mind.jpg"
+    },
+    {
+        "title": "Hauru no ugoku shiro",
+        "year": "2005",
+        "genre": "Animation, Adventure, Family",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Hauru_no_ugoku_shiro.jpg"
+    },
+    {
+        "title": "The Treasure of the Sierra Madre",
+        "year": "1948",
+        "genre": "Adventure, Drama, Western",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Two jobless Americans convince a prospector to travel to the mountains of Mexico with them in search of gold. But the hostile wilderness, local bandits, and greed all get in the way of their journey.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Treasure_of_the_Sierra_Madre.jpg"
+    },
+    {
+        "title": "Finding Nemo",
+        "year": "2003",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Nemo, an adventurous young clownfish, is unexpectedly taken from his Great Barrier Reef home to a dentist's office aquarium. It's up to his worrisome father Marlin and a friendly but forgetful fish Dory to bring Nemo home -- meeting vegetarian sharks, surfer dude turtles, hypnotic jellyfish, hungry seagulls, and more along the way.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Finding_Nemo.jpg"
+    },
+    {
+        "title": "Klaus",
+        "year": "2019",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A selfish postman and a reclusive toymaker form an unlikely friendship, delivering joy to a cold, dark town that desperately needs it.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Klaus.jpg"
+    },
+    {
+        "title": "Yôjinbô",
+        "year": "1961",
+        "genre": "Action, Drama, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A nameless ronin, or samurai with no master, enters a small village in feudal Japan where two rival businessmen are struggling for control of the local gambling trade. Taking the name Sanjuro Kuwabatake, the ronin convinces both silk merchant Tazaemon and sake merchant Tokuemon to hire him as a personal bodyguard, then artfully sets in motion a full-scale gang war between the two ambitious and unscrupulous men.",
+        "platform_string": "HBO Max, HBO Max Amazon Channel, JustWatch",
+        "poster_local": "posters/Yôjinbô.jpg"
+    },
+    {
+        "title": "The Great Escape",
+        "year": "1963",
+        "genre": "Adventure, Drama, Thriller",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "The Nazis, exasperated at the number of escapes from their prison camps by a relatively small number of Allied prisoners, relocate them to a high-security 'escape-proof' camp to sit out the remainder of the war. Undaunted, the prisoners plan one of the most ambitious escape attempts of World War II. Based on a true story.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Great_Escape.jpg"
+    },
+    {
+        "title": "The Elephant Man",
+        "year": "1980",
+        "genre": "Biography, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/The_Elephant_Man.jpg"
+    },
+    {
+        "title": "Monty Python and the Holy Grail",
+        "year": "1975",
+        "genre": "Adventure, Comedy, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "King Arthur, accompanied by his squire, recruits his Knights of the Round Table, including Sir Bedevere the Wise, Sir Lancelot the Brave, Sir Robin the Not-Quite-So-Brave-As-Sir-Lancelot and Sir Galahad the Pure. On the way, Arthur battles the Black Knight who, despite having had all his limbs chopped off, insists he can still fight. They reach Camelot, but Arthur decides not to enter, as \"it is a silly place\".",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Monty_Python_and_the_Holy_Grail.jpg"
+    },
+    {
+        "title": "Gekijô-ban Kimetsu no Yaiba Mugen Jô-hen",
+        "year": "2025",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "The Demon Slayer Corps are drawn into the Infinity Castle, where Tanjiro, Nezuko, and the Hashira face terrifying Upper Rank demons in a desperate fight as the final battle against Muzan Kibutsuji begins.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Gekijôban_Kimetsu_no_Yaiba_Mugen_Jôhen.jpg"
+    },
+    {
+        "title": "Dial M for Murder",
+        "year": "1954",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When her American lover visits London, a wealthy woman’s jealous husband hatches a plan to murder her and inherit her fortune.",
+        "platform_string": "TCM, IndieFlix, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Dial_M_for_Murder.jpg"
+    },
+    {
+        "title": "El secreto de sus ojos",
+        "year": "2010",
+        "genre": "Drama, Mystery, Romance",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Hoping to put to rest years of unease concerning a past case, retired criminal investigator Benjamín begins writing a novel based on the unsolved mystery of a newlywed’s rape and murder. With the help of a former colleague, judge Irene, he attempts to make sense of the past.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/El_secreto_de_sus_ojos.jpg"
+    },
+    {
+        "title": "Gone with the Wind",
+        "year": "1940",
+        "genre": "Drama, Romance, War",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "The spoiled daughter of a Georgia plantation owner conducts a tumultuous romance with a cynical profiteer during the American Civil War and Reconstruction Era.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Gone_with_the_Wind.jpg"
+    },
+    {
+        "title": "La meglio gioventù",
+        "year": "2003",
+        "genre": "Drama, Romance",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "After a fateful encounter in the summer of 1966, the lifepaths of two brothers from a middle-class Roman family diverge, intersecting with some of the most significant events of postwar Italian history in the following decades.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/La_meglio_gioventù.jpg"
+    },
+    {
+        "title": "Lock, Stock and Two Smoking Barrels",
+        "year": "1998",
+        "genre": "Comedy, Crime",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A card shark and his unwillingly-enlisted friends need to make a lot of cash quick after losing a sketchy poker match. To do this they decide to pull a heist on a small-time gang who happen to be operating out of the flat next door.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Lock_Stock_and_Two_Smoking_Barrels.jpg"
+    },
+    {
+        "title": "Chinatown",
+        "year": "1974",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Willis Wu, a background character trapped in a police procedural, tries to find his way into the larger story–and along the way discovers secrets about the strange world he inhabits and his family's buried history.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Chinatown.jpg"
+    },
+    {
+        "title": "V for Vendetta",
+        "year": "2006",
+        "genre": "Action, Drama, Sci-Fi",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In a world in which Great Britain has become a fascist state, a masked vigilante known only as “V” conducts guerrilla warfare against the oppressive British government. When V rescues a young woman from the secret police, he finds in her an ally with whom he can continue his fight to free the people of Britain.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/V_for_Vendetta.jpg"
+    },
+    {
+        "title": "Catch Me If You Can",
+        "year": "2002",
+        "genre": "Biography, Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A true story about Frank Abagnale Jr. who, before his 19th birthday, successfully conned millions of dollars worth of checks as a Pan Am pilot, doctor, and legal prosecutor. An FBI agent makes it his mission to put him behind bars. But Frank not only eludes capture, he revels in the pursuit.",
+        "platform_string": "Apple TV Store, Netflix, Catchplay",
+        "poster_local": "posters/Catch_Me_If_You_Can.jpg"
+    },
+    {
+        "title": "Inside Out",
+        "year": "2015",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When 11-year-old Riley moves to a new city, her Emotions team up to help her through the transition. Joy, Fear, Anger, Disgust and Sadness work together, but when Joy and Sadness get lost, they must journey through unfamiliar places to get back home.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Inside_Out.jpg"
+    },
+    {
+        "title": "Rashômon",
+        "year": "1951",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Four people recount different versions of the story of a man's murder and the rape of his wife.",
+        "platform_string": "Plex",
+        "poster_local": "posters/Rashômon.jpg"
+    },
+    {
+        "title": "Trainspotting",
+        "year": "1996",
+        "genre": "Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Heroin addict Mark Renton stumbles through bad ideas and sobriety attempts with his unreliable friends --Sick Boy, Begbie, Spud and Tommy. He also has an underage girlfriend, Diane, along for the ride. After cleaning up and moving from Edinburgh to London, Mark finds he can't escape the life he left behind as Begbie and Sick Boy come knocking.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Trainspotting.jpg"
+    },
+    {
+        "title": "Three Billboards Outside Ebbing, Missouri",
+        "year": "2017",
+        "genre": "Comedy, Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Three_Billboards_Outside_Ebbing_Missouri.jpg"
+    },
+    {
+        "title": "The Bridge on the River Kwai",
+        "year": "1957",
+        "genre": "Adventure, Drama, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The classic story of English POWs in Burma forced to build a bridge to aid the war effort of their Japanese captors. British and American intelligence officers conspire to blow up the structure, but Col. Nicholson, the commander who supervised the bridge's construction, has acquired a sense of pride in his creation and tries to foil their plans.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Bridge_on_the_River_Kwai.jpg"
+    },
+    {
+        "title": "Dead Poets Society",
+        "year": "1989",
+        "genre": "Comedy, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "At an elite, old-fashioned boarding school in New England, a passionate English teacher inspires his students to rebel against convention and seize the potential of every day, courting the disdain of the stern headmaster.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Dead_Poets_Society.jpg"
+    },
+    {
+        "title": "Harry Potter and the Deathly Hallows: Part 2",
+        "year": "2011",
+        "genre": "Adventure, Family, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Harry, Ron and Hermione continue their quest to vanquish the evil Voldemort once and for all. Just as things begin to look hopeless for the young wizards, Harry discovers a trio of magical objects that endow him with powers to rival Voldemort's formidable skills.",
+        "platform_string": "Apple TV Store, iflix, Catchplay, HBO Max",
+        "poster_local": "posters/Harry_Potter_and_the_Deathly_Hallows_Part_2.jpg"
+    },
+    {
+        "title": "The Wild Robot",
+        "year": "2024",
+        "genre": "Animation, Adventure, Family",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island's animals and cares for an orphaned baby goose.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/The_Wild_Robot.jpg"
+    },
+    {
+        "title": "Barry Lyndon",
+        "year": "1975",
+        "genre": "Adventure, Drama, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "An Irish rogue uses his cunning and wit to work his way up the social classes of 18th century England, transforming himself from the humble Redmond Barry into the noble Barry Lyndon.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Barry_Lyndon.jpg"
+    },
+    {
+        "title": "Warrior",
+        "year": "2011",
+        "genre": "Action, Drama, Sport",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "During the Tong Wars in the late 1800s, Ah Sahm, a martial arts prodigy from China, immigrates to San Francisco and becomes a hatchet man for the most powerful tong in Chinatown.",
+        "platform_string": "HBO Max",
+        "poster_local": "posters/Warrior.jpg"
+    },
+    {
+        "title": "Ben-Hur",
+        "year": "1959",
+        "genre": "Adventure, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A falsely accused nobleman survives years of slavery to take vengeance on his best friend who betrayed him.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/BenHur.jpg"
+    },
+    {
+        "title": "Fargo",
+        "year": "1996",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A close-knit anthology series dealing with stories involving malice, violence and murder based in and around Minnesota.",
+        "platform_string": "Amazon Prime Video, Netflix",
+        "poster_local": "posters/Fargo.jpg"
+    },
+    {
+        "title": "Million Dollar Baby",
+        "year": "2005",
+        "genre": "Drama, Sport",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In this cutthroat competition series, an undercover millionaire must hide in plain sight and evade elimination to keep the money and win the game.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Million_Dollar_Baby.jpg"
+    },
+    {
+        "title": "Mad Max: Fury Road",
+        "year": "2015",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max",
+        "poster_local": "posters/Mad_Max_Fury_Road.jpg"
+    },
+    {
+        "title": "Hacksaw Ridge",
+        "year": "2016",
+        "genre": "Biography, Drama, History",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "WWII American Army Medic Desmond T. Doss, who served during the Battle of Okinawa, refuses to kill people and becomes the first Conscientious Objector in American history to receive the Congressional Medal of Honor.",
+        "platform_string": "Netflix, Catchplay, Vidio",
+        "poster_local": "posters/Hacksaw_Ridge.jpg"
+    },
+    {
+        "title": "Bacheha-ye aseman",
+        "year": "1999",
+        "genre": "Drama, Family, Sport",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Zohre's shoes are gone; her older brother Ali lost them. They are poor, there are no shoes for Zohre until they come up with an idea: they will share one pair of shoes. School awaits.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Bachehaye_aseman.jpg"
+    },
+    {
+        "title": "Raging Bull",
+        "year": "1980",
+        "genre": "Biography, Drama, Sport",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The life of boxer Jake LaMotta, whose violence and temper that led him to the top in the ring destroyed his life outside of it.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Raging_Bull.jpg"
+    },
+    {
+        "title": "Tonari no Totoro",
+        "year": "1990",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by Totoros, magical spirits of the forest. When the youngest runs away from home, the older sister seeks help from the spirits to find her.",
+        "platform_string": "Netflix Kids, Netflix",
+        "poster_local": "posters/Tonari_no_Totoro.jpg"
+    },
+    {
+        "title": "Gran Torino",
+        "year": "2009",
+        "genre": "Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Disgruntled Korean War veteran Walt Kowalski sets out to reform his neighbor, Thao Lor, a Hmong teenager who tried to steal Kowalski's prized possession: a 1972 Gran Torino.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Gran_Torino.jpg"
+    },
+    {
+        "title": "Ratatouille",
+        "year": "2007",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Remy, a rat, possesses a palate far more refined than that of his fellow comrades. He dreams of becoming a chef, one who creates rather than scavenges. When fate deposits him in the sewers beneath one of Paris’s most famous restaurants, he finds himself ideally placed to fulfill his dream. Forming an unusual alliance with a hapless young kitchen worker, Remy begins a daring culinary double life. As Remy pursues his vision, he must navigate the suspicions of the calculating Head Chef Skinner, the disapproval of Remy’s own colony, and the foreboding presence of renowned food critic Anton Ego, who strikes fear in the hearts of chefs all throughout France.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Ratatouille.jpg"
+    },
+    {
+        "title": "12 Years a Slave",
+        "year": "2013",
+        "genre": "Biography, Drama, History",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the pre-Civil War United States, Solomon Northup, a free black man from upstate New York, is abducted and sold into slavery. Facing cruelty as well as unexpected kindnesses Solomon struggles not only to stay alive, but to retain his dignity. In the twelfth year of his unforgettable odyssey, Solomon’s chance meeting with a Canadian abolitionist will forever alter his life.",
+        "platform_string": "YouTube TV, Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/12_Years_a_Slave.jpg"
+    },
+    {
+        "title": "The Grand Budapest Hotel",
+        "year": "2014",
+        "genre": "Comedy, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The Grand Budapest Hotel tells of a legendary concierge at a famous European hotel between the wars and his friendship with a young employee who becomes his trusted protégé. The story involves the theft and recovery of a priceless Renaissance painting, the battle for an enormous family fortune and the slow and then sudden upheavals that transformed Europe during the first half of the 20th century.",
+        "platform_string": "Disney+, Netflix",
+        "poster_local": "posters/The_Grand_Budapest_Hotel.jpg"
+    },
+    {
+        "title": "Before Sunrise",
+        "year": "1995",
+        "genre": "Comedy, Drama, Romance",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "An unexpected meeting on a train leads two travelers to spend an evening wandering through Vienna. As the night unfolds, they share stories and conversations about life and love, exploring new ideas while a quiet intimacy grows between them, knowing it may be their only night together.",
+        "platform_string": "Plex Player, Amazon Video, JustWatch, Apple TV Store",
+        "poster_local": "posters/Before_Sunrise.jpg"
+    },
+    {
+        "title": "Salinui chueok",
+        "year": "2003",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A sadistic serial rapist and murderer of young women terrorizes a small province in 1980s South Korea. To prevent further crimes, three increasingly desperate detectives with conflicting methods race against time to unravel the violent mind of the killer in a futile effort to solve the case.",
+        "platform_string": "fuboTV, Paramount Plus Premium, JustWatch",
+        "poster_local": "posters/Salinui_chueok.jpg"
+    },
+    {
+        "title": "How to Train Your Dragon",
+        "year": "2010",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "As an ancient threat endangers both Vikings and dragons alike on the isle of Berk, the friendship between Hiccup, an inventive Viking, and Toothless, a Night Fury dragon, becomes the key to both species forging a new future together.",
+        "platform_string": "Apple TV Store, HBO Max",
+        "poster_local": "posters/How_to_Train_Your_Dragon.jpg"
+    },
+    {
+        "title": "Blade Runner",
+        "year": "1982",
+        "genre": "Action, Drama, Sci-Fi",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.",
+        "platform_string": "Apple TV Store, Netflix, Catchplay",
+        "poster_local": "posters/Blade_Runner.jpg"
+    },
+    {
+        "title": "Gone Girl",
+        "year": "2014",
+        "genre": "Drama, Mystery, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "With his wife's disappearance having become the focus of an intense media circus, a man sees the spotlight turned on him when it's suspected that he may not be innocent.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Gone_Girl.jpg"
+    },
+    {
+        "title": "Monsters, Inc.",
+        "year": "2001",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Lovable Sulley and his wisecracking sidekick Mike Wazowski are the top scare team at Monsters, Inc., the scream-processing factory in Monstropolis. When a little girl named Boo wanders into their world, it's the monsters who are scared silly, and it's up to Sulley and Mike to keep her out of sight and get her back home.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Monsters_Inc.jpg"
+    },
+    {
+        "title": "Spider-Man: No Way Home",
+        "year": "2021",
+        "genre": "Action, Adventure, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+        "platform_string": "Apple TV Store, Catchplay, Vidio",
+        "poster_local": "posters/SpiderMan_No_Way_Home.jpg"
+    },
+    {
+        "title": "Hababam Sinifi: Sinifta Kaldi",
+        "year": "Unknown",
+        "genre": "Comedy",
+        "rating": "8.4",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Hababam_Sinifi_Sinifta_Kaldi.jpg"
+    },
+    {
+        "title": "Jaws",
+        "year": "1975",
+        "genre": "Adventure, Drama, Horror",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When the seaside community of Amity finds itself under attack by a dangerous great white shark, the town's chief of police, a young marine biologist, and a grizzled shark hunter embark on a desperate quest to kill the beast before it strikes again.",
+        "platform_string": "Amazon Prime Video",
+        "poster_local": "posters/Jaws.jpg"
+    },
+    {
+        "title": "Ford v Ferrari",
+        "year": "2019",
+        "genre": "Action, Biography, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "American car designer Carroll Shelby and the British-born driver Ken Miles work together to battle corporate interference, the laws of physics, and their own personal demons to build a revolutionary race car for Ford Motor Company and take on the dominating race cars of Enzo Ferrari at the 24 Hours of Le Mans in France in 1966.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Ford_v_Ferrari.jpg"
+    },
+    {
+        "title": "In the Name of the Father",
+        "year": "1994",
+        "genre": "Biography, Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A man named Farmer sets out to rescue his kidnapped wife and avenge the death of his son – two acts committed by the Krugs, a race of animal-warriors who are controlled by the evil Gallian.",
+        "platform_string": "Amazon Prime Video, ViX Premium Amazon Channel, JustWatch, Plex",
+        "poster_local": "posters/In_the_Name_of_the_Father.jpg"
+    },
+    {
+        "title": "Relatos salvajes",
+        "year": "2014",
+        "genre": "Comedy, Drama, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Injustice and the demands of the world can cause stress for many people. Some of them, however, explode. This includes a waitress serving a grouchy loan shark, an altercation between two motorists, an ill-fated wedding reception, and a wealthy businessman who tries to buy his family out of trouble.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch",
+        "poster_local": "posters/Relatos_salvajes.jpg"
+    },
+    {
+        "title": "The Gold Rush",
+        "year": "1925",
+        "genre": "Adventure, Comedy, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A gold prospector in Alaska struggles to survive the elements and win the heart of a dance hall girl.",
+        "platform_string": "JustWatch TV, Plex, KlikFilm",
+        "poster_local": "posters/The_Gold_Rush.jpg"
+    },
+    {
+        "title": "Sherlock Jr.",
+        "year": "1924",
+        "genre": "Action, Comedy, Romance",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A film projectionist longs to be a detective, and puts his meager skills to work when he is framed by a rival for stealing his girlfriend's father's pocketwatch.",
+        "platform_string": "JustWatch TV, Plex",
+        "poster_local": "posters/Sherlock_Jr.jpg"
+    },
+    {
+        "title": "Mary and Max.",
+        "year": "2009",
+        "genre": "Animation, Comedy, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A tale of friendship between two unlikely pen pals: Mary, a lonely, eight-year-old girl living in the suburbs of Melbourne, and Max, a forty-four-year old, severely obese man living in New York.",
+        "platform_string": "Disney Plus, Hulu, JustWatch, Apple TV Store",
+        "poster_local": "posters/Mary_and_Max.jpg"
+    },
+    {
+        "title": "The Deer Hunter",
+        "year": "1979",
+        "genre": "Drama, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Three steelworkers enlist in the army and are sent to Vietnam, one leaving behind a rushed marriage, the others a shared love. What they encounter during the war changes their lives forever.",
+        "platform_string": "Amazon Video, Apple TV Store, JustWatch, JustWatch TV",
+        "poster_local": "posters/The_Deer_Hunter.jpg"
+    },
+    {
+        "title": "Le salaire de la peur",
+        "year": "1955",
+        "genre": "Adventure, Drama, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When an explosion at an oil well threatens hundreds of lives, a crack team is called upon to make a deadly desert crossing with nitroglycerine in tow.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Le_salaire_de_la_peur.jpg"
+    },
+    {
+        "title": "The General",
+        "year": "1927",
+        "genre": "Action, Adventure, Comedy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "During America’s Civil War, Union spies steal engineer Johnny Gray's beloved locomotive, 'The General'—with Johnnie's lady love aboard an attached boxcar—and he single-handedly must do all in his power to both get The General back and to rescue Annabelle.",
+        "platform_string": "JustWatch TV, Plex, Artiflix",
+        "poster_local": "posters/The_General.jpg"
+    },
+    {
+        "title": "Rocky",
+        "year": "1976",
+        "genre": "Drama, Sport",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Rocky Balboa is a Philadelphia club fighter who seems to be going nowhere. But when a stroke of fate puts him in the ring with a world heavyweight champion, Rocky knows that it's his one shot at the big time — a once-in-a-lifetime opportunity to go the distance and come out a winner!",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Rocky.jpg"
+    },
+    {
+        "title": "Logan",
+        "year": "2017",
+        "genre": "Action, Drama, Sci-Fi",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the near future, a weary Logan cares for an ailing Professor X in a hideout on the Mexican border. But Logan's attempts to hide from the world and his legacy are upended when a young mutant arrives, pursued by dark forces.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Logan.jpg"
+    },
+    {
+        "title": "Mr. Smith Goes to Washington",
+        "year": "1939",
+        "genre": "Comedy, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "After the death of a United States Senator, idealistic Jefferson Smith is appointed as his replacement in Washington. Soon, the naive and earnest new senator has to battle political corruption.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Mr_Smith_Goes_to_Washington.jpg"
+    },
+    {
+        "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "year": "2003",
+        "genre": "Action, Adventure, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When wily pirate Captain Barbossa seizes Jack Sparrow’s beloved ship, the Black Pearl, and kidnaps the governor’s daughter, Elizabeth Swann, blacksmith Will Turner reluctantly teams up with the unpredictable pirate Jack to rescue her—only to uncover a terrifying curse that turns Barbossa’s crew into the undead.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/Pirates_of_the_Caribbean_The_Curse_of_the_Black_Pearl.jpg"
+    },
+    {
+        "title": "Koe no katachi",
+        "year": "2016",
+        "genre": "Animation, Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "Shouya Ishida starts bullying the new girl in class, Shouko Nishimiya, because she is deaf. But as the teasing continues, the rest of the class starts to turn on Shouya for his lack of compassion. When they leave elementary school, Shouko and Shouya do not speak to each other again... until an older, wiser Shouya, tormented by his past behaviour, decides he must see Shouko once more. He wants to atone for his sins, but is it already too late...?",
+        "platform_string": "Crunchyroll, Crunchyroll Amazon Channel, Apple TV Store, Amazon Video",
+        "poster_local": "posters/Koe_no_katachi.jpg"
+    },
+    {
+        "title": "Tôkyô monogatari",
+        "year": "1972",
+        "genre": "Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The elderly Shukishi and his wife, Tomi, take the long journey from their small seaside village to visit their adult children in Tokyo. Their elder son, Koichi, a doctor, and their daughter, Shige, a hairdresser, don't have much time to spend with their aged parents, and so it falls to Noriko, the widow of their younger son who was killed in the war, to keep her in-laws company.",
+        "platform_string": "Plex",
+        "poster_local": "posters/Tôkyô_monogatari.jpg"
+    },
+    {
+        "title": "On the Waterfront",
+        "year": "1954",
+        "genre": "Crime, Drama, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A prizefighter-turned-longshoreman with a conscience goes up against labor leaders to expose corruption, extortion, and murder among the union ranks.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/On_the_Waterfront.jpg"
+    },
+    {
+        "title": "La haine",
+        "year": "1996",
+        "genre": "Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "After a chaotic night of rioting in a marginal suburb of Paris, three young friends, Vinz, Hubert and Saïd, wander around unoccupied waiting for news about the state of health of a mutual friend who has been seriously injured when confronting the police.",
+        "platform_string": "Criterion Channel, Kanopy, JustWatch",
+        "poster_local": "posters/La_haine.jpg"
+    },
+    {
+        "title": "Spotlight",
+        "year": "2015",
+        "genre": "Biography, Crime, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The true story of how the Boston Globe uncovered the massive scandal of child molestation and cover-up within the local Catholic Archdiocese, shaking the entire Catholic Church to its core.",
+        "platform_string": "Kanopy, Shout! Factory TV, JustWatch, Apple TV Store",
+        "poster_local": "posters/Spotlight.jpg"
+    },
+    {
+        "title": "Smultronstället",
+        "year": "1959",
+        "genre": "Drama, Romance",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Smultronstället.jpg"
+    },
+    {
+        "title": "Gekijô-ban Chensô Man Reze-hen",
+        "year": "2025",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "In a brutal war between devils, hunters, and secret enemies, a mysterious girl named Reze has stepped into Denji's world, and he faces his deadliest battle yet, fueled by love in a world where survival knows no rules.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Gekijôban_Chensô_Man_Rezehen.jpg"
+    },
+    {
+        "title": "The Sound of Music",
+        "year": "1965",
+        "genre": "Biography, Drama, Family",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the years before World War II, a tomboyish postulant at an Austrian abbey is hired as a governess in the home of a widowed naval captain with seven children and brings a new love of life and music into the home.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/The_Sound_of_Music.jpg"
+    },
+    {
+        "title": "The Terminator",
+        "year": "1984",
+        "genre": "Action, Adventure, Sci-Fi",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the post-apocalyptic future, reigning tyrannical supercomputers teleport a cyborg assassin known as the \"Terminator\" back to 1984 to kill Sarah Connor, whose unborn son is destined to lead insurgents against 21st century mechanical hegemony. Meanwhile, the human-resistance movement dispatches a lone warrior to safeguard Sarah. Can he stop the virtually indestructible killing machine?",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Terminator.jpg"
+    },
+    {
+        "title": "Maharaja",
+        "year": "2024",
+        "genre": "Action, Crime, Drama",
+        "rating": "8.3",
+        "status": "Plan to Watch",
+        "description": "A barber seeks vengeance after his home is burglarized, cryptically telling police his \"lakshmi\" has been taken, leaving them uncertain if it's a person or object. His quest to recover the elusive \"lakshmi\" unfolds.",
+        "platform_string": "Netflix",
+        "poster_local": "posters/Maharaja.jpg"
+    },
+    {
+        "title": "Jai Bhim",
+        "year": "2021",
+        "genre": "Crime, Drama",
+        "rating": "8.6",
+        "status": "Plan to Watch",
+        "description": "When a tribal man is arrested for a case of alleged theft, his wife turns to a human-rights lawyer to help bring justice.",
+        "platform_string": "Amazon Prime Video",
+        "poster_local": "posters/Jai_Bhim.jpg"
+    },
+    {
+        "title": "The Third Man",
+        "year": "1950",
+        "genre": "Drama, Film-Noir, Mystery",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "A unique story told over two distinct halves, \"Summer\" follows Sam, a man drawn to a mysterious island off the British coast where he encounters a group of islanders set on preserving their traditions at any cost. \"Winter\" follows Helen, a strong-willed outsider who comes to the island seeking answers, but whose arrival precipitates a fractious battle to decide its fate.",
+        "platform_string": "HBO Max",
+        "poster_local": "posters/The_Third_Man.jpg"
+    },
+    {
+        "title": "The Big Lebowski",
+        "year": "1998",
+        "genre": "Comedy, Crime",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Physicists Leonard and Sheldon find their nerd-centric social circle with pals Howard and Raj expanding when aspiring actress Penny moves in next door.",
+        "platform_string": "HBO Max, iflix",
+        "poster_local": "posters/The_Big_Lebowski.jpg"
+    },
+    {
+        "title": "The Best Years of Our Lives",
+        "year": "1947",
+        "genre": "Drama, Romance, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The Horton and Brady broods endure the romantic trials of life in Salem, a Midwestern hamlet filled with evil geniuses, star-crossed lovers and a rich family history.",
+        "platform_string": "Peacock Premium, Peacock Premium Plus, JustWatch",
+        "poster_local": "posters/The_Best_Years_of_Our_Lives.jpg"
+    },
+    {
+        "title": "Before Sunset",
+        "year": "2004",
+        "genre": "Drama, Romance",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Nine years later, Jesse travels across Europe giving readings from a book he wrote about the night he spent in Vienna with Celine. After his reading in Paris, Celine finds him, and they spend part of the day together before Jesse has to again leave for a flight. They are both in relationships now, and Jesse has a son, but as their strong feelings for each other start to return, both confess a longing for more.",
+        "platform_string": "Plex Player, Spectrum On Demand, JustWatch, Amazon Video, Apple TV Store",
+        "poster_local": "posters/Before_Sunset.jpg"
+    },
+    {
+        "title": "Room",
+        "year": "2016",
+        "genre": "Drama, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Room.jpg"
+    },
+    {
+        "title": "Det sjunde inseglet",
+        "year": "1958",
+        "genre": "Drama, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "An American anthology police detective series utilizing multiple timelines in which investigations seem to unearth personal and professional secrets of those involved, both within or outside the law.",
+        "platform_string": "HBO Max",
+        "poster_local": "posters/Det_sjunde_inseglet.jpg"
+    },
+    {
+        "title": "The Incredibles",
+        "year": "2004",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8",
+        "status": "Plan to Watch",
+        "description": "Brave rabbit cop Judy Hopps and her friend, the fox Nick Wilde, team up again to crack a new case, the most perilous and intricate of their careers.",
+        "platform_string": "Disney+",
+        "poster_local": "posters/The_Incredibles.jpg"
+    },
+    {
+        "title": "Hotel Rwanda",
+        "year": "2005",
+        "genre": "Biography, Drama, History",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Inspired by true events, this film takes place in Rwanda in the 1990s when more than a million Tutsis were killed in a genocide that went mostly unnoticed by the rest of the world. Hotel owner Paul Rusesabagina houses over a thousand refuges in his hotel in attempt to save their lives.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Hotel_Rwanda.jpg"
+    },
+    {
+        "title": "Hachi: A Dog's Tale",
+        "year": "2010",
+        "genre": "Biography, Drama, Family",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Professor Wilson discovers a lost Akita puppy on his way home. Despite objections from his wife, Hachi endears himself to the family and grows to be Parker's loyal companion. As their bond grows deeper, a beautiful relationship unfolds.",
+        "platform_string": "fuboTV, BYUtv, Apple TV Store, JustWatch, Amazon Video",
+        "poster_local": "posters/Hachi_A_Dogaposs_Tale.jpg"
+    },
+    {
+        "title": "Platoon",
+        "year": "1986",
+        "genre": "Drama, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "As a young and naive recruit in Vietnam, Chris Taylor faces a moral crisis when confronted with the horrors of war and the duality of man.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Platoon.jpg"
+    },
+    {
+        "title": "The Exorcist",
+        "year": "1973",
+        "genre": "Horror",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When a mysterious entity possesses a young girl, her mother seeks the help of two Catholic priests to save her life.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Exorcist.jpg"
+    },
+    {
+        "title": "The Iron Giant",
+        "year": "1999",
+        "genre": "Animation, Action, Adventure",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the small town of Rockwell, Maine in October 1957, a giant metal machine befriends a nine-year-old boy and ultimately finds its humanity by unselfishly saving people from their own fears and prejudices.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/The_Iron_Giant.jpg"
+    },
+    {
+        "title": "Rush",
+        "year": "2013",
+        "genre": "Biography, Drama, Sport",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "In the 1970s, a rivalry propels race car drivers Niki Lauda and James Hunt to fame and glory — until a horrible accident threatens to end it all.",
+        "platform_string": "Amazon Prime Video, Amazon Prime Video with Ads, JustWatch, Apple TV Store",
+        "poster_local": "posters/Rush.jpg"
+    },
+    {
+        "title": "Stand by Me",
+        "year": "1986",
+        "genre": "Adventure, Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "After learning that a boy their age has been accidentally killed near their rural homes, four boys decide to go see the body. Gordie, Vern, Chris, and Teddy encounter a mean junk man and a marsh full of leeches, but they also learn more about one another and their very different home lives. Just a lark at first, the boys' adventure evolves into a defining event in their lives.",
+        "platform_string": "Apple TV Store, Netflix",
+        "poster_local": "posters/Stand_by_Me.jpg"
+    },
+    {
+        "title": "The Wizard of Oz",
+        "year": "1939",
+        "genre": "Adventure, Family, Fantasy",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Young Dorothy finds herself in a magical world where she makes friends with a lion, a scarecrow and a tin man as they make their way along the yellow brick road to talk with the Wizard and ask for the things they miss most in their lives. The Wicked Witch of the West is the only thing that could stop them.",
+        "platform_string": "Apple TV Store, Catchplay",
+        "poster_local": "posters/The_Wizard_of_Oz.jpg"
+    },
+    {
+        "title": "Babam ve Oglum",
+        "year": "2005",
+        "genre": "Drama",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "No synopsis available.",
+        "platform_string": "Not Available Online",
+        "poster_local": "posters/Babam_ve_Oglum.jpg"
+    },
+    {
+        "title": "La battaglia di Algeri",
+        "year": "1967",
+        "genre": "Drama, War",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "The legendary true story of a small band of soldiers who sacrificed their lives in hopeless combat against a massive army in order to prevent a tyrant from smashing the new Republic of Texas.",
+        "platform_string": "MGM Plus Roku Premium Channel, Philo, JustWatch, Apple TV Store, Amazon Video",
+        "poster_local": "posters/La_battaglia_di_Algeri.jpg"
+    },
+    {
+        "title": "La passion de Jeanne d'Arc",
+        "year": "1928",
+        "genre": "Biography, Drama, History",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "Set in 1889 France, Dodin Bouffant is a chef living with his personal cook and lover Eugénie. They share a long history of gastronomy and love but Eugénie refuses to marry Dodin, so the food lover decides to do something he has never done before: cook for her.",
+        "platform_string": "KlikFilm",
+        "poster_local": "posters/La_passion_de_Jeanne_daposArc.jpg"
+    },
+    {
+        "title": "Ah-ga-ssi",
+        "year": "2017",
+        "genre": "Drama, Romance, Thriller",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "1930s Korea, in the period of Japanese occupation, a new girl, Sook-hee, is hired as a handmaiden to a Japanese heiress, Hideko, who lives a secluded life on a large countryside estate with her domineering Uncle Kouzuki. But the maid has a secret. She is a pickpocket recruited by a swindler posing as a Japanese Count to help him seduce the Lady to steal her fortune.",
+        "platform_string": "FilmBox+",
+        "poster_local": "posters/Ahgassi.jpg"
+    },
+    {
+        "title": "Network",
+        "year": "1976",
+        "genre": "Drama",
+        "rating": "8.1",
+        "status": "Plan to Watch",
+        "description": "When veteran anchorman Howard Beale is forced to retire his 25-year post because of his age, he announces to viewers that he will kill himself during his farewell broadcast. Network executives rethink their decision when his fanatical tirade results in a spike in ratings.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Network.jpg"
+    },
+    {
+        "title": "Drishyam",
+        "year": "2015",
+        "genre": "Crime, Drama, Mystery",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "A simple street-smart man tries to protect his family from a cop looking for her missing son who was accidently killed by his daughter.",
+        "platform_string": "Apple TV Store",
+        "poster_local": "posters/Drishyam.jpg"
+    },
+    {
+        "title": "Gangs of Wasseypur",
+        "year": "2012",
+        "genre": "Action, Comedy, Crime",
+        "rating": "8.2",
+        "status": "Plan to Watch",
+        "description": "When the head of a criminal organisation, Finn Wallace is assassinated, the sudden power vacuum his death creates threatens the fragile peace between the intricate web of gangs operating on the streets of the city. Now it’s up to the grieving, volatile and impulsive Sean Wallace to restore control and find those responsible for killing his father.",
+        "platform_string": "AMC Plus Apple TV Channel , AMC+ Amazon Channel, JustWatch",
+        "poster_local": "posters/Gangs_of_Wasseypur.jpg"
+    }
+]
