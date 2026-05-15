@@ -425,7 +425,7 @@ class MovieDetailPage(ctk.CTkFrame):
                         pass
 
         # 6. BANNER FOOTER
-        # FIX: tombol diubah ke Watchlist
+        # FIX: tombol diubah ke Watchlist, karena Dashboard sudah ada di navbar atas
         banner = ctk.CTkFrame(self.scroll, fg_color="#FF8C00", corner_radius=0, height=120)
         banner.pack(fill="x", pady=(50, 0))
         banner.pack_propagate(False)
