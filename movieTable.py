@@ -45,7 +45,7 @@ class MovietablePage(ctk.CTkFrame):
             command=lambda: self.filter_data(self.search_entry.get())
         ).pack(side="left")
 
-        # ── Nav Pills (BENAR-BENAR CENTER pakai place) ──
+        # ── Nav Pills (CENTER pakai place) ──
         pill = ctk.CTkFrame(nav, fg_color="#2E2E2E", corner_radius=20, height=34)
         pill.place(relx=0.5, rely=0.5, anchor="center")
 
