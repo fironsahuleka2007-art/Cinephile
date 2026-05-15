@@ -21,11 +21,6 @@ class MainApp(ctk.CTk):
         self.configure(fg_color=BG_MAIN)
         
         self.db_path = "data_film.json"
-<<<<<<< HEAD
-=======
-        self.movie_list = []
-        self.search_query_pending = None
->>>>>>> main
         self.scraper = MovieScraper()
         self.current_page_instance = None
 
@@ -64,10 +59,7 @@ class MainApp(ctk.CTk):
             self.movie_list = hasil
             with open(self.db_path, "w", encoding="utf-8") as f:
                 json.dump(self.movie_list, f, indent=4)
-<<<<<<< HEAD
             print("✅ Database Ready!")
-=======
->>>>>>> main
 
     def show_page(self, page_name, data=None):
         for widget in self.container.winfo_children():
