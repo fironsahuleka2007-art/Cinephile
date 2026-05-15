@@ -2,20 +2,16 @@ import customtkinter as ctk
 import json
 import os
 import threading
+
 from loginPage import AuthPages
 from movieTable import MovietablePage
 from dashboardCinephile import DashboardPage
+from profilePage import ProfilePage
 from genreAnalyze import GenreAnalyzePage
 from movieDetail import MovieDetailPage
 from watchlist import WatchlistPage
 from scraper import MovieScraper
-
-# Variabel Warna Global (Biar gak NameError lagi)
-BG_MAIN    = "#1A1A1A"
-BG_LIGHT   = "#F4F4F4"
-TEXT_WHITE = "#FFFFFF"
-TEXT_GRAY  = "#AAAAAA"
-ACCENT     = "#E53935"
+from styles import *
 
 class MainApp(ctk.CTk):
     def __init__(self):
@@ -24,42 +20,42 @@ class MainApp(ctk.CTk):
         self.geometry("1100x850")
         self.configure(fg_color=BG_MAIN)
         
-        # Variabel sistem
-        self.search_query_pending = None
-        self.movie_list = []
         self.db_path = "data_film.json"
+<<<<<<< HEAD
+=======
+        self.movie_list = []
+        self.search_query_pending = None
+>>>>>>> main
         self.scraper = MovieScraper()
         self.current_page_instance = None
 
-        # Load Data Lokal
         self._load_local_data()
 
-        # UI Setup
         self.container = ctk.CTkFrame(self, fg_color="transparent")
         self.container.pack(fill="both", expand=True)
 
-        # Init Auth
         self.auth = AuthPages(self.container, self)
+        
+        active_user = None
+        if os.path.exists("session.json"):
+            try:
+                with open("session.json", "r", encoding="utf-8") as f:
+                    active_user = json.load(f).get("active_user")
+            except: pass
 
-        # Cek Sesi
-        active_user = self.auth.db.get_session()
         if active_user:
             self.show_page("dashboard")
         else:
             self.show_page("login")
 
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)
-
     def _load_local_data(self):
         if os.path.exists(self.db_path):
-            with open(self.db_path, "r", encoding="utf-8") as f:
-                try:
+            try:
+                with open(self.db_path, "r", encoding="utf-8") as f:
                     self.movie_list = json.load(f)
-                except:
-                    self.movie_list = []
+            except: self.movie_list = []
         
         if not self.movie_list:
-            print("⚠️ Database kosong. Scraping data awal...")
             threading.Thread(target=self._initialize_data, daemon=True).start()
 
     def _initialize_data(self):
@@ -68,20 +64,27 @@ class MainApp(ctk.CTk):
             self.movie_list = hasil
             with open(self.db_path, "w", encoding="utf-8") as f:
                 json.dump(self.movie_list, f, indent=4)
+<<<<<<< HEAD
             print("✅ Database Ready!")
+=======
+>>>>>>> main
 
     def show_page(self, page_name, data=None):
         for widget in self.container.winfo_children():
             widget.destroy()
 
         if page_name == "login":
+            self.geometry("1100x850") # Reset geometri ke standar
             self.auth.render_login()
-            self.current_page_instance = self.auth
         elif page_name == "register":
+            # Geometri dipanjangin biar form register muat, handled in loginPage render_register
             self.auth.render_register()
-            self.current_page_instance = self.auth
         elif page_name == "dashboard":
+            self.geometry("1100x850") # Reset geometri ke standar
             self.current_page_instance = DashboardPage(self.container, self)
+        elif page_name == "profile":
+            self.geometry("1100x850") # Reset geometri ke standar
+            self.current_page_instance = ProfilePage(self.container, self)
         elif page_name == "movietable":
             self.current_page_instance = MovietablePage(self.container, self)
         elif page_name == "genreanalyze":
@@ -91,25 +94,60 @@ class MainApp(ctk.CTk):
         elif page_name == "watchlist":
             self.current_page_instance = WatchlistPage(self.container, self)
 
-        if hasattr(self.current_page_instance, "pack"):
+        if self.current_page_instance and hasattr(self.current_page_instance, "pack"):
             self.current_page_instance.pack(fill="both", expand=True)
 
     def show_toast(self, message, target=None):
-        """Fungsi yang tadi error (Sekarang sudah ada)"""
-        print(f"🔔 {message}")
+        # Toast sederhana via console untuk sementara, atau implementasikan UI popup
+        print(f"Toas Notification: {message}")
         if target:
             self.show_page(target)
+
+    def show_welcome_transition(self, username):
+        # Animasi welcome kamu yang lama, tapi pastiin reset geometri
+        for widget in self.container.winfo_children():
+            widget.destroy()
+            
+        welcome_frame = ctk.CTkFrame(self.container, fg_color=BG_MAIN)
+        welcome_frame.place(relwidth=1, relheight=1)
+        
+        self.welcome_lbl = ctk.CTkLabel(welcome_frame, text=f"Welcome back,\n{username}", font=("Arial Black", 46, "bold"), text_color="white", justify="center")
+        self.welcome_lbl.place(relx=0.5, rely=0.55, anchor="center") 
+        
+        self.text_y = 0.55
+        self._animate_text_up()
+        
+        self.after(2000, lambda: self._slide_up_dashboard(welcome_frame))
+
+    def _animate_text_up(self):
+        if hasattr(self, 'welcome_lbl') and self.welcome_lbl.winfo_exists():
+            if self.text_y > 0.48:
+                self.text_y -= 0.001
+                self.welcome_lbl.place(rely=self.text_y)
+                self.after(16, self._animate_text_up)
+
+    def _slide_up_dashboard(self, welcome_frame):
+        self.current_page_instance = DashboardPage(self.container, self)
+        self.current_page_instance.place(relwidth=1, relheight=1, rely=1.0, relx=0)
+        self.slide_y = 1.0
+        self._animate_slide(welcome_frame)
+
+    def _animate_slide(self, welcome_frame):
+        if self.slide_y > 0.005: 
+            self.slide_y += (0.0 - self.slide_y) * 0.08 
+            self.current_page_instance.place(rely=self.slide_y)
+            self.after(16, lambda: self._animate_slide(welcome_frame))
+        else:
+            self.current_page_instance.place(rely=0)
+            welcome_frame.destroy()
+            self.current_page_instance.place_forget()
+            self.current_page_instance.pack(fill="both", expand=True)
 
     def handle_local_search(self, query):
         if not query: return
         query = query.lower().strip()
-        
-        # Jika di MovieTable, langsung filter. Jika tidak, titip query.
-        if self.current_page_instance.__class__.__name__ == "MovietablePage":
-            self.current_page_instance.filter_data(query)
-        else:
-            self.search_query_pending = query
-            self.show_page("movietable")
+        self.search_query_pending = query 
+        self.show_page("movietable")
 
     def on_closing(self):
         try: self.scraper.close()
@@ -118,4 +156,5 @@ class MainApp(ctk.CTk):
 
 if __name__ == "__main__":
     app = MainApp()
+    app.protocol("WM_DELETE_WINDOW", app.on_closing)
     app.mainloop()

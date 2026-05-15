@@ -71,9 +71,9 @@ class MovietablePage(ctk.CTkFrame):
         pill_outer.place(relx=0.5, rely=0.5, anchor="center")
         pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
         pill.pack()
-        for text, page, active in [("Home","dashboard",False),("Genre Analysis","genreanalyze",False),
+        for text, page, active in [("Home","dashboard",False),("Genre Analyze","genreanalyze",False),
                                     ("Movie Table",None,True),("Watchlist","watchlist",False)]:
-            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analysis" else 80,
+            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analyze" else 80,
                           height=28, corner_radius=16, font=("Trebuchet MS",11,"bold"),
                           fg_color=ACCENT if active else "transparent",
                           text_color=TEXT_WHITE if active else TEXT_GRAY,
