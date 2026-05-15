@@ -13,6 +13,11 @@ class MovieDetailPage(ctk.CTkFrame):
         self.movie = movie_data if movie_data else {}
         self.star_buttons = []
         self.selected_stars = 0
+        self._more_movies = None  # FIX: cache sample movies
+
+        # FIX: init image cache on app level
+        if not hasattr(self.app, '_img_cache'):
+            self.app._img_cache = {}
 
         self.username = "Guest"
         try:
@@ -25,11 +30,27 @@ class MovieDetailPage(ctk.CTkFrame):
 
         self._build_ui()
 
-    def _generate_dynamic_chart(self, rating_str):
+    # FIX: helper untuk load image dengan cache
+    def _load_image(self, path, size):
+        key = (path, size)
+        if key not in self.app._img_cache:
+            img = Image.open(path)
+            self.app._img_cache[key] = ctk.CTkImage(
+                light_image=img, dark_image=img, size=size
+            )
+        return self.app._img_cache[key]
+
+    def _generate_dynamic_chart(self, rating_str, votes_str="0"):
         try:
             rating = float(rating_str)
         except:
             rating = 5.0
+
+        # FIX: parse total votes dari scraper
+        try:
+            total_votes = int(str(votes_str).replace(",", "").replace(".", "").replace(" ", ""))
+        except:
+            total_votes = 0
 
         distribution = {}
         for score in range(1, 11):
@@ -41,7 +62,8 @@ class MovieDetailPage(ctk.CTkFrame):
         total_weight = sum(distribution.values())
         for score in distribution:
             distribution[score] = distribution[score] / total_weight
-        return distribution
+
+        return distribution, total_votes
 
     def _load_existing_review(self):
         watchlist_file = f"watchlist_{self.username}.json"
@@ -129,18 +151,15 @@ class MovieDetailPage(ctk.CTkFrame):
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        # ── Logo (pack LEFT dulu) ──
         ctk.CTkLabel(nav, text="CINEPHILE", font=("Trebuchet MS", 20, "bold"),
                      text_color="#E53935").pack(side="left", padx=30)
 
-        # ── User Info (pack RIGHT dulu) ──
         user_frame = ctk.CTkFrame(nav, fg_color="transparent")
         user_frame.pack(side="right", padx=30)
         ctk.CTkLabel(user_frame, text=self.username, font=("Trebuchet MS", 12, "bold"),
                      text_color="#FFFFFF").pack(side="right")
         ctk.CTkLabel(user_frame, text="👤", font=("Arial", 16)).pack(side="right", padx=10)
 
-        # ── Nav Pills (CENTER — pakai place agar betul-betul tengah) ──
         center_frame = ctk.CTkFrame(nav, fg_color="transparent")
         center_frame.pack(side="left", fill="both", expand=True)
 
@@ -176,6 +195,7 @@ class MovieDetailPage(ctk.CTkFrame):
         title         = self.movie.get("title", "Unknown Title")
         year          = self.movie.get("year", "N/A")
         rating_val    = self.movie.get("rating", "N/A")
+        votes_val     = self.movie.get("votes", "0")   # FIX: ambil votes dari data film
         poster_path   = self.movie.get("poster_local", "")
         raw_genre     = self.movie.get("genre", "General")
         genres        = [g.strip() for g in raw_genre.split(",")] if isinstance(raw_genre, str) else ["Action"]
@@ -188,7 +208,8 @@ class MovieDetailPage(ctk.CTkFrame):
 
         if poster_path and os.path.exists(poster_path):
             try:
-                target_w, target_h = 1200, 340
+                # FIX: resize ke ukuran lebih kecil sebelum blur → jauh lebih cepat
+                target_w, target_h = 800, 227
                 bg_img = Image.open(poster_path).convert("RGB")
 
                 ratio  = max(target_w / bg_img.width, target_h / bg_img.height)
@@ -200,11 +221,12 @@ class MovieDetailPage(ctk.CTkFrame):
                 top    = (new_h - target_h) // 2
                 bg_img = bg_img.crop((left, top, left + target_w, top + target_h))
 
-                bg_img = bg_img.filter(ImageFilter.GaussianBlur(radius=18))
+                bg_img = bg_img.filter(ImageFilter.GaussianBlur(radius=12))
                 bg_img = ImageEnhance.Brightness(bg_img).enhance(0.25)
 
+                # FIX: tetap display di ukuran 1200x340, tapi proses di 800x227
                 self._hero_bg = ctk.CTkImage(light_image=bg_img, dark_image=bg_img,
-                                             size=(target_w, target_h))
+                                             size=(1200, 340))
                 bg_label = ctk.CTkLabel(hero, text="", image=self._hero_bg)
                 bg_label.place(x=0, y=0, relwidth=1, relheight=1)
             except Exception as e:
@@ -215,8 +237,8 @@ class MovieDetailPage(ctk.CTkFrame):
 
         if poster_path and os.path.exists(poster_path):
             try:
-                p_img = Image.open(poster_path)
-                self._poster_thumb = ctk.CTkImage(light_image=p_img, dark_image=p_img, size=(160, 240))
+                # FIX: pakai cache untuk poster thumb
+                self._poster_thumb = self._load_image(poster_path, size=(160, 240))
                 ctk.CTkLabel(hero_content, text="", image=self._poster_thumb).pack(side="left")
             except:
                 pass
@@ -283,7 +305,9 @@ class MovieDetailPage(ctk.CTkFrame):
         ctk.CTkLabel(chart_frame, text="Ratings Distribution",
                      font=("Helvetica", 24, "bold"), text_color="white").pack(anchor="w", pady=(0, 20))
 
-        ratings_data = self._generate_dynamic_chart(rating_val)
+        # FIX: pass votes_val ke generate chart, terima total_votes juga
+        ratings_data, total_votes = self._generate_dynamic_chart(rating_val, votes_val)
+
         for score in sorted(ratings_data.keys(), reverse=True):
             value = ratings_data[score]
             row = ctk.CTkFrame(chart_frame, fg_color="transparent")
@@ -291,8 +315,19 @@ class MovieDetailPage(ctk.CTkFrame):
             ctk.CTkLabel(row, text=str(score), font=("Helvetica", 14),
                          text_color="white", width=30).pack(side="left")
             fill_width = max(5, int(value * 450))
+            # FIX: corner_radius 5 → 2 (lebih ringan di render)
             ctk.CTkFrame(row, fg_color="#C00000", height=24,
-                         width=fill_width, corner_radius=5).pack(side="left", padx=10)
+                         width=fill_width, corner_radius=2).pack(side="left", padx=10)
+
+        # FIX: tampilkan total orang yang sudah rating di bawah chart
+        votes_display = f"{total_votes:,}" if total_votes > 0 else "N/A"
+        if votes_display:
+            ctk.CTkLabel(
+                chart_frame,
+                text=f"👥  {votes_display} ratings",
+                font=("Helvetica", 18),
+                text_color="#AAAAAA"
+            ).pack(anchor="w", pady=(14, 0))
 
         wl_frame = ctk.CTkFrame(split_frame, fg_color="#1E1E1E", corner_radius=15)
         wl_frame.pack(side="left", fill="both", expand=True, padx=(80, 0), anchor="nw")
@@ -372,13 +407,17 @@ class MovieDetailPage(ctk.CTkFrame):
 
         all_movies = getattr(self.app, "movie_list", [])
         other_movies = [m for m in all_movies if m.get("title") != title]
+
+        # FIX: sample sekali saja, disimpan di self._more_movies biar ga random ulang
         if other_movies:
-            sample_movies = random.sample(other_movies, min(len(other_movies), 4))
-            for m_data in sample_movies:
+            if self._more_movies is None:
+                self._more_movies = random.sample(other_movies, min(len(other_movies), 4))
+            for m_data in self._more_movies:
                 m_path = m_data.get("poster_local", "")
                 if m_path and os.path.exists(m_path):
                     try:
-                        m_img = ctk.CTkImage(Image.open(m_path), size=(140, 200))
+                        # FIX: pakai cache untuk thumbnail "More Stories"
+                        m_img = self._load_image(m_path, size=(140, 200))
                         btn = ctk.CTkLabel(posters_container, text="", image=m_img, cursor="hand2")
                         btn.pack(side="left", padx=(0, 20))
                         btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
@@ -386,10 +425,12 @@ class MovieDetailPage(ctk.CTkFrame):
                         pass
 
         # 6. BANNER FOOTER
+        # FIX: tombol diubah ke Watchlist
         banner = ctk.CTkFrame(self.scroll, fg_color="#FF8C00", corner_radius=0, height=120)
         banner.pack(fill="x", pady=(50, 0))
         banner.pack_propagate(False)
         ctk.CTkLabel(banner, text="Ready to track more movies?",
                      font=("Georgia", 24, "italic"), text_color="black").pack(pady=(20, 5))
-        ctk.CTkButton(banner, text="Back to Dashboard", fg_color="#1A1A1A",
-                      command=lambda: self.app.show_page("dashboard")).pack()
+        ctk.CTkButton(banner, text="Go to Watchlist", fg_color="#1A1A1A",
+                      text_color="white", font=("Trebuchet MS", 13, "bold"),
+                      command=lambda: self.app.show_page("watchlist")).pack()
