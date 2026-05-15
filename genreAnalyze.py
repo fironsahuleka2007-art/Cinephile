@@ -32,29 +32,35 @@ class GenreAnalyzePage(ctk.CTkFrame):
         }
 
         self.analyzed_data = self.process_genre_logic()
-        self._anim_offset = 0  # untuk animasi geser
         self._build_ui()
 
     def process_genre_logic(self):
         all_genres = []
         movie_list = getattr(self.app, "movie_list", [])
+        
         for movie in movie_list:
             raw_genre = movie.get("genre", "Unknown")
             if raw_genre and raw_genre not in ["Unknown", "N/A"]:
                 genres = [g.strip() for g in raw_genre.split(',')]
                 all_genres.extend(genres)
+                
         counts = Counter(all_genres)
         return sorted(counts.items(), key=lambda x: x[1], reverse=True)
 
     def get_genre_description(self, genre_name):
         return self.GENRE_DESCRIPTIONS.get(
-            genre_name,
+            genre_name, 
             f"Discover our top recommendations for the {genre_name} genre based on your collection."
         )
 
     def _build_ui(self):
         self._build_nav()
-        self.body = ctk.CTkScrollableFrame(self, fg_color=BG_MAIN, scrollbar_button_color="#444", scrollbar_button_hover_color=ACCENT)
+        
+        self.body = ctk.CTkScrollableFrame(
+            self, fg_color=BG_MAIN,
+            scrollbar_button_color="#444",
+            scrollbar_button_hover_color=ACCENT
+        )
         self.body.pack(fill="both", expand=True, side="top")
 
         self.create_hero_section()
@@ -83,17 +89,46 @@ class GenreAnalyzePage(ctk.CTkFrame):
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
+        # ── Search Bar (pack RIGHT) ──
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
         self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search...", width=150, height=32, fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
-        ctk.CTkButton(search_frame, text="🔍", width=40, height=32, fg_color=ACCENT,
-                      command=lambda: self.app.handle_local_search(self.search_entry.get())).pack(side="left")
+        ctk.CTkButton(
+            search_frame, text="🔍", width=40, height=32, fg_color=ACCENT,
+            command=lambda: self.app.handle_local_search(self.search_entry.get())
+        ).pack(side="left")
 
-        pill_outer = ctk.CTkFrame(nav, fg_color="transparent")
-        pill_outer.place(relx=0.5, rely=0.5, anchor="center")
-        pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
-        pill.pack()
+        # ── Nav Pills (BENAR-BENAR CENTER pakai place) ──
+        pill = ctk.CTkFrame(nav, fg_color="#2E2E2E", corner_radius=20, height=34)
+        pill.place(relx=0.5, rely=0.5, anchor="center")
+
+        ctk.CTkButton(
+            pill, text="Home", width=70, height=28,
+            fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16,
+            font=("Trebuchet MS", 11, "bold"),
+            command=lambda: self.app.show_page("dashboard")
+        ).pack(side="left", padx=(6, 2), pady=3)
+
+        ctk.CTkButton(
+            pill, text="Genre Analysis", width=110, height=28,
+            fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16,
+            font=("Trebuchet MS", 11, "bold")
+        ).pack(side="left", padx=2, pady=3)
+
+        ctk.CTkButton(
+            pill, text="Movie Table", width=92, height=28,
+            fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16,
+            font=("Trebuchet MS", 11, "bold"),
+            command=lambda: self.app.show_page("movietable")
+        ).pack(side="left", padx=2, pady=3)
+
+        ctk.CTkButton(
+            pill, text="Watchlist", width=80, height=28,
+            fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16,
+            font=("Trebuchet MS", 11, "bold"),
+            command=lambda: self.app.show_page("watchlist")
+        ).pack(side="left", padx=(2, 6), pady=3)
 
         ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=3)
         ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=("Trebuchet MS", 11, "bold")).pack(side="left", padx=1)
@@ -164,8 +199,9 @@ class GenreAnalyzePage(ctk.CTkFrame):
         if not top_10:
             ctk.CTkLabel(graph_box, text="No movie data available.", text_color=TEXT_GRAY).pack()
             return
-
+            
         max_val = top_10[0][1]
+
         for genre, count in top_10:
             row = ctk.CTkFrame(graph_box, fg_color="transparent")
             row.pack(fill="x", pady=4)
@@ -188,7 +224,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
     def create_top_recommendations(self):
         top_3 = self.analyzed_data[:3]
         movie_list = getattr(self.app, "movie_list", [])
-
+        
         for index, (name, count) in enumerate(top_3):
             cat_frame = ctk.CTkFrame(self.body, fg_color="transparent")
             cat_frame.pack(fill="x", padx=150, pady=40)
@@ -199,11 +235,15 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
             p_frame = ctk.CTkFrame(cat_frame, fg_color="transparent")
             p_frame.pack(anchor="w")
-
-            matching_movies = [m for m in movie_list if name in [g.strip() for g in m.get("genre", "").split(",")]]
-
+            
+            matching_movies = [
+                m for m in movie_list
+                if name in [g.strip() for g in m.get("genre", "").split(",")]
+            ]
+            
             for m_data in matching_movies[:4]:
                 poster_path = m_data.get("poster_local", "")
+                
                 if poster_path and os.path.exists(poster_path):
                     try:
                         img = ctk.CTkImage(Image.open(poster_path), size=(130, 190))
@@ -216,24 +256,51 @@ class GenreAnalyzePage(ctk.CTkFrame):
                     p = ctk.CTkFrame(p_frame, width=130, height=190, fg_color="#333", corner_radius=4)
                     p.pack(side="left", padx=(0, 20))
                     p.pack_propagate(False)
-                    ctk.CTkLabel(p, text=m_data.get("title", "No Title"), font=("Trebuchet MS", 11), text_color=TEXT_WHITE, wraplength=110).place(relx=0.5, rely=0.5, anchor="center")
+                    ctk.CTkLabel(
+                        p, text=m_data.get("title", "No Title"),
+                        font=("Trebuchet MS", 11), text_color=TEXT_WHITE, wraplength=110
+                    ).place(relx=0.5, rely=0.5, anchor="center")
 
             if index < len(top_3) - 1:
-                ctk.CTkFrame(self.body, height=1, fg_color="#333333").pack(fill="x", padx=150, pady=20)
+                ctk.CTkFrame(
+                    self.body, height=1, fg_color="#333333"
+                ).pack(fill="x", padx=150, pady=20)
 
     def create_orange_banner(self):
         banner = ctk.CTkFrame(self.body, fg_color="#FF8C00", corner_radius=0, height=180)
         banner.pack(fill="x", padx=0, pady=20)
         banner.pack_propagate(False)
+
         content = ctk.CTkFrame(banner, fg_color="transparent")
         content.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(content, text="Ready for a movie marathon?", font=("Georgia", 32, "italic"), text_color="#111111").pack()
-        ctk.CTkLabel(content, text="Review your watchlist and plan your next cinematic journey.", font=("Trebuchet MS", 14), text_color="#222222").pack(pady=(5, 20))
-        ctk.CTkButton(content, text="Open Watchlist", fg_color="#111111", hover_color="#333333", text_color=TEXT_WHITE, font=("Trebuchet MS", 12, "bold"), width=160, height=40, corner_radius=0, command=lambda: self.app.show_page("watchlist")).pack()
+        ctk.CTkLabel(
+            content, text="Ready for a movie marathon?",
+            font=("Georgia", 32, "italic"), text_color="#111111"
+        ).pack()
+        ctk.CTkLabel(
+            content,
+            text="Review your watchlist and plan your next cinematic journey.",
+            font=("Trebuchet MS", 14), text_color="#222222"
+        ).pack(pady=(5, 20))
+        ctk.CTkButton(
+            content, text="Open Watchlist",
+            fg_color="#111111", hover_color="#333333",
+            text_color=TEXT_WHITE, font=("Trebuchet MS", 12, "bold"),
+            width=160, height=40, corner_radius=0,
+            command=lambda: self.app.show_page("watchlist")
+        ).pack()
 
     def create_footer(self):
         footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=150)
         footer.pack(fill="x", pady=(20, 0))
         footer.pack_propagate(False)
-        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 50, "bold"), text_color=TEXT_WHITE).place(relx=0.05, rely=0.5, anchor="w")
-        ctk.CTkLabel(footer, text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.", font=("Trebuchet MS", 11), text_color=TEXT_GRAY, justify="right").place(relx=0.95, rely=0.5, anchor="e")
+
+        ctk.CTkLabel(
+            footer, text="Cinephile",
+            font=("Helvetica", 50, "bold"), text_color=TEXT_WHITE
+        ).place(relx=0.05, rely=0.5, anchor="w")
+        ctk.CTkLabel(
+            footer,
+            text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.",
+            font=("Trebuchet MS", 11), text_color=TEXT_GRAY, justify="right"
+        ).place(relx=0.95, rely=0.5, anchor="e")
