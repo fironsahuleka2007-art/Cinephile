@@ -2,9 +2,7 @@
     "FironFariz08": {
         "full_name": "Firon Fariz",
         "email": "fironsahuleka2007@gmail.com",
-<<<<<<< Updated upstream
         "password": "12345678"
-=======
         "password": "12345678",
         "avatar_path": "avatars\\FironFariz08.jpg",
         "bio": "",
@@ -19,6 +17,5 @@
         "dob": "20-02-2007",
         "bio": "",
         "avatar_path": "avatars\\aihtaf.jpg"
->>>>>>> Stashed changes
-    }
+
 }

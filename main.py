@@ -106,6 +106,8 @@ class MainApp(ctk.CTk):
         elif page_name == "moviedetail":
             self.current_page_instance = MovieDetailPage(self.container, self, movie_data=data)
         elif page_name == "watchlist":
+            # FIX UTAMA: Kembalikan ke format original agar tidak crash positional argument!
+            # Halaman WatchlistPage di dalam filenya nanti tinggal baca 'self.app.username'
             self.current_page_instance = WatchlistPage(self.container, self)
 
         if self.current_page_instance and hasattr(self.current_page_instance, "pack"):
@@ -113,6 +115,7 @@ class MainApp(ctk.CTk):
 
     def show_toast(self, message, target=None):
         print(f"Toast Notification: {message}")
+        print(f"Toas Notification: {message}")
         if target:
             self.show_page(target)
 
@@ -121,6 +124,8 @@ class MainApp(ctk.CTk):
         self.username = username
         self._check_admin_status()  # ← CEK ADMIN STATUS SETELAH LOGIN
 
+        self.username = username 
+        
         for widget in self.container.winfo_children():
             widget.destroy()
             

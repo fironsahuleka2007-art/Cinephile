@@ -483,6 +483,15 @@ class MovietablePage(ctk.CTkFrame):
                 "⛔ Fitur ini hanya untuk Admin.\n\n"
                 "Kamu bisa mendaftar sebagai Admin\nmelalui halaman Profile."
             )
+        for text, page, active in [("Home","dashboard",False),("Genre Analyze","genreanalyze",False),
+                                    ("Movie Table",None,True),("Watchlist","watchlist",False)]:
+            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analyze" else 80,
+                          height=28, corner_radius=16, font=("Trebuchet MS",11,"bold"),
+                          fg_color=ACCENT if active else "transparent",
+                          text_color=TEXT_WHITE if active else TEXT_GRAY,
+                          hover_color="#c0392b" if active else "#3A3A3A",
+                          command=(lambda p=page: self.app.show_page(p)) if page else None
+                          ).pack(side="left", padx=2, pady=3)
 
     # ── SORT / FILTER ────────────────────────────────────────────────────────
     def _apply_sort(self, data):
