@@ -23,6 +23,12 @@ class MainApp(ctk.CTk):
         self.db_path = "data_film.json"
         self.scraper = MovieScraper()
         self.current_page_instance = None
+        
+        # Status awal hak akses user saat pertama kali app dibuka
+        self.is_admin = False 
+        
+        # Kunci username di core app utama (default 'guest')
+        self.username = "guest" 
 
         self._load_local_data()
 
@@ -39,6 +45,8 @@ class MainApp(ctk.CTk):
             except: pass
 
         if active_user:
+            # Jika ada session tersimpan, set langsung username aktifnya
+            self.username = active_user 
             self.show_page("dashboard")
         else:
             self.show_page("login")
@@ -66,16 +74,15 @@ class MainApp(ctk.CTk):
             widget.destroy()
 
         if page_name == "login":
-            self.geometry("1100x850") # Reset geometri ke standar
+            self.geometry("1100x850")
             self.auth.render_login()
         elif page_name == "register":
-            # Geometri dipanjangin biar form register muat, handled in loginPage render_register
             self.auth.render_register()
         elif page_name == "dashboard":
-            self.geometry("1100x850") # Reset geometri ke standar
+            self.geometry("1100x850")
             self.current_page_instance = DashboardPage(self.container, self)
         elif page_name == "profile":
-            self.geometry("1100x850") # Reset geometri ke standar
+            self.geometry("1100x850")
             self.current_page_instance = ProfilePage(self.container, self)
         elif page_name == "movietable":
             self.current_page_instance = MovietablePage(self.container, self)
@@ -84,19 +91,22 @@ class MainApp(ctk.CTk):
         elif page_name == "moviedetail":
             self.current_page_instance = MovieDetailPage(self.container, self, movie_data=data)
         elif page_name == "watchlist":
+            # FIX UTAMA: Kembalikan ke format original agar tidak crash positional argument!
+            # Halaman WatchlistPage di dalam filenya nanti tinggal baca 'self.app.username'
             self.current_page_instance = WatchlistPage(self.container, self)
 
         if self.current_page_instance and hasattr(self.current_page_instance, "pack"):
             self.current_page_instance.pack(fill="both", expand=True)
 
     def show_toast(self, message, target=None):
-        # Toast sederhana via console untuk sementara, atau implementasikan UI popup
         print(f"Toas Notification: {message}")
         if target:
             self.show_page(target)
 
     def show_welcome_transition(self, username):
-        # Animasi welcome kamu yang lama, tapi pastiin reset geometri
+        # Kunci username yang sukses login ke Core Application
+        self.username = username 
+        
         for widget in self.container.winfo_children():
             widget.destroy()
             
@@ -140,6 +150,13 @@ class MainApp(ctk.CTk):
         query = query.lower().strip()
         self.search_query_pending = query 
         self.show_page("movietable")
+
+    def logout_user(self):
+        if os.path.exists("session.json"):
+            try: os.remove("session.json")
+            except: pass
+        self.username = "guest"
+        self.show_page("login")
 
     def on_closing(self):
         try: self.scraper.close()

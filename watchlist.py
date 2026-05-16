@@ -23,14 +23,17 @@ class WatchlistPage(ctk.CTkFrame):
         self.app = app 
         self.filter = "all"
         
-        # Cek User
-        self.current_user = "guest"
-        try:
-            if os.path.exists("session.json"):
-                with open("session.json", "r") as f:
-                    s = json.load(f)
-                    self.current_user = s.get("username", "guest")
-        except: pass
+        # FIX UTAMA: Pertama-tama ambil dari core app utama yang menampung login asli, kalau kosong baru cek session file
+        self.current_user = getattr(self.app, "username", "guest")
+        
+        if self.current_user == "guest":
+            try:
+                if os.path.exists("session.json"):
+                    with open("session.json", "r") as f:
+                        s = json.load(f)
+                        # FIX KEY: Ubah dari s.get("username") menjadi s.get("active_user") agar sinkron dengan loginPage.py
+                        self.current_user = s.get("active_user", "guest")
+            except: pass
         
         self.data_file = f"watchlist_{self.current_user}.json"
         self.watchlist_data = self._load_data()
@@ -59,8 +62,10 @@ class WatchlistPage(ctk.CTkFrame):
         ctk.CTkButton(nav, text="← Back", width=80, fg_color="transparent", text_color=ORANGE, 
                       font=("Trebuchet MS", 12, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=10)
         
-        ctk.CTkLabel(nav, text=f"Cinema Logbook: {self.current_user}", 
-                     font=("Helvetica", 18, "bold"), text_color=TEXT_WHITE).pack(side="left", padx=20)
+        # Menampung label agar bisa di-update teksnya saat refresh halaman
+        self.nav_title_lbl = ctk.CTkLabel(nav, text=f"Cinema Logbook: {self.current_user}", 
+                                          font=("Helvetica", 18, "bold"), text_color=TEXT_WHITE)
+        self.nav_title_lbl.pack(side="left", padx=20)
 
         # Tab Filter
         tab_frame = ctk.CTkFrame(nav, fg_color="transparent")
@@ -103,6 +108,20 @@ class WatchlistPage(ctk.CTkFrame):
                       font=("Inter", 12, "bold"), command=self._add_movie).pack(side="left", padx=10)
 
     def _refresh(self):
+        # Sinkronisasi ulang data user aktif sesaat sebelum merender komponen agar tidak tertinggal menjadi guest
+        self.current_user = getattr(self.app, "username", "guest")
+        if self.current_user == "guest" and os.path.exists("session.json"):
+            try:
+                with open("session.json", "r") as f:
+                    self.current_user = json.load(f).get("active_user", "guest")
+            except: pass
+            
+        self.data_file = f"watchlist_{self.current_user}.json"
+        self.watchlist_data = self._load_data()
+        
+        if hasattr(self, 'nav_title_lbl'):
+            self.nav_title_lbl.configure(text=f"Cinema Logbook: {self.current_user}")
+            
         for w in self.movie_area.winfo_children(): w.destroy()
         
         if self.filter == "Watched":
