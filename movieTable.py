@@ -8,7 +8,7 @@ from styles import *
 BG_MAIN       = "#1A1A1A"
 TEXT_WHITE     = "#FFFFFF"
 TEXT_GRAY      = "#AAAAAA"
-ACCENT         = "#E53935"
+ACCENT         = "#7A1C1C"
 BG_CARD        = "#2E2E2E"
 BG_CARD_HOVER  = "#3D3D3D"
 POSTER_W, POSTER_H = 160, 220
@@ -71,9 +71,9 @@ class MovietablePage(ctk.CTkFrame):
         pill_outer.place(relx=0.5, rely=0.5, anchor="center")
         pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
         pill.pack()
-        for text, page, active in [("Home","dashboard",False),("Genre Analysis","genreanalyze",False),
+        for text, page, active in [("Home","dashboard",False),("Genre Analyze","genreanalyze",False),
                                     ("Movie Table",None,True),("Watchlist","watchlist",False)]:
-            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analysis" else 80,
+            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analyze" else 80,
                           height=28, corner_radius=16, font=("Trebuchet MS",11,"bold"),
                           fg_color=ACCENT if active else "transparent",
                           text_color=TEXT_WHITE if active else TEXT_GRAY,
@@ -195,7 +195,7 @@ class MovietablePage(ctk.CTkFrame):
             b = ctk.CTkButton(inner, text=g, width=110, height=28,
                                fg_color=ACCENT if active else "#333",
                                text_color=TEXT_WHITE if active else TEXT_GRAY,
-                               hover_color="#c0392b" if active else "#3E3E3E",
+                               hover_color="#7A1C1C" if active else "#3E3E3E",
                                corner_radius=13, font=("Trebuchet MS",10,"bold"),
                                border_width=1, border_color=ACCENT if active else "#555",
                                command=lambda genre=g: self._toggle_genre(genre))
@@ -256,7 +256,7 @@ class MovietablePage(ctk.CTkFrame):
             b = ctk.CTkButton(row, text=label, width=78, height=28,
                                fg_color=ACCENT if key==self.sort_key else "#2E2E2E",
                                text_color=TEXT_WHITE if key==self.sort_key else TEXT_GRAY,
-                               hover_color="#c0392b" if key==self.sort_key else "#3E3E3E",
+                               hover_color="#7A1C1C" if key==self.sort_key else "#3E3E3E",
                                corner_radius=14, font=("Trebuchet MS",11,"bold"),
                                command=lambda k=key: self._set_sort(k))
             b.pack(side="left", padx=3)
