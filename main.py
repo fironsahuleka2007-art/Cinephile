@@ -46,10 +46,23 @@ class MainApp(ctk.CTk):
 
         if active_user:
             # Jika ada session tersimpan, set langsung username aktifnya
-            self.username = active_user 
+            self.username = active_user
+            self._check_admin_status()  # ← CEK ADMIN STATUS DARI FILE
             self.show_page("dashboard")
         else:
             self.show_page("login")
+
+    def _check_admin_status(self):
+        """Baca admin_config.json dan update is_admin sesuai username aktif."""
+        self.is_admin = False
+        if os.path.exists("admin_config.json"):
+            try:
+                with open("admin_config.json", "r", encoding="utf-8") as f:
+                    admin_list = json.load(f)
+                    self.is_admin = self.username in admin_list
+            except:
+                self.is_admin = False
+        print(f"[Auth] @{self.username} | is_admin = {self.is_admin}")
 
     def _load_local_data(self):
         if os.path.exists(self.db_path):
@@ -57,6 +70,8 @@ class MainApp(ctk.CTk):
                 with open(self.db_path, "r", encoding="utf-8") as f:
                     self.movie_list = json.load(f)
             except: self.movie_list = []
+        else:
+            self.movie_list = []
         
         if not self.movie_list:
             threading.Thread(target=self._initialize_data, daemon=True).start()
@@ -99,12 +114,16 @@ class MainApp(ctk.CTk):
             self.current_page_instance.pack(fill="both", expand=True)
 
     def show_toast(self, message, target=None):
+        print(f"Toast Notification: {message}")
         print(f"Toas Notification: {message}")
         if target:
             self.show_page(target)
 
     def show_welcome_transition(self, username):
         # Kunci username yang sukses login ke Core Application
+        self.username = username
+        self._check_admin_status()  # ← CEK ADMIN STATUS SETELAH LOGIN
+
         self.username = username 
         
         for widget in self.container.winfo_children():
@@ -156,6 +175,7 @@ class MainApp(ctk.CTk):
             try: os.remove("session.json")
             except: pass
         self.username = "guest"
+        self.is_admin = False  # ← RESET ADMIN STATUS SAAT LOGOUT
         self.show_page("login")
 
     def on_closing(self):
