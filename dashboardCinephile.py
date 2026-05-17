@@ -408,6 +408,8 @@ class DashboardPage(ctk.CTkFrame):
         super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
         self.app = app
         self._load_user_data()
+        self.hero_images = ["hero1.jpeg", "hero2.jpeg", "hero3.jpeg"]
+        self.h_idx = 0
         self._build_ui()
         self.after(60, self._entrance_animation)
 
