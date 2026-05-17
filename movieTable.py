@@ -11,7 +11,7 @@ from styles import *
 BG_MAIN       = "#1A1A1A"
 TEXT_WHITE     = "#FFFFFF"
 TEXT_GRAY      = "#AAAAAA"
-ACCENT         = "#E53935"
+ACCENT         = "#7A1C1C"
 BG_CARD        = "#2E2E2E"
 BG_CARD_HOVER  = "#3D3D3D"
 POSTER_W, POSTER_H = 160, 220
@@ -437,52 +437,6 @@ class MovietablePage(ctk.CTkFrame):
         pill_outer.place(relx=0.5, rely=0.5, anchor="center")
         pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
         pill.pack()
-
-        pages = [
-            ("Home",         "dashboard",    False),
-            ("Genre Analyze","genreanalyze", False),
-            ("Movie Table",  None,           True),
-            ("Watchlist",    "watchlist",    False),
-        ]
-        widths = {"Genre Analyze": 110, "Movie Table": 92, "Watchlist": 80, "Home": 70}
-        for i, (text, page, active) in enumerate(pages):
-            px_l = 6 if i == 0 else 2
-            px_r = 6 if i == len(pages) - 1 else 2
-            ctk.CTkButton(
-                pill, text=text,
-                width=widths.get(text, 80), height=28, corner_radius=16,
-                font=("Trebuchet MS", 11, "bold"),
-                fg_color=ACCENT if active else "transparent",
-                text_color=TEXT_WHITE if active else TEXT_GRAY,
-                hover_color="#c0392b" if active else "#3A3A3A",
-                command=(lambda p=page: self.app.show_page(p)) if page else None,
-            ).pack(side="left", padx=(px_l, px_r), pady=3)
-
-        # ── TOMBOL ADMIN MODE DI NAVBAR ──
-        self._admin_nav_btn = ctk.CTkButton(
-            nav,
-            text="🔓 Admin Mode" if getattr(self.app, "is_admin", False) else "🔒 Admin Mode",
-            width=130, height=30, corner_radius=15,
-            fg_color="#AA2222" if getattr(self.app, "is_admin", False) else "#333",
-            hover_color="#CC3333" if getattr(self.app, "is_admin", False) else "#444",
-            font=("Trebuchet MS", 10, "bold"), text_color=TEXT_WHITE,
-            command=self._on_admin_btn_click
-        )
-        self._admin_nav_btn.pack(side="left", padx=(16, 0), pady=14)
-
-    def _on_admin_btn_click(self):
-        if getattr(self.app, "is_admin", False):
-            AdminActionPopup(
-                self, self.app,
-                on_add=self._open_add_movie,
-                on_delete=self._open_delete_picker
-            )
-        else:
-            messagebox.showwarning(
-                "Akses Ditolak",
-                "⛔ Fitur ini hanya untuk Admin.\n\n"
-                "Kamu bisa mendaftar sebagai Admin\nmelalui halaman Profile."
-            )
         for text, page, active in [("Home","dashboard",False),("Genre Analyze","genreanalyze",False),
                                     ("Movie Table",None,True),("Watchlist","watchlist",False)]:
             ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analyze" else 80,
@@ -608,8 +562,8 @@ class MovietablePage(ctk.CTkFrame):
             b = ctk.CTkButton(inner, text=g, width=110, height=28,
                                fg_color=ACCENT if active else "#333",
                                text_color=TEXT_WHITE if active else TEXT_GRAY,
-                               hover_color="#c0392b" if active else "#3E3E3E",
-                               corner_radius=13, font=("Trebuchet MS", 10, "bold"),
+                               hover_color="#7A1C1C" if active else "#3E3E3E",
+                               corner_radius=13, font=("Trebuchet MS",10,"bold"),
                                border_width=1, border_color=ACCENT if active else "#555",
                                command=lambda genre=g: self._toggle_genre(genre))
             b.grid(row=i // COLS + 1, column=i % COLS, padx=5, pady=4, sticky="ew")
@@ -669,10 +623,10 @@ class MovietablePage(ctk.CTkFrame):
         for label, key in [("Default", "default"), ("A–Z", "title"), ("Newest", "year_desc"),
                             ("Oldest", "year_asc"), ("Rating ↓", "rating_desc"), ("Rating ↑", "rating_asc")]:
             b = ctk.CTkButton(row, text=label, width=78, height=28,
-                               fg_color=ACCENT if key == self.sort_key else "#2E2E2E",
-                               text_color=TEXT_WHITE if key == self.sort_key else TEXT_GRAY,
-                               hover_color="#c0392b" if key == self.sort_key else "#3E3E3E",
-                               corner_radius=14, font=("Trebuchet MS", 11, "bold"),
+                               fg_color=ACCENT if key==self.sort_key else "#2E2E2E",
+                               text_color=TEXT_WHITE if key==self.sort_key else TEXT_GRAY,
+                               hover_color="#7A1C1C" if key==self.sort_key else "#3E3E3E",
+                               corner_radius=14, font=("Trebuchet MS",11,"bold"),
                                command=lambda k=key: self._set_sort(k))
             b.pack(side="left", padx=3)
             self._sort_buttons[key] = b
