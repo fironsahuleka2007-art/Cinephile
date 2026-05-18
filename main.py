@@ -621,7 +621,7 @@ class MainApp(ctk.CTk):
     def show_welcome_transition(self, username):
         # Kunci username yang sukses login ke Core Application
         self.username = username
-        self._check_admin_status()  # ← CEK ADMIN STATUS SETELAH LOGIN
+        # self._check_admin_status()  # ← CEK ADMIN STATUS SETELAH LOGIN
 
         self.username = username 
         

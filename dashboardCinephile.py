@@ -487,35 +487,36 @@ class DashboardPage(ctk.CTkFrame):
             corner_radius=10, width=280
         )
 
-    # ------------------------------------------------------------- NAV BAR (RAPI + SEARCH RESTORED)
+    # ------------------------------------------------------------- NAV BAR (PERFECTED)
     def _build_nav(self):
-        self.nav = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0, height=75)
+        # 1. Gunakan fg_color yang sama dengan background atau BG_NAV
+        # Hilangkan border_width jika ada
+        self.nav = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0, height=75, border_width=0)
         self.nav.pack(fill="x", side="top")
         self.nav.pack_propagate(False)
 
         # ── KIRI: Avatar + Username ──────────────────────────────────────
-        left_frame = ctk.CTkFrame(self.nav, fg_color="transparent", cursor="hand2")
+        left_frame = ctk.CTkFrame(self.nav, fg_color="transparent")
         left_frame.pack(side="left", padx=(20, 0))
 
         avatar_path = self.user_data.get("avatar_path", "")
         if avatar_path and os.path.exists(avatar_path):
             img_round = self._get_round_avatar(avatar_path)
-            self.p_img = ctk.CTkLabel(left_frame, image=img_round, text="")
+            self.p_img = ctk.CTkLabel(left_frame, image=img_round, text="", cursor="hand2")
         else:
             self.p_img = ctk.CTkLabel(left_frame, text="👤",
-                                      font=("Arial", 24), text_color="white")
+                                      font=("Arial", 24), text_color="white", cursor="hand2")
         self.p_img.pack(side="left")
 
         self.p_name = ctk.CTkLabel(
             left_frame, text=f"  {self.username}",
-            font=("Trebuchet MS", 15, "bold"), text_color="white"
+            font=("Trebuchet MS", 15, "bold"), text_color="white", cursor="hand2"
         )
         self.p_name.pack(side="left")
 
         def go_to_profile(e=None):
             self.app.show_page("profile")
 
-        left_frame.bind("<Button-1>", go_to_profile)
         self.p_img.bind("<Button-1>",  go_to_profile)
         self.p_name.bind("<Button-1>", go_to_profile)
 
@@ -527,9 +528,10 @@ class DashboardPage(ctk.CTkFrame):
             right_frame,
             placeholder_text="🔍  Search movie...",
             width=210, height=38,
-            fg_color="#222222", border_color="#444444",
+            fg_color="#222222", border_color="#333333", # Warna border lebih soft
             corner_radius=20,
-            font=("Trebuchet MS", 12), text_color="white"
+            font=("Trebuchet MS", 12), text_color="white",
+            border_width=1
         )
         self.entry_s.pack(side="left", padx=(0, 8))
         self.entry_s.bind("<KeyRelease>", self._on_search_typing)
@@ -546,36 +548,50 @@ class DashboardPage(ctk.CTkFrame):
         )
         self.btn_s.pack(side="left")
 
-        # ── TENGAH: Menu pill (place setelah left & right pack) ──────────
-        # 4 tombol × 118px + padding dalam pill
-        PILL_W = 4 * 118 + 4 * 8 + 16  # ≈ 536px
-
-        pill = ctk.CTkFrame(
-            self.nav, fg_color=BG_TAB,
-            corner_radius=30, height=46, width=PILL_W,
-            border_width=0, bg_color=BG_NAV
-        )
-        pill.place(relx=0.5, rely=0.5, anchor="center")
-        pill.pack_propagate(False)
-
+        # ── TENGAH: Menu pill (SYMMETRICAL & COMPACT) ──────────
         menu_items = [
             ("Home",          None),
             ("Genre Analyze", "genreanalyze"),
             ("Movie Table",   "movietable"),
             ("Watchlist",     "watchlist"),
         ]
-        for txt, pg in menu_items:
-            is_active = pg is None
+        
+        # 1. Hapus width statis agar frame otomatis mengikuti isi
+        pill = ctk.CTkFrame(
+            self.nav, 
+            fg_color=BG_TAB,      
+            bg_color=BG_NAV,      
+            corner_radius=25, 
+            height=46,
+            border_width=0
+        )
+        # 2. Pakai place tanpa width, biarkan otomatis
+        pill.place(relx=0.5, rely=0.5, anchor="center")
+        
+        # 3. KUNCI: Jangan pakai pack_propagate(False) agar frame bisa menciut
+        pill.pack_propagate(True) 
+
+        for i, (txt, pg) in enumerate(menu_items):
+            is_active = (txt == "Home")
+            
+            # Berikan padding kiri & kanan yang sama (10) agar simetris
+            # Tombol pertama dan terakhir diberi jarak ekstra ke dinding lengkungan
+            p_left = 15 if i == 0 else 5
+            p_right = 15 if i == len(menu_items) - 1 else 5
+            
             btn = ctk.CTkButton(
-                pill, text=txt, width=118, height=36,
+                pill, text=txt, 
+                width=110, # Lebar tombol sedikit dikecilkan agar lebih rapat
+                height=32,
                 fg_color=ACCENT if is_active else "transparent",
-                hover_color="#7A1C1C" if not is_active else "#6B1515",
-                corner_radius=25,
+                hover_color="#444444" if not is_active else "#902a2a",
+                bg_color="transparent", 
+                corner_radius=20,
                 font=("Trebuchet MS", 12, "bold"),
                 text_color="white",
                 command=lambda p=pg: self.app.show_page(p) if p else None
             )
-            btn.pack(side="left", padx=4, pady=5)
+            btn.pack(side="left", padx=(p_left, p_right), pady=7)
 
     # ----------------------------------------------------- SEARCH DROPDOWN
     def _on_search_typing(self, event):
