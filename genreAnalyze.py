@@ -9,7 +9,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
         self.app = app
 
-        # Deskripsi genre
+        # Deskripsi genre untuk section rekomendasi
         self.GENRE_DESCRIPTIONS = {
             "Action": "Focuses on high-energy sequences, physical feats, and thrilling chases or battles.",
             "Adventure": "Features characters traveling to new worlds or embarking on epic journeys to complete a mission.",
@@ -59,12 +59,13 @@ class GenreAnalyzePage(ctk.CTkFrame):
                 genres = [g.strip() for g in raw_genre.split(',')]
                 if year not in year_data: year_data[year] = []
                 year_data[year].extend(genres)
+        
         yearly_top = {}
         for y, g_list in year_data.items():
             if g_list:
                 top_genre, count = Counter(g_list).most_common(1)[0]
                 yearly_top[y] = (top_genre, count)
-        return sorted(yearly_top.keys(), reverse=True), yearly_top
+        return sorted(yearly_top.keys()), yearly_top
 
     def get_genre_description(self, genre_name):
         return self.GENRE_DESCRIPTIONS.get(genre_name, f"Discover our top recommendations for the {genre_name} genre.")
@@ -76,27 +77,24 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         self.create_hero_section()
 
-        # --- CONTAINER UTAMA (DIBAGI 2 KOLOM) ---
+        # ── KONTAINER UTAMA 2 KOLOM ──
         main_content = ctk.CTkFrame(self.body, fg_color="transparent")
-        main_content.pack(fill="x", padx=80, pady=40)
+        main_content.pack(fill="x", padx=100, pady=40)
 
-        # KOLOM KIRI (Distribusi + Penjelasan Genre)
-        left_col = ctk.CTkFrame(main_content, fg_color="transparent")
-        left_col.pack(side="left", fill="both", expand=True, padx=(0, 40), anchor="n")
+        # KOLOM KIRI: Genre Distribution
+        self.left_col = ctk.CTkFrame(main_content, fg_color="transparent")
+        self.left_col.pack(side="left", fill="both", expand=True, padx=(0, 40), anchor="n")
 
-        # KOLOM KANAN (Overview + Yearly Trends)
-        right_col = ctk.CTkFrame(main_content, fg_color="transparent", width=350)
-        right_col.pack(side="left", fill="both", anchor="n")
+        # KOLOM KANAN: Overview & Yearly Trends
+        self.right_col = ctk.CTkFrame(main_content, fg_color="transparent")
+        self.right_col.pack(side="right", fill="both", expand=True, padx=(40, 0), anchor="n")
 
-        # Isi Kolom Kiri
-        self.create_genre_graphics(left_col)
-        self.create_top_recommendations(left_col) 
+        self.create_genre_graphics(parent=self.left_col)
+        self.create_overview_section(parent=self.right_col)
+        self.create_trend_section(parent=self.right_col)
 
-        # Isi Kolom Kanan
-        self.create_overview_section(right_col)
-        self.create_trend_section(right_col)
-        # ---------------------------------------
-
+        # Bagian Bawah
+        self.create_top_recommendations(parent=self.body)
         self.create_orange_banner()
         self.create_footer()
 
@@ -104,19 +102,20 @@ class GenreAnalyzePage(ctk.CTkFrame):
         nav = ctk.CTkFrame(self, fg_color="#111111", corner_radius=0, height=60)
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
+
         search_frame = ctk.CTkFrame(nav, fg_color="transparent")
         search_frame.pack(side="right", padx=20, pady=10)
         self.search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search...", width=150, height=32, fg_color="#222", border_color="#444")
         self.search_entry.pack(side="left", padx=5)
         ctk.CTkButton(search_frame, text="🔍", width=40, height=32, fg_color=ACCENT, command=lambda: self.app.handle_local_search(self.search_entry.get())).pack(side="left")
-        pill_outer = ctk.CTkFrame(nav, fg_color="transparent")
-        pill_outer.place(relx=0.5, rely=0.5, anchor="center")
-        pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
-        pill.pack()
-        ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=3)
-        ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=("Trebuchet MS", 11, "bold")).pack(side="left", padx=1)
-        ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=1)
-        ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=3)
+
+        pill = ctk.CTkFrame(nav, fg_color="#2E2E2E", corner_radius=20, height=34)
+        pill.place(relx=0.5, rely=0.5, anchor="center")
+
+        ctk.CTkButton(pill, text="Home", width=70, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("dashboard")).pack(side="left", padx=(6, 2), pady=3)
+        ctk.CTkButton(pill, text="Genre Analysis", width=110, height=28, fg_color=ACCENT, text_color=TEXT_WHITE, corner_radius=16, font=("Trebuchet MS", 11, "bold")).pack(side="left", padx=2, pady=3)
+        ctk.CTkButton(pill, text="Movie Table", width=92, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("movietable")).pack(side="left", padx=2, pady=3)
+        ctk.CTkButton(pill, text="Watchlist", width=80, height=28, fg_color="transparent", text_color=TEXT_GRAY, corner_radius=16, font=("Trebuchet MS", 11, "bold"), command=lambda: self.app.show_page("watchlist")).pack(side="left", padx=(2, 6), pady=3)
 
     def create_hero_section(self):
         ctk.CTkLabel(self.body, text="Genre Analyze", font=("Helvetica", 70, "bold"), text_color=TEXT_WHITE).pack(pady=(60, 20))
@@ -153,7 +152,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         except: pass
 
     def create_genre_graphics(self, parent):
-        ctk.CTkLabel(parent, text="Genre Distribution", font=("Georgia", 35, "italic"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 20))
+        ctk.CTkLabel(parent, text="Genre Distribution", font=("Georgia", 40, "italic"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 20))
         graph_box = ctk.CTkFrame(parent, fg_color="transparent")
         graph_box.pack(anchor="w", fill="x")
         top_10 = self.analyzed_data[:10]
@@ -162,90 +161,124 @@ class GenreAnalyzePage(ctk.CTkFrame):
         
         for genre, count in top_10:
             row = ctk.CTkFrame(graph_box, fg_color="transparent", cursor="hand2")
-            row.pack(fill="x", pady=4)
-            
-            # Teks Genre (Bisa diklik)
-            lbl = ctk.CTkLabel(row, text=f"{genre} ({count})", width=120, anchor="e", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE, cursor="hand2")
-            lbl.pack(side="left", padx=(0, 10))
-            
-            # Batang Grafik (Bisa diklik)
-            bar_w = max(5, int((count / max_val) * 350))
-            bar = ctk.CTkFrame(row, width=bar_w, height=20, fg_color=ACCENT, corner_radius=2, cursor="hand2")
+            row.pack(fill="x", pady=6)
+            lbl = ctk.CTkLabel(row, text=f"{genre} ({count})", width=130, anchor="e", font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE, cursor="hand2")
+            lbl.pack(side="left", padx=(0, 15))
+            bar_w = max(5, int((count / max_val) * 380))
+            bar = ctk.CTkFrame(row, width=bar_w, height=22, fg_color=ACCENT, corner_radius=2, cursor="hand2")
             bar.pack(side="left")
-
-            # --- FUNGSI KLIK PINDAH & FILTER ---
-            def go_to_table(event, target_genre=genre):
-                # Memanggil routing & pencarian milik main.py
-                self.app.handle_local_search(target_genre)
-
-            # Menyambungkan event klik ke elemen UI
-            row.bind("<Button-1>", go_to_table)
-            lbl.bind("<Button-1>", go_to_table)
-            bar.bind("<Button-1>", go_to_table)
+            row.bind("<Button-1>", lambda e, g=genre: self.app.handle_local_search(g))
 
     def create_overview_section(self, parent):
         ctk.CTkLabel(parent, text="OVERVIEW", font=("Trebuchet MS", 12, "bold"), text_color=TEXT_GRAY).pack(anchor="w", pady=(5, 5))
         overview_text = ("Analyze your movie collection's DNA.\nThis section provides insights into your\nmost watched genres and trends.")
-        ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 13), text_color=TEXT_WHITE, justify="left").pack(anchor="w")
+        ctk.CTkLabel(parent, text=overview_text, font=("Trebuchet MS", 14), text_color=TEXT_WHITE, justify="left").pack(anchor="w")
 
     def create_trend_section(self, parent):
         self.all_years, self.yearly_top = self.process_yearly_data()
         self.trend_container = ctk.CTkFrame(parent, fg_color="transparent")
-        self.trend_container.pack(fill="x", pady=(40, 0))
-        ctk.CTkLabel(self.trend_container, text="Yearly Trends", font=("Georgia", 28, "italic"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 5))
+        self.trend_container.pack(fill="x", pady=(50, 0))
         
+        ctk.CTkLabel(self.trend_container, text="Yearly Trends", font=("Georgia", 35, "italic"), text_color=TEXT_WHITE).pack(anchor="w", pady=(0, 10))
+        
+        # --- UI FILTER RENTANG TAHUN ---
         filter_frame = ctk.CTkFrame(self.trend_container, fg_color="transparent")
-        filter_frame.pack(anchor="w", pady=(0, 15))
-        
-        y_list = self.all_years if self.all_years else ["2024"]
-        self.start_year_var = ctk.StringVar(value=y_list[min(4, len(y_list)-1)])
-        self.end_year_var = ctk.StringVar(value=y_list[0])
-        
-        ctk.CTkOptionMenu(filter_frame, values=y_list, variable=self.start_year_var, width=80, fg_color="#333", button_color=ACCENT).pack(side="left", padx=2)
-        ctk.CTkLabel(filter_frame, text="-", text_color=TEXT_WHITE).pack(side="left", padx=5)
-        ctk.CTkOptionMenu(filter_frame, values=y_list, variable=self.end_year_var, width=80, fg_color="#333", button_color=ACCENT).pack(side="left", padx=2)
-        ctk.CTkButton(filter_frame, text="Filter", width=60, fg_color="transparent", border_width=1, border_color=ACCENT, text_color=ACCENT, command=self.render_trend_graph).pack(side="left", padx=10)
-        
-        self.trend_graph_area = ctk.CTkFrame(self.trend_container, fg_color="transparent")
-        self.trend_graph_area.pack(fill="x")
-        self.render_trend_graph()
+        filter_frame.pack(anchor="w", pady=(0, 25))
 
-    def render_trend_graph(self):
-        for w in self.trend_graph_area.winfo_children(): w.destroy()
-        s, e = self.start_year_var.get(), self.end_year_var.get()
-        if s > e: s, e = e, s
-        f_years = [y for y in self.all_years if s <= y <= e]
-        if not f_years: return
-        max_c = max([self.yearly_top[y][1] for y in f_years] + [1])
-        for year in f_years:
+        if not self.all_years:
+            ctk.CTkLabel(self.trend_container, text="No yearly data found.", text_color=TEXT_GRAY).pack(anchor="w")
+            return
+
+        sorted_years = sorted(self.all_years)
+        
+        # Style tanpa 'dropdown_max_height' biar nggak error di versi lama
+        cb_style = {
+            "width": 100, 
+            "fg_color": "#2B2B2B", 
+            "button_color": "#333", 
+            "border_color": "#444", 
+            "corner_radius": 6
+        }
+        
+        self.start_combo = ctk.CTkComboBox(filter_frame, values=sorted_years, **cb_style)
+        self.start_combo.set(sorted_years[0])
+        self.start_combo.pack(side="left")
+        # Trik manual buat maksa scrollbar di versi lama
+        try: self.start_combo._dropdown_menu.config(maxheight=10) 
+        except: pass
+
+        ctk.CTkLabel(filter_frame, text=" - ", text_color=TEXT_WHITE, font=("Arial", 16)).pack(side="left", padx=8)
+
+        self.end_combo = ctk.CTkComboBox(filter_frame, values=sorted_years, **cb_style)
+        self.end_combo.set(sorted_years[-1])
+        self.end_combo.pack(side="left")
+        # Trik manual buat maksa scrollbar di versi lama
+        try: self.end_combo._dropdown_menu.config(maxheight=10)
+        except: pass
+
+        btn_filter = ctk.CTkButton(filter_frame, text="Filter", width=70, height=32, fg_color="transparent", 
+                                  border_width=1, border_color=ACCENT, text_color=TEXT_WHITE, 
+                                  hover_color="#441111", font=("Trebuchet MS", 12, "bold"),
+                                  command=self.update_trends_display)
+        btn_filter.pack(side="left", padx=(15, 0))
+
+        self.graph_display = ctk.CTkFrame(self.trend_container, fg_color="transparent")
+        self.graph_display.pack(fill="x", anchor="w")
+
+        self.update_trends_display()
+
+    def update_trends_display(self):
+        for w in self.graph_display.winfo_children(): w.destroy()
+
+        try:
+            s_year, e_year = int(self.start_combo.get()), int(self.end_combo.get())
+            if s_year > e_year: s_year, e_year = e_year, s_year
+        except: return
+
+        # Ambil data yang masuk range
+        valid_years = sorted([y for y in self.all_years if s_year <= int(y) <= e_year], reverse=True)
+        if not valid_years: return
+
+        # Ambil max count untuk skala grafik (supaya bar terpanjang pas di kontainer)
+        max_c = max([self.yearly_top[y][1] for y in valid_years])
+
+        for year in valid_years:
             genre, count = self.yearly_top[year]
-            row = ctk.CTkFrame(self.trend_graph_area, fg_color="transparent")
-            row.pack(fill="x", pady=4)
-            ctk.CTkLabel(row, text=year, width=40, font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(side="left")
-            bar_w = max(5, int((count / max_c) * 180))
-            ctk.CTkFrame(row, width=bar_w, height=16, fg_color=ACCENT, corner_radius=2).pack(side="left", padx=10)
-            ctk.CTkLabel(row, text=f"{genre} ({count})", font=("Trebuchet MS", 11), text_color=TEXT_WHITE).pack(side="left")
+            
+            row = ctk.CTkFrame(self.graph_display, fg_color="transparent")
+            row.pack(fill="x", pady=5, anchor="w")
+
+            # Tahun
+            ctk.CTkLabel(row, text=str(year), width=50, anchor="w", font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE).pack(side="left")
+
+            # Grafik batang (Bar)
+            bar_width = max(8, int((count / max_c) * 160))
+            ctk.CTkFrame(row, width=bar_width, height=16, fg_color=ACCENT, corner_radius=0).pack(side="left", padx=(5, 12))
+
+            # Nama Genre & Jumlah
+            ctk.CTkLabel(row, text=f"{genre} ({count})", font=("Trebuchet MS", 12), text_color=TEXT_GRAY).pack(side="left")
 
     def create_top_recommendations(self, parent):
-        ctk.CTkFrame(parent, height=1, fg_color="#333").pack(fill="x", pady=40)
-        
         top_3 = self.analyzed_data[:3]
         movie_list = getattr(self.app, "movie_list", [])
+        recom_container = ctk.CTkFrame(parent, fg_color="transparent")
+        recom_container.pack(fill="x", padx=100, pady=40)
+
         for name, count in top_3:
-            cat_frame = ctk.CTkFrame(parent, fg_color="transparent")
-            cat_frame.pack(fill="x", pady=(0, 40))
-            ctk.CTkLabel(cat_frame, text=name, font=("Helvetica", 32, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
-            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 13), text_color=TEXT_GRAY, wraplength=500, justify="left").pack(anchor="w", pady=(10, 15))
+            cat_frame = ctk.CTkFrame(recom_container, fg_color="transparent")
+            cat_frame.pack(fill="x", pady=(0, 45))
+            ctk.CTkLabel(cat_frame, text=name, font=("Helvetica", 36, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
+            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 14), text_color=TEXT_GRAY, wraplength=600, justify="left").pack(anchor="w", pady=(10, 20))
             
             p_frame = ctk.CTkFrame(cat_frame, fg_color="transparent")
             p_frame.pack(anchor="w")
             matches = [m for m in movie_list if name in [g.strip() for g in m.get("genre", "").split(",")]]
-            for m_data in matches[:4]:
+            for m_data in matches[:5]:
                 path = m_data.get("poster_local", "")
                 if path and os.path.exists(path):
-                    img = ctk.CTkImage(Image.open(path), size=(110, 160))
+                    img = ctk.CTkImage(Image.open(path), size=(120, 175))
                     btn = ctk.CTkLabel(p_frame, text="", image=img, cursor="hand2")
-                    btn.pack(side="left", padx=(0, 15))
+                    btn.pack(side="left", padx=(0, 18))
                     btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
 
     def create_orange_banner(self):
@@ -254,10 +287,50 @@ class GenreAnalyzePage(ctk.CTkFrame):
         banner.pack_propagate(False)
         c = ctk.CTkFrame(banner, fg_color="transparent")
         c.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(c, text="Ready for a movie marathon?", font=("Georgia", 28, "italic"), text_color="#111").pack()
-        ctk.CTkButton(c, text="Open Watchlist", fg_color="#111", corner_radius=0, command=lambda: self.app.show_page("watchlist")).pack(pady=15)
+        ctk.CTkLabel(c, text="Ready for a movie marathon?", font=("Georgia", 30, "italic"), text_color="#111").pack()
+        ctk.CTkButton(c, text="Open Watchlist", fg_color="#111", corner_radius=4, font=("Trebuchet MS", 13, "bold"), command=lambda: self.app.show_page("watchlist")).pack(pady=18)
 
     def create_footer(self):
-        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", height=120)
-        footer.pack(fill="x")
-        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 40, "bold"), text_color=TEXT_WHITE).place(relx=0.05, rely=0.5, anchor="w")
+        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=180)
+        footer.pack(fill="x", pady=(20, 0))
+        footer.pack_propagate(False)
+        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 55, "bold"), text_color=TEXT_WHITE).place(relx=0.05, rely=0.5, anchor="w")
+        ctk.CTkLabel(footer, text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.", font=("Trebuchet MS", 12), text_color=TEXT_GRAY, justify="right").place(relx=0.95, rely=0.5, anchor="e")
+
+    def _on_search_typing(self, event):
+        query = self.entry_s.get().lower().strip()
+        if not query:
+            self.drop_box.place_forget()
+            return
+        all_movies = getattr(self.app, "movie_list", [])
+        matches = [m for m in all_movies
+                   if query in m.get("title", "").lower()][:5]
+        for w in self.drop_box.winfo_children():
+            w.destroy()
+        if matches:
+            self.drop_box.place(relx=1.0, x=-330, y=75)
+            self.drop_box.lift()
+            for m in matches:
+                item_f = ctk.CTkFrame(self.drop_box, fg_color="transparent",
+                                       cursor="hand2")
+                item_f.pack(fill="x", padx=5, pady=2)
+                p_path = m.get("poster_local", "")
+                if p_path and os.path.exists(p_path):
+                    try:
+                        img_s = ctk.CTkImage(Image.open(p_path), size=(30, 45))
+                        ctk.CTkLabel(item_f, image=img_s, text="").pack(
+                            side="left", padx=5)
+                    except Exception:
+                        pass
+                ctk.CTkLabel(
+                    item_f, text=m.get("title", "Unknown"),
+                    font=("Trebuchet MS", 12), text_color="white", anchor="w"
+                ).pack(side="left", fill="x")
+                item_f.bind("<Button-1>",
+                            lambda e, item=m: self._go_to_detail(item))
+        else:
+            self.drop_box.place_forget()
+
+    def _go_to_detail(self, movie):
+        self.drop_box.place_forget()
+        self.app.show_page("moviedetail", data=movie)
