@@ -2,20 +2,19 @@
     "FironFariz08": {
         "full_name": "Firon Fariz",
         "email": "fironsahuleka2007@gmail.com",
-        "password": "12345678"
         "password": "12345678",
         "avatar_path": "avatars\\FironFariz08.jpg",
         "bio": "",
         "gender": "Male",
         "dob": "08-05-2007"
     },
-    "aihtaf": {
-        "full_name": "aihtaf",
-        "email": "fathiaindirasalsabila@gmail.com",
-        "password": "Aihtaf200207",
-        "gender": "Other",
-        "dob": "20-02-2007",
+    "pibi": {
+        "full_name": "pibi",
+        "email": "pibi@gmail.com",
+        "password": "Pibi10022002",
+        "gender": "Male",
+        "dob": "10-02-2002",
         "bio": "",
-        "avatar_path": "avatars\\aihtaf.jpg"
-
+        "avatar_path": null
+    }
 }
