@@ -137,7 +137,7 @@ class MovieFormPopup(ctk.CTkToplevel):
                        font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE,
                        command=self.destroy).pack(side="left")
         ctk.CTkButton(btn_row, text="💾  Save", width=160, height=40,
-                       fg_color=ACCENT, hover_color="#c0392b", corner_radius=10,
+                       fg_color=ACCENT, hover_color="#9B2226", corner_radius=10,
                        font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE,
                        command=self._save).pack(side="right")
 
@@ -198,9 +198,6 @@ class MovieFormPopup(ctk.CTkToplevel):
 #  POPUP: Admin Action Menu
 # ─────────────────────────────────────────────────────────────────────────────
 class AdminActionPopup(ctk.CTkToplevel):
-    """Popup yang muncul saat admin klik tombol 'Admin Mode'.
-    Berisi pilihan: Tambah Film, Hapus Film, atau Cancel."""
-
     def __init__(self, master, app, on_add, on_delete):
         super().__init__(master)
         self.app       = app
@@ -221,45 +218,32 @@ class AdminActionPopup(ctk.CTkToplevel):
         self._build()
 
     def _build(self):
-        # Header
         ctk.CTkLabel(self, text="🔓 Admin Panel",
                      font=("Arial Black", 20, "bold"),
                      text_color=TEXT_WHITE).pack(pady=(28, 4))
-        ctk.CTkLabel(self, text="Pilih aksi yang ingin dilakukan:",
+        ctk.CTkLabel(self, text="Choose an action to perform:",
                      font=("Trebuchet MS", 12), text_color=TEXT_GRAY).pack(pady=(0, 20))
 
         btn_frame = ctk.CTkFrame(self, fg_color="transparent")
         btn_frame.pack(fill="x", padx=36)
 
-        # Tombol Tambah Film
-        ctk.CTkButton(
-            btn_frame,
-            text="➕  Tambah Film Baru",
-            height=48, corner_radius=10,
-            fg_color=ACCENT, hover_color="#c0392b",
-            font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
-            command=self._do_add
-        ).pack(fill="x", pady=(0, 10))
+        ctk.CTkButton(btn_frame, text="➕  Add New Movie",
+                      height=48, corner_radius=10,
+                      fg_color=ACCENT, hover_color="#9B2226",
+                      font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
+                      command=self._do_add).pack(fill="x", pady=(0, 10))
 
-        # Tombol Hapus Film
-        ctk.CTkButton(
-            btn_frame,
-            text="🗑  Hapus Film",
-            height=48, corner_radius=10,
-            fg_color="#AA2222", hover_color="#CC3333",
-            font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
-            command=self._do_delete
-        ).pack(fill="x", pady=(0, 10))
+        ctk.CTkButton(btn_frame, text="🗑  Delete Movie",
+                      height=48, corner_radius=10,
+                      fg_color="#AA2222", hover_color="#CC3333",
+                      font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
+                      command=self._do_delete).pack(fill="x", pady=(0, 10))
 
-        # Tombol Cancel
-        ctk.CTkButton(
-            btn_frame,
-            text="Batal",
-            height=36, corner_radius=10,
-            fg_color="#333", hover_color="#444",
-            font=("Trebuchet MS", 12), text_color=TEXT_GRAY,
-            command=self.destroy
-        ).pack(fill="x")
+        ctk.CTkButton(btn_frame, text="Cancel",
+                      height=36, corner_radius=10,
+                      fg_color="#333", hover_color="#444",
+                      font=("Trebuchet MS", 12), text_color=TEXT_GRAY,
+                      command=self.destroy).pack(fill="x")
 
     def _do_add(self):
         self.destroy()
@@ -274,8 +258,6 @@ class AdminActionPopup(ctk.CTkToplevel):
 #  POPUP: Pilih Film untuk Dihapus
 # ─────────────────────────────────────────────────────────────────────────────
 class DeleteMoviePopup(ctk.CTkToplevel):
-    """Popup daftar film dengan search, user pilih film mana yang dihapus."""
-
     def __init__(self, master, app, movie_list, on_delete):
         super().__init__(master)
         self.app        = app
@@ -284,12 +266,12 @@ class DeleteMoviePopup(ctk.CTkToplevel):
         self._filtered  = movie_list.copy()
 
         self.title("Hapus Film")
-        self.geometry("500x580")
+        self.geometry("560x580")
         self.configure(fg_color="#1A1A1A")
         self.resizable(False, True)
 
         self.update_idletasks()
-        x = app.winfo_x() + (app.winfo_width()  // 2) - 250
+        x = app.winfo_x() + (app.winfo_width()  // 2) - 280
         y = app.winfo_y() + (app.winfo_height() // 2) - 290
         self.geometry(f"+{x}+{y}")
         self.attributes("-topmost", True)
@@ -297,32 +279,74 @@ class DeleteMoviePopup(ctk.CTkToplevel):
         self._build()
 
     def _build(self):
-        ctk.CTkLabel(self, text="🗑  Pilih Film yang Ingin Dihapus",
+        ctk.CTkLabel(self, text="🗑  Select a Movie to Delete",
                      font=("Arial Black", 16, "bold"),
                      text_color=TEXT_WHITE).pack(pady=(22, 8))
 
-        # Search bar
         search_frame = ctk.CTkFrame(self, fg_color="transparent")
         search_frame.pack(fill="x", padx=24, pady=(0, 10))
         self._search_var = ctk.StringVar()
         self._search_var.trace_add("write", self._on_search)
         ctk.CTkEntry(search_frame, textvariable=self._search_var,
-                     placeholder_text="Cari judul film...",
+                     placeholder_text="Search movie title...",
                      height=36, fg_color="#222", border_color="#444",
                      text_color=TEXT_WHITE, corner_radius=8,
                      font=("Trebuchet MS", 12)).pack(fill="x")
 
-        # List film
-        self._list_frame = ctk.CTkScrollableFrame(self, fg_color="#111",
-                                                   corner_radius=10,
-                                                   scrollbar_button_color="#333")
-        self._list_frame.pack(fill="both", expand=True, padx=24, pady=(0, 12))
+        # Canvas scroll — support mouse & touchpad
+        canvas_wrap = ctk.CTkFrame(self, fg_color="#111", corner_radius=10)
+        canvas_wrap.pack(fill="both", expand=True, padx=24, pady=(0, 12))
+
+        self._del_canvas = tk.Canvas(canvas_wrap, bg="#111111", highlightthickness=0)
+        self._del_canvas.pack(fill="both", expand=True, padx=2, pady=2)
+
+        self._list_frame = ctk.CTkFrame(self._del_canvas, fg_color="transparent")
+        self._canvas_win = self._del_canvas.create_window((0, 0), window=self._list_frame, anchor="nw")
+
+        self._list_frame.bind("<Configure>", lambda e: self._del_canvas.configure(
+            scrollregion=self._del_canvas.bbox("all")))
+        self._del_canvas.bind("<Configure>", lambda e: self._del_canvas.itemconfig(
+            self._canvas_win, width=e.width))
+
+        self._del_canvas.bind("<Enter>", self._bind_scroll)
+        self._del_canvas.bind("<Leave>", self._unbind_scroll)
+        self._list_frame.bind("<Enter>", self._bind_scroll)
+
         self._render_list()
 
-        ctk.CTkButton(self, text="Batal", height=36, corner_radius=10,
+        ctk.CTkButton(self, text="Cancel", height=36, corner_radius=10,
                       fg_color="#333", hover_color="#444",
                       font=("Trebuchet MS", 12), text_color=TEXT_GRAY,
                       command=self.destroy).pack(fill="x", padx=24, pady=(0, 18))
+
+    def _bind_scroll(self, e=None):
+        self._del_canvas.bind_all("<MouseWheel>", self._scroll)
+        self._del_canvas.bind_all("<Button-4>",   self._scroll_up)
+        self._del_canvas.bind_all("<Button-5>",   self._scroll_down)
+
+    def _unbind_scroll(self, e=None):
+        self._del_canvas.unbind_all("<MouseWheel>")
+        self._del_canvas.unbind_all("<Button-4>")
+        self._del_canvas.unbind_all("<Button-5>")
+
+    def _scroll(self, e):
+        if e.delta == 0:
+            return
+        self._del_canvas.yview_scroll(-1 if e.delta > 0 else 1, "units")
+
+    def _scroll_up(self, e):
+        self._del_canvas.yview_scroll(-1, "units")
+
+    def _scroll_down(self, e):
+        self._del_canvas.yview_scroll(1, "units")
+
+    def destroy(self):
+        try:
+            self._del_canvas.unbind_all("<MouseWheel>")
+            self._del_canvas.unbind_all("<Button-4>")
+            self._del_canvas.unbind_all("<Button-5>")
+        except: pass
+        super().destroy()
 
     def _on_search(self, *_):
         q = self._search_var.get().lower().strip()
@@ -335,47 +359,54 @@ class DeleteMoviePopup(ctk.CTkToplevel):
             w.destroy()
 
         if not self._filtered:
-            ctk.CTkLabel(self._list_frame, text="Film tidak ditemukan.",
+            ctk.CTkLabel(self._list_frame, text="No movies found.",
                          text_color=TEXT_GRAY, font=("Trebuchet MS", 12)).pack(pady=20)
             return
 
-        # Render bertahap agar UI tidak freeze
+        # Render bertahap agar tidak lag saat list panjang
         self._render_batch(self._filtered, 0)
 
     def _render_batch(self, movies, start, batch=30):
         end = min(start + batch, len(movies))
         for movie in movies[start:end]:
             row = ctk.CTkFrame(self._list_frame, fg_color="#222", corner_radius=8)
-            row.pack(fill="x", pady=3, padx=4)
+            row.pack(fill="x", pady=3, padx=6)
 
-            # Judul bisa wrap jadi 2 baris kalau terlalu panjang
-            ctk.CTkLabel(row,
-                         text=f"{movie.get('title', 'Unknown')}  ({movie.get('year', '?')})",
-                         font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE,
-                         anchor="w", wraplength=310, justify="left"
-                         ).pack(side="left", padx=12, pady=10, fill="x", expand=True)
-
-            # Tombol fixed width supaya tidak terpotong
-            ctk.CTkButton(row, text="🗑 Hapus", width=90, height=32,
+            # Tombol hapus DULU ke kanan agar label dapat sisa lebar
+            ctk.CTkButton(row, text="🗑 Delete", width=90, height=34,
                           fg_color="#AA2222", hover_color="#CC3333",
                           corner_radius=8, font=("Trebuchet MS", 11, "bold"),
                           text_color=TEXT_WHITE,
                           command=lambda m=movie: self._confirm(m)
                           ).pack(side="right", padx=10, pady=10)
 
+            # Label — judul panjang wrap ke baris bawah
+            ctk.CTkLabel(row,
+                         text=f"{movie.get('title', 'Unknown')}  ({movie.get('year', '?')})",
+                         font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE,
+                         anchor="w", wraplength=370, justify="left"
+                         ).pack(side="left", padx=12, pady=10, fill="x", expand=True)
+
+            # Bind scroll ke setiap row
+            row.bind("<Enter>", self._bind_scroll)
+
         if end < len(movies):
-            # Render sisa di idle berikutnya agar UI tetap responsif
             self.after(0, lambda: self._render_batch(movies, end, batch))
 
     def _confirm(self, movie):
         title = movie.get("title", "film ini")
-        if messagebox.askyesno(
-            "Konfirmasi Hapus",
-            f"Hapus '{title}' secara permanen?\nAksi ini tidak bisa dibatalkan.",
-            icon="warning", parent=self
-        ):
+        # Sembunyikan dulu → hilangkan flash putih
+        self.withdraw()
+        confirmed = messagebox.askyesno(
+            "Confirm Delete",
+            f"Permanently delete '{title}'?\nThis action cannot be undone.",
+            icon="warning"
+        )
+        if confirmed:
             self.destroy()
             self.on_delete(movie)
+        else:
+            self.deiconify()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -384,18 +415,18 @@ class DeleteMoviePopup(ctk.CTkToplevel):
 class MovietablePage(ctk.CTkFrame):
     def __init__(self, master, app, genre_filter=None):
         super().__init__(master, fg_color=BG_MAIN, corner_radius=0)
-        self.app           = app
-        self.current_page  = 0
+        self.app            = app
+        self.current_page   = 0
         self.items_per_page = 20
-        self.sort_key      = "default"
-        self._filter_job   = None
-        self._genre_selected  = set()
+        self.sort_key       = "default"
+        self._filter_job    = None
+        self._genre_selected      = set()
         self._genre_dropdown_open = False
-        self._genre_popup  = None
-        self._poster_cache = {}
-        self._sort_buttons = {}
+        self._genre_popup   = None
+        self._poster_cache  = {}
+        self._sort_buttons  = {}
         self._genre_buttons = {}
-        self._render_gen   = 0
+        self._render_gen    = 0
 
         self.all_movies    = getattr(self.app, "movie_list", [])
         self.filtered_list = self.all_movies.copy()
@@ -420,32 +451,148 @@ class MovietablePage(ctk.CTkFrame):
 
     # ── NAVBAR ───────────────────────────────────────────────────────────────
     def _build_nav(self):
-        nav = ctk.CTkFrame(self, fg_color="#111111", corner_radius=0, height=60)
+        nav = ctk.CTkFrame(self, fg_color="#111111", corner_radius=0, height=75, border_width=0)
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        sf = ctk.CTkFrame(nav, fg_color="transparent")
-        sf.pack(side="right", padx=20, pady=10)
-        self.search_entry = ctk.CTkEntry(sf, placeholder_text="Search...",
-                                          width=150, height=32, fg_color="#222", border_color="#444")
-        self.search_entry.pack(side="left", padx=5)
-        self.search_entry.bind("<Return>", lambda e: self._apply_filters())
-        ctk.CTkButton(sf, text="🔍", width=40, height=32, fg_color=ACCENT,
-                      command=self._apply_filters).pack(side="left")
+        # ── KANAN: Admin Mode + Search bar ───────────────────────────────
+        right_frame = ctk.CTkFrame(nav, fg_color="transparent")
+        right_frame.pack(side="right", padx=(0, 20))
 
-        pill_outer = ctk.CTkFrame(nav, fg_color="transparent")
-        pill_outer.place(relx=0.5, rely=0.5, anchor="center")
-        pill = ctk.CTkFrame(pill_outer, fg_color="#2E2E2E", corner_radius=20, height=34)
-        pill.pack()
-        for text, page, active in [("Home","dashboard",False),("Genre Analyze","genreanalyze",False),
-                                    ("Movie Table",None,True),("Watchlist","watchlist",False)]:
-            ctk.CTkButton(pill, text=text, width=90 if text=="Genre Analyze" else 80,
-                          height=28, corner_radius=16, font=("Trebuchet MS",11,"bold"),
-                          fg_color=ACCENT if active else "transparent",
-                          text_color=TEXT_WHITE if active else TEXT_GRAY,
-                          hover_color="#c0392b" if active else "#3A3A3A",
-                          command=(lambda p=page: self.app.show_page(p)) if page else None
-                          ).pack(side="left", padx=2, pady=3)
+        self.search_entry = ctk.CTkEntry(
+            right_frame,
+            placeholder_text="🔍  Search movie...",
+            width=210, height=38,
+            fg_color="#222222", border_color="#333333",
+            corner_radius=20,
+            font=("Trebuchet MS", 12), text_color="white",
+            border_width=1
+        )
+        self.search_entry.pack(side="left", padx=(0, 8))
+        self.search_entry.bind("<Return>", lambda e: self._apply_filters())
+        self.search_entry.bind("<KeyRelease>", self._on_search_typing)
+
+        ctk.CTkButton(
+            right_frame, text="Search", width=80, height=38,
+            fg_color=ACCENT, hover_color="#9B2226",
+            corner_radius=20,
+            font=("Trebuchet MS", 12, "bold"), text_color="white",
+            command=self._apply_filters
+        ).pack(side="left")
+
+        # ── TENGAH: Menu pill ────────────────────────────────────────────
+        menu_items = [
+            ("Home",          "dashboard"),
+            ("Genre Analyze", "genreanalyze"),
+            ("Movie Table",   None),
+            ("Watchlist",     "watchlist"),
+        ]
+
+        pill = ctk.CTkFrame(
+            nav,
+            fg_color="#2E2E2E",
+            bg_color="#111111",
+            corner_radius=25,
+            height=46,
+            border_width=0
+        )
+        pill.place(relx=0.5, rely=0.5, anchor="center")
+        pill.pack_propagate(True)
+
+        for i, (txt, pg) in enumerate(menu_items):
+            is_active = (txt == "Movie Table")
+            p_left  = 15 if i == 0 else 5
+            p_right = 15 if i == len(menu_items) - 1 else 5
+
+            ctk.CTkButton(
+                pill, text=txt,
+                width=110, height=32,
+                fg_color=ACCENT if is_active else "transparent",
+                hover_color="#444444" if not is_active else "#902a2a",
+                bg_color="transparent",
+                corner_radius=20,
+                font=("Trebuchet MS", 12, "bold"),
+                text_color="white",
+                command=(lambda p=pg: self.app.show_page(p)) if pg else None
+            ).pack(side="left", padx=(p_left, p_right), pady=7)
+
+        # ── KIRI: Tombol Admin Mode ───────────────────────────────────────
+        is_admin = getattr(self.app, "is_admin", False)
+        self._admin_nav_btn = ctk.CTkButton(
+            nav,
+            text="🔓 Admin Mode" if is_admin else "🔒 Admin Mode",
+            width=130, height=34,
+            corner_radius=17,
+            fg_color="#7A1C1C" if is_admin else "#333",
+            hover_color="#9B2226" if is_admin else "#444",
+            font=("Trebuchet MS", 10, "bold"),
+            text_color=TEXT_WHITE,
+            command=self._on_admin_btn_click
+        )
+        self._admin_nav_btn.pack(side="left", padx=(16, 0), pady=20)
+
+        # ── DROPDOWN BOX ─────────────────────────────────────────────────
+        self.drop_box = ctk.CTkFrame(
+            self, fg_color="#1E1E1E",
+            border_color="#444", border_width=1,
+            corner_radius=10, width=280
+        )
+
+    def _on_admin_btn_click(self):
+        """Klik Admin Mode: admin → action menu. User biasa → notif."""
+        if getattr(self.app, "is_admin", False):
+            AdminActionPopup(
+                self, self.app,
+                on_add=self._open_add_movie,
+                on_delete=self._open_delete_picker
+            )
+        else:
+            messagebox.showwarning(
+                "Access Denied",
+                "⛔ This feature is for Admins only.\n\n"
+                "You can register as an Admin\nthrough the Profile page."
+            )
+
+    # ── SEARCH DROPDOWN ───────────────────────────────────────────────────────
+    def _on_search_typing(self, event=None):
+        query = self.search_entry.get().lower().strip()
+        if not query:
+            self.drop_box.place_forget()
+            return
+        all_movies = getattr(self.app, "movie_list", [])
+        matches = [m for m in all_movies
+                   if query in m.get("title", "").lower()][:5]
+        for w in self.drop_box.winfo_children():
+            w.destroy()
+        if matches:
+            self.drop_box.place(relx=1.0, x=-310, y=75)
+            self.drop_box.lift()
+            for m in matches:
+                item_f = ctk.CTkFrame(self.drop_box, fg_color="transparent", cursor="hand2")
+                item_f.pack(fill="x", padx=5, pady=2)
+                p_path = m.get("poster_local", "")
+                if p_path and os.path.exists(p_path):
+                    try:
+                        img_s = ctk.CTkImage(Image.open(p_path), size=(30, 45))
+                        lbl_img = ctk.CTkLabel(item_f, image=img_s, text="")
+                        lbl_img.pack(side="left", padx=5)
+                        lbl_img._ctk_image = img_s
+                        lbl_img.bind("<Button-1>", lambda e, item=m: self._go_to_detail(item))
+                    except Exception:
+                        pass
+                lbl_title = ctk.CTkLabel(
+                    item_f, text=m.get("title", "Unknown"),
+                    font=("Trebuchet MS", 12), text_color="white", anchor="w"
+                )
+                lbl_title.pack(side="left", fill="x")
+                item_f.bind("<Button-1>",    lambda e, item=m: self._go_to_detail(item))
+                lbl_title.bind("<Button-1>", lambda e, item=m: self._go_to_detail(item))
+        else:
+            self.drop_box.place_forget()
+
+    def _go_to_detail(self, movie):
+        self.drop_box.place_forget()
+        self.app.show_page("moviedetail", data=movie)
 
     # ── SORT / FILTER ────────────────────────────────────────────────────────
     def _apply_sort(self, data):
@@ -461,6 +608,7 @@ class MovietablePage(ctk.CTkFrame):
         if self._filter_job:
             try: self.after_cancel(self._filter_job)
             except: pass
+        self.drop_box.place_forget()
         self._filter_job = self.after(150, self._do_filter)
 
     def _do_filter(self):
@@ -535,41 +683,85 @@ class MovietablePage(ctk.CTkFrame):
         btn.update_idletasks()
         x = btn.winfo_rootx()
         y = btn.winfo_rooty() + btn.winfo_height() + 4
-        rows = (len(self._all_genres) + 3) // 4
-        h = min(rows * 38 + 56, 420)
+
+        # Tinggi tetap max 300px agar selalu bisa di-scroll
+        POPUP_H = 300
 
         popup = tk.Toplevel(self)
         popup.overrideredirect(True)
         popup.configure(bg="#222222")
-        popup.geometry(f"540x{h}+{x}+{y}")
+        popup.geometry(f"560x{POPUP_H}+{x}+{y}")
         popup.attributes("-topmost", True)
         self._genre_popup = popup
 
-        inner = ctk.CTkFrame(popup, fg_color="#222222", corner_radius=12,
-                               border_width=1, border_color="#444")
-        inner.pack(fill="both", expand=True, padx=1, pady=1)
+        outer = ctk.CTkFrame(popup, fg_color="#222222", corner_radius=12,
+                              border_width=1, border_color="#444")
+        outer.pack(fill="both", expand=True, padx=1, pady=1)
 
-        ctk.CTkButton(inner, text="✕ Clear All", width=100, height=26,
-                       fg_color="#444", text_color=TEXT_WHITE, corner_radius=13,
-                       font=("Trebuchet MS", 10, "bold"),
-                       command=self._clear_genres
-                       ).grid(row=0, column=0, columnspan=2, padx=8, pady=(8, 4), sticky="w")
+        # Tombol Clear All — selalu terlihat di atas
+        ctk.CTkButton(outer, text="✕ Clear All", width=100, height=26,
+                      fg_color="#444", text_color=TEXT_WHITE, corner_radius=13,
+                      font=("Trebuchet MS", 10, "bold"),
+                      command=self._clear_genres
+                      ).pack(anchor="w", padx=8, pady=(8, 4))
 
+        # Canvas + scrollbar untuk grid genre
+        canvas_frame = tk.Frame(outer, bg="#222222")
+        canvas_frame.pack(fill="both", expand=True, padx=4, pady=(0, 6))
+
+        genre_canvas = tk.Canvas(canvas_frame, bg="#222222", highlightthickness=0)
+        scrollbar    = tk.Scrollbar(canvas_frame, orient="vertical", command=genre_canvas.yview,
+                                    bg="#444444", troughcolor="#222222",
+                                    activebackground="#555555", width=8, relief="flat",
+                                    bd=0, highlightthickness=0)
+        genre_canvas.configure(yscrollcommand=scrollbar.set)
+
+        scrollbar.pack(side="right", fill="y")
+        genre_canvas.pack(side="left", fill="both", expand=True)
+
+        # Frame isi grid di dalam canvas
+        grid_frame = ctk.CTkFrame(genre_canvas, fg_color="#222222")
+        grid_win   = genre_canvas.create_window((0, 0), window=grid_frame, anchor="nw")
+
+        genre_canvas.bind("<Configure>",
+                          lambda e: genre_canvas.itemconfig(grid_win, width=e.width))
+        grid_frame.bind("<Configure>",
+                        lambda e: genre_canvas.configure(scrollregion=genre_canvas.bbox("all")))
+
+        # Scroll touchpad & mouse
+        def _gs(e):
+            if e.delta == 0: return
+            genre_canvas.yview_scroll(-1 if e.delta > 0 else 1, "units")
+        def _gs_up(e):   genre_canvas.yview_scroll(-1, "units")
+        def _gs_down(e): genre_canvas.yview_scroll(1,  "units")
+
+        genre_canvas.bind("<Enter>", lambda e: (
+            genre_canvas.bind_all("<MouseWheel>", _gs),
+            genre_canvas.bind_all("<Button-4>",   _gs_up),
+            genre_canvas.bind_all("<Button-5>",   _gs_down)
+        ))
+        genre_canvas.bind("<Leave>", lambda e: (
+            genre_canvas.unbind_all("<MouseWheel>"),
+            genre_canvas.unbind_all("<Button-4>"),
+            genre_canvas.unbind_all("<Button-5>")
+        ))
+
+        # Render tombol genre dalam grid
         COLS = 4
         self._genre_buttons = {}
         for i, g in enumerate(self._all_genres):
             active = g in self._genre_selected
-            b = ctk.CTkButton(inner, text=g, width=110, height=28,
-                               fg_color=ACCENT if active else "#333",
-                               text_color=TEXT_WHITE if active else TEXT_GRAY,
-                               hover_color="#7A1C1C" if active else "#3E3E3E",
-                               corner_radius=13, font=("Trebuchet MS",10,"bold"),
-                               border_width=1, border_color=ACCENT if active else "#555",
-                               command=lambda genre=g: self._toggle_genre(genre))
-            b.grid(row=i // COLS + 1, column=i % COLS, padx=5, pady=4, sticky="ew")
+            b = ctk.CTkButton(grid_frame, text=g, width=110, height=28,
+                              fg_color=ACCENT if active else "#333",
+                              text_color=TEXT_WHITE if active else TEXT_GRAY,
+                              hover_color="#7A1C1C" if active else "#3E3E3E",
+                              corner_radius=13, font=("Trebuchet MS", 10, "bold"),
+                              border_width=1, border_color=ACCENT if active else "#555",
+                              command=lambda genre=g: self._toggle_genre(genre))
+            b.grid(row=i // COLS, column=i % COLS, padx=5, pady=4, sticky="ew")
             self._genre_buttons[g] = b
         for c in range(COLS):
-            inner.columnconfigure(c, weight=1)
+            grid_frame.columnconfigure(c, weight=1)
 
         popup.bind("<FocusOut>", lambda e: self.after(100, self._check_focus))
         popup.focus_set()
@@ -599,10 +791,10 @@ class MovietablePage(ctk.CTkFrame):
             self, text="Find your movie!",
             font=("Georgia", 38, "bold"), text_color=TEXT_WHITE,
             anchor="center", justify="center",
-        ).pack(pady=(20, 8), fill="x")
+        ).pack(pady=(20, 30), fill="x")
 
         row = ctk.CTkFrame(self, fg_color="transparent")
-        row.pack(fill="x", padx=40, pady=(0, 10))
+        row.pack(fill="x", padx=40, pady=(0, 14))
 
         self._genre_btn_main = ctk.CTkButton(
             row, text="Genre ▼", width=100, height=32,
@@ -623,10 +815,10 @@ class MovietablePage(ctk.CTkFrame):
         for label, key in [("Default", "default"), ("A–Z", "title"), ("Newest", "year_desc"),
                             ("Oldest", "year_asc"), ("Rating ↓", "rating_desc"), ("Rating ↑", "rating_asc")]:
             b = ctk.CTkButton(row, text=label, width=78, height=28,
-                               fg_color=ACCENT if key==self.sort_key else "#2E2E2E",
-                               text_color=TEXT_WHITE if key==self.sort_key else TEXT_GRAY,
-                               hover_color="#7A1C1C" if key==self.sort_key else "#3E3E3E",
-                               corner_radius=14, font=("Trebuchet MS",11,"bold"),
+                               fg_color=ACCENT if key == self.sort_key else "#2E2E2E",
+                               text_color=TEXT_WHITE if key == self.sort_key else TEXT_GRAY,
+                               hover_color="#7A1C1C" if key == self.sort_key else "#3E3E3E",
+                               corner_radius=14, font=("Trebuchet MS", 11, "bold"),
                                command=lambda k=key: self._set_sort(k))
             b.pack(side="left", padx=3)
             self._sort_buttons[key] = b
@@ -750,7 +942,6 @@ class MovietablePage(ctk.CTkFrame):
         if path and os.path.exists(path):
             self._load_poster_async(poster_lbl, path, self._render_gen)
 
-        # Info di bawah poster
         info = ctk.CTkFrame(card, fg_color="transparent")
         info.pack(fill="x", padx=8, pady=(6, 8))
 
@@ -772,7 +963,6 @@ class MovietablePage(ctk.CTkFrame):
                      font=("Trebuchet MS", 9), text_color=TEXT_GRAY,
                      anchor="w").pack(side="left", padx=(4, 0))
 
-        # Hover + click
         def _all_widgets(parent):
             result = [parent]
             for child in parent.winfo_children():
@@ -801,7 +991,7 @@ class MovietablePage(ctk.CTkFrame):
         db.append(new_data)
         _write_db(db)
         self._reload_movie_list(db)
-        messagebox.showinfo("Berhasil", f"'{new_data.get('title')}' berhasil ditambahkan!")
+        messagebox.showinfo("Success", f"'{new_data.get('title')}' has been added successfully!")
 
     def _do_delete_movie(self, movie):
         db = _read_db()
@@ -811,7 +1001,7 @@ class MovietablePage(ctk.CTkFrame):
         )]
         _write_db(db)
         self._reload_movie_list(db)
-        messagebox.showinfo("Berhasil", f"'{movie.get('title')}' berhasil dihapus dari database.")
+        messagebox.showinfo("Success", f"'{movie.get('title')}' has been removed from the database.")
 
     def _reload_movie_list(self, db):
         self.app.movie_list = db
@@ -843,14 +1033,16 @@ class MovietablePage(ctk.CTkFrame):
 
     # ── PAGINATION ───────────────────────────────────────────────────────────
     def _render_pagination(self, total_pages, end):
-        ctk.CTkButton(self.pagination_frame, text="◀ Prev", width=100, fg_color=ACCENT,
+        ctk.CTkButton(self.pagination_frame, text="◀ Prev", width=100,
+                       fg_color=ACCENT, hover_color="#555555",   # hover abu
                        command=self.prev_page,
                        state="normal" if self.current_page > 0 else "disabled"
                        ).pack(side="left", padx=40)
         ctk.CTkLabel(self.pagination_frame,
                      text=f"Page {self.current_page + 1} of {total_pages}",
                      text_color=TEXT_WHITE).pack(side="left", expand=True)
-        ctk.CTkButton(self.pagination_frame, text="Next ▶", width=100, fg_color=ACCENT,
+        ctk.CTkButton(self.pagination_frame, text="Next ▶", width=100,
+                       fg_color=ACCENT, hover_color="#555555",   # hover abu
                        command=self.next_page,
                        state="normal" if end < len(self.filtered_list) else "disabled"
                        ).pack(side="right", padx=40)
