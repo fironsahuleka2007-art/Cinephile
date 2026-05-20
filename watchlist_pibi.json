@@ -1,0 +1,15 @@
+[
+    {
+        "title": "The Dark Knight",
+        "year": "2008",
+        "genre": "Action, Crime, Drama",
+        "rating": "9.1",
+        "status": "Watched",
+        "description": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
+        "platform_string": "Apple TV Store, Catchplay, HBO Max, Crunchyroll",
+        "poster_local": "posters/The_Dark_Knight.jpg",
+        "watch_date": "2026-05-16",
+        "platform": "Cinema",
+        "notes": ""
+    }
+]

@@ -24,7 +24,7 @@ class MovieScraper:
         chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
 
         print("Menyiapkan WebDriver...")
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.wait = WebDriverWait(self.driver, 10)
 
         if not os.path.exists("posters"):
