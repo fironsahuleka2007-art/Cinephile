@@ -463,7 +463,7 @@ class WatchlistPage(ctk.CTkFrame):
             right.pack(side="right", padx=18, pady=14)
 
             ctk.CTkButton(
-                right, text="✏ Edit Log",
+                right, text="✏ Edit",
                 width=90, height=34,
                 fg_color=BG_TAB, hover_color="#3A3A3A",
                 border_width=1, border_color="#444",
@@ -475,7 +475,7 @@ class WatchlistPage(ctk.CTkFrame):
             ctk.CTkButton(
                 right, text="↺ Re-watch",
                 width=90, height=34,
-                fg_color=BLUE, hover_color="#1a2a70",
+                fg_color="#233D6D", hover_color="#1a2a70",
                 font=("Trebuchet MS", 12, "bold"),
                 corner_radius=10,
                 command=lambda m=movie: self._handle_status_change(m, "Watching")
