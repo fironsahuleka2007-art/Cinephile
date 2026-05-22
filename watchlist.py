@@ -159,10 +159,10 @@ class WatchlistPage(ctk.CTkFrame):
             font=("Trebuchet MS", 12, "bold"),
             text_color=TEXT_WHITE,
             hover_color="#6C6C6C",
-            command=lambda: self._set_filter("Watched")
+            command=lambda: self._set_filter("diary")   # ← HANYA INI YANG BERUBAH
         )
         btn.place(relx=0.99, rely=0.5, anchor="e", x=-20)
-        self._tab_btns["Watched"] = btn
+        self._tab_btns["diary"] = btn
 
     def _update_tab_highlight(self):
         pass
@@ -282,7 +282,7 @@ class WatchlistPage(ctk.CTkFrame):
         for w in self.movie_area.winfo_children():
             w.destroy()
 
-        if self.filter == "Watched":
+        if self.filter == "diary":                          # ← HANYA INI YANG BERUBAH
             data = [m for m in self.watchlist_data if m.get("status") == "Watched"]
             data.sort(key=lambda x: x.get("watch_date", ""), reverse=True)
             self._render_diary_timeline(data)
@@ -304,7 +304,7 @@ class WatchlistPage(ctk.CTkFrame):
         ctk.CTkLabel(wrap, text="Add a movie above to get started.",
                      font=("Trebuchet MS", 12), text_color="#555").pack(pady=(4, 30))
 
-    # ── STANDARD CARD (All / Plan / Watching) ────────────────────────────────
+    # ── STANDARD CARD (All / Plan / Watching / Watched) ──────────────────────
     def _render_standard_card(self, movie):
         card = ctk.CTkFrame(
             self.movie_area, fg_color=BG_CARD,
@@ -402,7 +402,7 @@ class WatchlistPage(ctk.CTkFrame):
         hdr = ctk.CTkFrame(self.movie_area, fg_color="transparent")
         hdr.pack(fill="x", pady=(0, 10))
         ctk.CTkLabel(hdr, text="My Movie Diary",
-                     font=("Georgia", 26, "bold"), text_color=TEXT_WHITE).pack(side="left")
+                     font=("Trebuchet MS", 20, "bold"), text_color=TEXT_WHITE).pack(side="left")
         ctk.CTkLabel(hdr, text=f"{len(data)} entries",
                      font=("Trebuchet MS", 13), text_color=TEXT_GRAY).pack(side="left", padx=16, pady=6)
 
@@ -432,13 +432,13 @@ class WatchlistPage(ctk.CTkFrame):
             mid.pack(side="left", fill="both", expand=True, pady=14)
 
             ctk.CTkLabel(mid, text=movie.get("title", "Unknown"),
-                         font=("Helvetica", 17, "bold"),
+                         font=("Trebuchet MS", 16, "bold"),
                          text_color=TEXT_WHITE, anchor="w").pack(fill="x")
 
             info_row = ctk.CTkFrame(mid, fg_color="transparent")
             info_row.pack(anchor="w", pady=(4, 4))
-            ctk.CTkLabel(info_row, text=f"🗓️ {movie.get('watch_date', '–')}",
-                         font=("Trebuchet MS", 12, "bold"), text_color=ORANGE).pack(side="left")
+            ctk.CTkLabel(info_row, text=f"{movie.get('watch_date', '–')}",
+                         font=("Trebuchet MS", 12, "bold"), text_color="#BBBBBB").pack(side="left")
             ctk.CTkLabel(info_row, text="  •  ",
                          font=("Trebuchet MS", 12), text_color="#444").pack(side="left")
             ctk.CTkLabel(info_row, text=f"📺 {movie.get('platform', 'Other')}",
@@ -456,7 +456,7 @@ class WatchlistPage(ctk.CTkFrame):
             if notes:
                 ctk.CTkLabel(mid, text=notes,
                              font=("Trebuchet MS", 12),
-                             text_color="#BBBBBB",
+                             text_color="#959595",
                              wraplength=520, justify="left", anchor="w").pack(fill="x")
 
             right = ctk.CTkFrame(item, fg_color="transparent")
@@ -527,7 +527,6 @@ class WatchlistPage(ctk.CTkFrame):
             cal_win.attributes("-topmost", True)
             cal_win.grab_set()
 
-            # Parse tanggal awal dari entry
             try:
                 init_date = datetime.strptime(e_date.get(), "%Y-%m-%d")
             except ValueError:
