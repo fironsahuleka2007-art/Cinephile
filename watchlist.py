@@ -522,7 +522,7 @@ class WatchlistPage(ctk.CTkFrame):
 
         def open_calendar():
             cal_win = ctk.CTkToplevel(popup)
-            cal_win.title("Pilih Tanggal")
+            cal_win.title("Pick a Date")
             cal_win.resizable(False, False)
             cal_win.attributes("-topmost", True)
             cal_win.grab_set()
@@ -562,7 +562,7 @@ class WatchlistPage(ctk.CTkFrame):
                 cal_win.destroy()
 
             ctk.CTkButton(
-                cal_win, text="✔ Pilih Tanggal",
+                cal_win, text="✔ Pick a Date",
                 fg_color="#5C1D24", hover_color="#7a2530",
                 height=36, font=("Trebuchet MS", 12, "bold"),
                 corner_radius=10,
