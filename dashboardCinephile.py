@@ -13,7 +13,7 @@ BG_MAIN    = "#1A1A1A"
 BG_NAV     = "#111111"
 BG_TAB     = "#2E2E2E"
 BG_LIGHT   = "#F4F4F4"
-ACCENT     = "#b03535"
+ACCENT     = "#7A1C1C"
 TEXT_WHITE = "#FFFFFF"
 TEXT_DARK  = "#111111"
 COL_FILM     = "#8d2827"
@@ -817,14 +817,43 @@ class DashboardPage(ctk.CTkFrame):
     # ------------------------------------------------------------ TAGLINE
     def _build_tagline_section(self):
         self.tagline_frame = ctk.CTkFrame(
-            self.body, fg_color="#000", corner_radius=20, height=300)
+            self.body, fg_color="#1C1C1C",
+            corner_radius=20, border_width=1, border_color="#2A2A2A",
+            height=200
+        )
         self.tagline_frame.pack(fill="x", padx=30, pady=10)
         self.tagline_frame.pack_propagate(False)
-        ctk.CTkLabel(self.tagline_frame,
-                     text='"Every story has a beginning."',
-                     font=("Times New Roman", 28, "italic"),
-                     text_color="#CCCCCC").place(relx=0.5, rely=0.5, anchor="center")
 
+        # Spacer atas
+        ctk.CTkFrame(self.tagline_frame, fg_color="transparent", height=60).pack()
+
+        # Garis merah pendek
+        ctk.CTkFrame(
+            self.tagline_frame, fg_color="#7A1C1C",
+            width=48, height=2, corner_radius=2
+        ).pack()
+
+        # Quote utama
+        ctk.CTkLabel(
+            self.tagline_frame,
+            text='"Every story has a beginning."',
+            font=("Georgia", 22, "italic"),
+            text_color="#CCCCCC"
+        ).pack(pady=(22, 8))
+
+        # Subtitle spasi manual
+        ctk.CTkLabel(
+            self.tagline_frame,
+            text="S T A R T   Y O U R   C I N E P H I L E   J O U R N E Y",
+            font=("Trebuchet MS", 10, "bold"),
+            text_color="#555555"
+        ).pack()
+
+        # Garis bawah
+        ctk.CTkFrame(
+            self.tagline_frame, fg_color="#333333",
+            width=40, height=1, corner_radius=1
+        ).pack(pady=(22, 0))
     # ------------------------------------------------------- WATCHLIST BANNER
     def _build_watchlist_banner(self):
         banner = ctk.CTkFrame(self.body, fg_color="#FF8C00",
@@ -845,18 +874,21 @@ class DashboardPage(ctk.CTkFrame):
 
     # ------------------------------------------------------------ FOOTER
     def _build_footer(self):
-        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", height=200)
-        footer.pack(fill="x")
-        ctk.CTkLabel(footer, text="Cinephile Archive",
-                     font=("Trebuchet MS", 22, "bold"),
-                     text_color="white").place(relx=0.5, rely=0.3, anchor="center")
-        ctk.CTkLabel(footer, text="Created by Kelompok D5",
-                     font=("Trebuchet MS", 14, "bold"),
-                     text_color=ACCENT).place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(footer, text="Your Ultimate Cinematic Database © 2026",
-                     font=("Trebuchet MS", 11),
-                     text_color="gray").place(relx=0.5, rely=0.7, anchor="center")
-
+        footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=180)
+        footer.pack(fill="x", pady=(20, 0))
+        footer.pack_propagate(False)
+        ctk.CTkLabel(
+            footer, text="Cinephile",
+            font=("Helvetica", 55, "bold"),
+            text_color=TEXT_WHITE
+        ).place(relx=0.05, rely=0.5, anchor="w")
+        ctk.CTkLabel(
+            footer,
+            text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.",
+            font=("Trebuchet MS", 12),
+            text_color="#AAAAAA",
+            justify="right"
+        ).place(relx=0.95, rely=0.5, anchor="e")
     # ----------------------------------------------------- SCROLL NOTIFICATION
     def _show_scroll_notification(self):
         self.notif_frame = ctk.CTkFrame(
