@@ -364,13 +364,24 @@ class GenreAnalyzePage(ctk.CTkFrame):
                     btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
 
     def create_orange_banner(self):
-        banner = ctk.CTkFrame(self.body, fg_color="#FF8C00", height=160)
-        banner.pack(fill="x", pady=20)
+        banner = ctk.CTkFrame(self.body, fg_color="#FF8C00",
+                            corner_radius=20, height=200)
+        banner.pack(fill="x", padx=30, pady=(20, 30))
         banner.pack_propagate(False)
-        c = ctk.CTkFrame(banner, fg_color="transparent")
-        c.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(c, text="Ready for a movie marathon?", font=("Georgia", 30, "italic"), text_color="#111").pack()
-        ctk.CTkButton(c, text="Open Watchlist", fg_color="#111", corner_radius=4, font=("Trebuchet MS", 13, "bold"), command=lambda: self.app.show_page("watchlist")).pack(pady=18)
+        ctx = ctk.CTkFrame(banner, fg_color="transparent")
+        ctx.place(relx=0.5, rely=0.5, anchor="center")
+        ctk.CTkLabel(
+            ctx, text="Manage your watchlist now!",
+            font=("Trebuchet MS", 24, "bold"),
+            text_color="#111"
+        ).pack()
+        ctk.CTkButton(
+            ctx, text="GO TO WATCHLIST",
+            fg_color="#111", text_color="white",
+            font=("Trebuchet MS", 14, "bold"),
+            width=240, height=48, corner_radius=10,
+            command=lambda: self.app.show_page("watchlist")
+        ).pack(pady=18)
 
     def create_footer(self):
         footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=180)
