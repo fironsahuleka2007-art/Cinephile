@@ -9,7 +9,7 @@ from tkcalendar import Calendar
 BG_MAIN    = "#1A1A1A"
 BG_NAV     = "#111111"
 BG_TAB     = "#2E2E2E"
-ACCENT     = "#5C1D24"
+ACCENT     = "#7A1C1C"
 BG_CARD    = "#2A2A2A"
 TEXT_WHITE = "#FFFFFF"
 TEXT_GRAY  = "#AAAAAA"
@@ -20,6 +20,14 @@ BLUE       = "#2A368F"
 RED        = "#E53E3E"
 STAR_ON    = "#F5A623"
 STAR_OFF   = "#444444"
+
+# Warna sidebar
+SIDEBAR_BG      = "#111111"
+SIDEBAR_ACTIVE  = "#2A2A2A"
+SIDEBAR_HOVER   = "#1E1E1E"
+SIDEBAR_ACCENT  = "#F5A623"   # garis aktif kiri
+
+SIDEBAR_W       = 175   # lebar sidebar saat terbuka
 
 
 class StarRatingWidget(ctk.CTkFrame):
@@ -95,6 +103,9 @@ class WatchlistPage(ctk.CTkFrame):
 
         self.data_file = f"watchlist_{self.current_user}.json"
         self.watchlist_data = self._load_data()
+        self._sidebar_btns = {}
+        self._sidebar_open = True     # state sidebar
+
         self._build_ui()
         self.bind("<Visibility>", lambda e: self._refresh())
 
@@ -114,66 +125,265 @@ class WatchlistPage(ctk.CTkFrame):
 
     # ── BUILD UI ──────────────────────────────────────────────────────────────
     def _build_ui(self):
+        # Gunakan grid agar navbar bisa full-width tanpa dipengaruhi sidebar
+        self.grid_rowconfigure(0, weight=0)   # navbar
+        self.grid_rowconfigure(1, weight=1)   # body
+        self.grid_columnconfigure(0, weight=1)
+
+        # 1) Navbar full-width di row 0
         self._build_nav()
 
+        # 2) Wrapper row bawah (sidebar + konten) di row 1
+        self.body_frame = ctk.CTkFrame(self, fg_color=BG_MAIN, corner_radius=0)
+        self.body_frame.grid(row=1, column=0, sticky="nsew")
+        self.body_frame.grid_rowconfigure(0, weight=1)
+        self.body_frame.grid_columnconfigure(1, weight=1)
+
+        # 3) Sidebar (column 0)
+        self._build_sidebar()
+
+        # 4) Konten kanan (column 1)
+        self.content_area = ctk.CTkFrame(self.body_frame, fg_color=BG_MAIN, corner_radius=0)
+        self.content_area.grid(row=0, column=1, sticky="nsew")
+
+        # 5) Form tambah film
+        self._build_form()
+
+        # 6) Area scroll film
         self.body = ctk.CTkScrollableFrame(
-            self, fg_color=BG_MAIN,
+            self.content_area, fg_color=BG_MAIN,
             scrollbar_button_color="#444",
             corner_radius=0
         )
         self.body.pack(fill="both", expand=True)
 
-        self._build_form()
-        self._build_stats_bar()
-
         self.movie_area = ctk.CTkFrame(self.body, fg_color="transparent")
-        self.movie_area.pack(fill="both", expand=True, padx=30, pady=(0, 30))
+        self.movie_area.pack(fill="both", expand=True, padx=20, pady=(0, 30))
 
         self._refresh()
 
     # ── NAVBAR ────────────────────────────────────────────────────────────────
     def _build_nav(self):
-        nav = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0, height=75)
+        # Wrapper navbar + garis bawah dalam satu frame di row 0
+        nav_wrap = ctk.CTkFrame(self, fg_color=BG_NAV, corner_radius=0)
+        nav_wrap.grid(row=0, column=0, sticky="ew")
+
+        nav = ctk.CTkFrame(nav_wrap, fg_color=BG_NAV, corner_radius=0, height=68)
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        ctk.CTkButton(
-            nav, text="❮", width=80, height=34,
+        # Garis bawah navbar
+        ctk.CTkFrame(nav_wrap, fg_color="#2A2A2A", height=2, corner_radius=0).pack(fill="x")
+
+        # ── Tombol toggle sidebar ─────────────────────────────────────────
+        self.toggle_btn = ctk.CTkButton(
+            nav, text="☰", width=38, height=32,
             fg_color="transparent", text_color=TEXT_GRAY,
-            font=("Trebuchet MS", 20, "bold"),
+            font=("Arial", 17),
+            hover_color=BG_TAB,
+            command=self._toggle_sidebar
+        )
+        self.toggle_btn.pack(side="left", padx=(16, 2))
+
+        # ── Tombol back ───────────────────────────────────────────────────
+        ctk.CTkButton(
+            nav, text="❮", width=38, height=32,
+            fg_color="transparent", text_color=TEXT_GRAY,
+            font=("Trebuchet MS", 18, "bold"),
             hover_color=BG_TAB,
             command=lambda: self.app.show_page("dashboard")
-        ).pack(side="left", padx=20)
+        ).pack(side="left", padx=(2, 12))
 
         self.nav_title_lbl = ctk.CTkLabel(
             nav, text="Watchlist",
             font=("Arial", 18, "bold"), text_color=TEXT_WHITE
         )
-        self.nav_title_lbl.pack(side="left", padx=10)
+        self.nav_title_lbl.pack(side="left", padx=(0, 14))
 
-        self._tab_btns = {}
-        btn = ctk.CTkButton(
-            nav, text="My Diary", width=120, height=38,
-            fg_color=ACCENT,
+        # ── USER BADGE ────────────────────────────────────────────────────────
+        user_badge = ctk.CTkFrame(
+            nav, fg_color="#2A2A2A",
+            corner_radius=20, border_width=1, border_color="#3A3A3A"
+        )
+        user_badge.pack(side="left")
+
+        ctk.CTkLabel(
+            user_badge, text="👤",
+            font=("Arial", 14), text_color=TEXT_GRAY
+        ).pack(side="left", padx=(10, 4), pady=8)
+
+        self.user_name_lbl = ctk.CTkLabel(
+            user_badge,
+            text=self.current_user.capitalize(),
+            font=("Trebuchet MS", 12, "bold"),
+            text_color=TEXT_WHITE
+        )
+        self.user_name_lbl.pack(side="left", padx=(0, 12), pady=8)
+
+        # ── TOMBOL MY DIARY (kanan navbar) — transparan dengan border ────────
+        ctk.CTkButton(
+            nav, text="📓  My Diary", width=130, height=38,
+            fg_color="transparent",
+            border_width=1, border_color="#555555",
             corner_radius=19,
             font=("Trebuchet MS", 12, "bold"),
-            text_color=TEXT_WHITE,
-            hover_color="#6C6C6C",
-            command=lambda: self._set_filter("diary")   # ← HANYA INI YANG BERUBAH
-        )
-        btn.place(relx=0.99, rely=0.5, anchor="e", x=-20)
-        self._tab_btns["diary"] = btn
+            text_color=TEXT_GRAY,
+            hover_color=BG_TAB,
+            command=lambda: self._set_filter("diary")
+        ).pack(side="right", padx=20)
 
-    def _update_tab_highlight(self):
-        pass
+    # ── TOGGLE SIDEBAR ────────────────────────────────────────────────────────
+    def _toggle_sidebar(self):
+        """Buka/tutup sidebar tanpa animasi width agar tidak lag."""
+        if self._sidebar_open:
+            self._sidebar_frame.grid_remove()
+            self._sidebar_open = False
+        else:
+            self._sidebar_frame.grid()
+            self._sidebar_open = True
+
+    # ── SIDEBAR ───────────────────────────────────────────────────────────────
+    def _build_sidebar(self):
+        if hasattr(self, "_sidebar_frame") and self._sidebar_frame.winfo_exists():
+            self._sidebar_frame.destroy()
+
+        sidebar = ctk.CTkFrame(
+            self.body_frame,
+            fg_color=SIDEBAR_BG,
+            corner_radius=0,
+            width=SIDEBAR_W if self._sidebar_open else 0,
+            border_width=0
+        )
+        sidebar.grid(row=0, column=0, sticky="ns")
+        sidebar.grid_propagate(False)
+        self._sidebar_frame = sidebar
+
+        # Separator kanan sidebar
+        sep = ctk.CTkFrame(sidebar, fg_color="#222222", width=1, corner_radius=0)
+        sep.place(relx=1.0, rely=0, relheight=1.0, anchor="ne")
+
+        if self._sidebar_open:
+            self._rebuild_sidebar_contents()
+
+    def _rebuild_sidebar_contents(self):
+        """Isi ulang widget di dalam sidebar frame."""
+        sidebar = self._sidebar_frame
+        for child in sidebar.winfo_children():
+            try:
+                child.destroy()
+            except:
+                pass
+
+        # Separator kanan sidebar
+        sep = ctk.CTkFrame(sidebar, fg_color="#222222", width=1, corner_radius=0)
+        sep.place(relx=1.0, rely=0, relheight=1.0, anchor="ne")
+
+        # Padding atas bawah navbar
+        ctk.CTkFrame(sidebar, fg_color="transparent", height=16).pack()
+
+        ctk.CTkLabel(
+            sidebar, text="FILTER",
+            font=("Trebuchet MS", 10, "bold"),
+            text_color="#555555"
+        ).pack(anchor="w", padx=18, pady=(8, 8))
+
+        nav_items = [
+            ("all",           "All"),
+            ("Plan to Watch", "Planning"),
+            ("Watching",      "Watching"),
+            ("Watched",       "Watched"),
+        ]
+        for filt, label in nav_items:
+            self._make_sidebar_btn(sidebar, filt, label)
+
+        # ── My Diary di bawah kiri pakai place ────────────────────────────
+        diary_frame = ctk.CTkFrame(sidebar, fg_color="transparent")
+        diary_frame.place(relx=0, rely=1.0, anchor="sw", x=0, y=-8)
+
+        # Garis pemisah
+        divider = ctk.CTkFrame(diary_frame, fg_color="#333333", height=1, corner_radius=0)
+        divider.pack(fill="x", padx=10, pady=(0, 6))
+
+        self._make_sidebar_btn(diary_frame, "diary", "My Diary", is_diary=True)
+
+    def _make_sidebar_btn(self, parent, filt, label, is_diary=False):
+        is_active = self.filter == filt
+
+        # Warna per status
+        STATUS_COLOR = {
+            "all":           "#233D6D",
+            "Plan to Watch": "#6D2323",
+            "Watching":      "#6D3F23",
+            "Watched":       "#3A4B38",
+            "diary":         "#4A3060",
+        }
+        accent_color = STATUS_COLOR.get(filt, SIDEBAR_ACCENT)
+
+        wrap = ctk.CTkFrame(
+            parent,
+            fg_color=SIDEBAR_ACTIVE if is_active else "transparent",
+            corner_radius=10,
+            height=42,
+            cursor="hand2"
+        )
+        wrap.pack(fill="x", padx=10, pady=2)
+        wrap.pack_propagate(False)
+
+        accent_bar = ctk.CTkFrame(
+            wrap,
+            fg_color=accent_color if is_active else "transparent",
+            width=3,
+            corner_radius=2
+        )
+        accent_bar.pack(side="left", fill="y")
+
+        text_lbl = ctk.CTkLabel(
+            wrap, text=label,
+            font=("Trebuchet MS", 13, "bold") if is_active else ("Trebuchet MS", 13),
+            text_color=TEXT_WHITE if is_active else TEXT_GRAY,
+            anchor="w"
+        )
+        text_lbl.pack(side="left", fill="x", expand=True, padx=(10, 0))
+
+        if not is_diary:
+            count = self._get_count(filt)
+            count_lbl = ctk.CTkLabel(
+                wrap,
+                text=str(count),
+                font=("Trebuchet MS", 11, "bold"),
+                fg_color=accent_color if is_active else "#333333",
+                text_color=TEXT_WHITE if is_active else "#AAAAAA",
+                corner_radius=8,
+                width=26, height=20
+            )
+            count_lbl.pack(side="right", padx=10)
+
+        for widget in [wrap, text_lbl]:
+            widget.bind("<Button-1>", lambda e, f=filt: self._set_filter(f))
+            widget.bind("<Enter>",    lambda e, w=wrap, a=is_active: w.configure(
+                fg_color=SIDEBAR_ACTIVE if a else SIDEBAR_HOVER))
+            widget.bind("<Leave>",    lambda e, w=wrap, a=is_active: w.configure(
+                fg_color=SIDEBAR_ACTIVE if a else "transparent"))
+
+        self._sidebar_btns[filt] = (wrap, accent_bar, text_lbl)
+
+    def _get_count(self, filt):
+        if filt == "all":
+            return len(self.watchlist_data)
+        return sum(1 for m in self.watchlist_data if m.get("status") == filt)
+
+    def _refresh_sidebar(self):
+        self._rebuild_sidebar_contents()
+        if not self._sidebar_open:
+            self._sidebar_frame.grid_remove()
 
     # ── FORM TAMBAH FILM ─────────────────────────────────────────────────────
     def _build_form(self):
         form = ctk.CTkFrame(
-            self.body, fg_color=BG_CARD,
+            self.content_area, fg_color=BG_CARD,
             corner_radius=20, border_width=1, border_color="#333"
         )
-        form.pack(fill="x", padx=30, pady=(25, 10))
+        form.pack(fill="x", padx=20, pady=(20, 10))
 
         ctk.CTkLabel(
             form, text="Add to Watchlist",
@@ -217,50 +427,6 @@ class WatchlistPage(ctk.CTkFrame):
             command=self._add_movie
         ).pack(side="left")
 
-    # ── STATS BAR ─────────────────────────────────────────────────────────────
-    def _build_stats_bar(self):
-        self.stats_frame = ctk.CTkFrame(self.body, fg_color="transparent")
-        self.stats_frame.pack(fill="x", padx=30, pady=(5, 15))
-
-    def _refresh_stats(self):
-        for w in self.stats_frame.winfo_children():
-            w.destroy()
-
-        total    = len(self.watchlist_data)
-        planning = sum(1 for m in self.watchlist_data if m.get("status") == "Plan to Watch")
-        watching = sum(1 for m in self.watchlist_data if m.get("status") == "Watching")
-        watched  = sum(1 for m in self.watchlist_data if m.get("status") == "Watched")
-
-        stats = [
-            ("Total",    str(total),    "#233D6D", "all"),
-            ("Planning", str(planning), "#6D2323", "Plan to Watch"),
-            ("Watching", str(watching), "#6D3F23", "Watching"),
-            ("Watched",  str(watched),  "#3A4B38", "Watched"),
-        ]
-        for label, val, col, filt in stats:
-            card = ctk.CTkFrame(
-                self.stats_frame, fg_color=col,
-                corner_radius=12, height=64,
-                cursor="hand2"
-            )
-            card.pack(side="left", fill="x", expand=True, padx=6)
-            card.pack_propagate(False)
-            lbl_val = ctk.CTkLabel(
-                card, text=val,
-                font=("Arial Black", 20, "bold"),
-                text_color=TEXT_WHITE
-            )
-            lbl_val.place(relx=0.5, rely=0.35, anchor="center")
-            lbl_name = ctk.CTkLabel(
-                card, text=label,
-                font=("Trebuchet MS", 11),
-                text_color="#DDD"
-            )
-            lbl_name.place(relx=0.5, rely=0.78, anchor="center")
-            card.bind("<Button-1>", lambda e, f=filt: self._set_filter(f))
-            lbl_val.bind("<Button-1>", lambda e, f=filt: self._set_filter(f))
-            lbl_name.bind("<Button-1>", lambda e, f=filt: self._set_filter(f))
-
     # ── REFRESH ───────────────────────────────────────────────────────────────
     def _refresh(self):
         self.current_user = getattr(self.app, "username", "guest")
@@ -275,14 +441,16 @@ class WatchlistPage(ctk.CTkFrame):
         self.watchlist_data = self._load_data()
 
         if hasattr(self, "nav_title_lbl"):
-            self.nav_title_lbl.configure(text=f"Watchlist")
+            self.nav_title_lbl.configure(text="Watchlist")
+        if hasattr(self, "user_name_lbl"):
+            self.user_name_lbl.configure(text=self.current_user.capitalize())
 
-        self._refresh_stats()
+        self._refresh_sidebar()
 
         for w in self.movie_area.winfo_children():
             w.destroy()
 
-        if self.filter == "diary":                          # ← HANYA INI YANG BERUBAH
+        if self.filter == "diary":
             data = [m for m in self.watchlist_data if m.get("status") == "Watched"]
             data.sort(key=lambda x: x.get("watch_date", ""), reverse=True)
             self._render_diary_timeline(data)
@@ -304,8 +472,31 @@ class WatchlistPage(ctk.CTkFrame):
         ctk.CTkLabel(wrap, text="Add a movie above to get started.",
                      font=("Trebuchet MS", 12), text_color="#555").pack(pady=(4, 30))
 
-    # ── STANDARD CARD (All / Plan / Watching / Watched) ──────────────────────
+    # ── STANDARD CARD ─────────────────────────────────────────────────────────
     def _render_standard_card(self, movie):
+        if not any(isinstance(w, ctk.CTkFrame) and getattr(w, "_is_section_hdr", False)
+                   for w in self.movie_area.winfo_children()):
+            hdr = ctk.CTkFrame(self.movie_area, fg_color="transparent")
+            hdr._is_section_hdr = True
+            hdr.pack(fill="x", pady=(10, 8))
+
+            labels = {
+                "all":           ("🎬  All Movies",        "#233D6D"),
+                "Plan to Watch": (" Planning to Watch",  "#6D2323"),
+                "Watching":      (" Currently Watching", "#6D3F23"),
+                "Watched":       (" Watched",             "#3A4B38"),
+            }
+            title, color = labels.get(self.filter, ("Movies", "#333"))
+            ctk.CTkLabel(hdr, text=title,
+                         font=("Trebuchet MS", 16, "bold"),
+                         text_color=TEXT_WHITE).pack(side="left")
+            count = self._get_count(self.filter)
+            badge = ctk.CTkFrame(hdr, fg_color=color, corner_radius=8)
+            badge.pack(side="left", padx=10)
+            ctk.CTkLabel(badge, text=f"{count} film{'s' if count != 1 else ''}",
+                         font=("Trebuchet MS", 11, "bold"),
+                         text_color=TEXT_WHITE).pack(padx=10, pady=3)
+
         card = ctk.CTkFrame(
             self.movie_area, fg_color=BG_CARD,
             corner_radius=14, border_width=1, border_color="#333"
@@ -400,9 +591,9 @@ class WatchlistPage(ctk.CTkFrame):
             return
 
         hdr = ctk.CTkFrame(self.movie_area, fg_color="transparent")
-        hdr.pack(fill="x", pady=(0, 10))
-        ctk.CTkLabel(hdr, text="My Movie Diary",
-                     font=("Trebuchet MS", 20, "bold"), text_color=TEXT_WHITE).pack(side="left")
+        hdr.pack(fill="x", pady=(10, 10))
+        ctk.CTkLabel(hdr, text="📓  My Movie Diary",
+                     font=("Trebuchet MS", 18, "bold"), text_color=TEXT_WHITE).pack(side="left")
         ctk.CTkLabel(hdr, text=f"{len(data)} entries",
                      font=("Trebuchet MS", 13), text_color=TEXT_GRAY).pack(side="left", padx=16, pady=6)
 
@@ -505,7 +696,7 @@ class WatchlistPage(ctk.CTkFrame):
         ctk.CTkLabel(cont, text=movie.get("title", ""),
                      font=("Trebuchet MS", 14), text_color=TEXT_GRAY).pack(pady=(0, 16))
 
-        # ── Watch Date dengan tombol kalender ────────────────────────────────
+        # ── Watch Date ────────────────────────────────────────────────────────
         ctk.CTkLabel(cont, text="Watch Date",
                      font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
 
