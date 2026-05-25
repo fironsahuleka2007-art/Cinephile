@@ -325,7 +325,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
                 anchor="w"
             )
             warning_lbl.pack(fill="x", pady=(0, 12), anchor="w")
-            valid_years = valid_years[:28]
+            valid_years = valid_years[:32]
 
         if not valid_years: return
 
