@@ -5,6 +5,7 @@ import re
 import math
 import random
 import time
+import atexit
 from tkinter import messagebox, Canvas
 from PIL import Image, ImageDraw, ImageOps
 
@@ -194,10 +195,13 @@ class UserDB:
         self._save(data)
         return True, "Account created successfully!"
 
-    def login_user(self, username, password):
+    def login_user(self, username, password, remember_me=False):
         data = self._load()
         if username in data and data[username]["password"] == password:
             self.save_session(username)
+            if not remember_me:
+                atexit.register(self.clear_session)
+                
             return True, "Login successful!"
         return False, "Incorrect username or password."
 
@@ -242,6 +246,10 @@ class UserDB:
     def save_session(self, username):
         with open(self.session_file, "w") as f:
             json.dump({"active_user": username}, f)
+            
+    def clear_session(self):
+        with open(self.session_file, "w") as f:
+            json.dump({"active_user": None}, f)
 
 
 # ─── SHARED HELPERS ────────────────────────────────────────────────────────────
@@ -425,9 +433,9 @@ class AuthPages:
                         command=lambda: self._toggle(self.l_pass, sp_var)
                         ).pack(side="left")
 
-        rm_var = ctk.BooleanVar(value=False)
+        self.rm_var = ctk.BooleanVar(value=False)
         ctk.CTkCheckBox(inner, text="Remember Me",
-                        variable=rm_var, font=FONT_SMALL,
+                        variable=self.rm_var, font=FONT_SMALL,
                         text_color=TEXT_MUTED,
                         checkbox_width=15, checkbox_height=15,
                         checkmark_color=TEXT_PRIMARY,
@@ -452,7 +460,14 @@ class AuthPages:
     def _handle_login(self):
         un = self.l_user.get().strip()
         pw = self.l_pass.get().strip()
-        ok, msg = self.db.login_user(un, pw)
+        
+        remember = self.rm_var.get()
+
+        if not un or not pw:
+            self._err.configure(text="Please fill in each column correctly")
+            return
+
+        ok, msg = self.db.login_user(un, pw, remember_me=remember)
         if ok:
             self._star_canvas.spawn_meteors(6)
             self.master.after(400, lambda: self._on_login_success(un))
@@ -529,7 +544,6 @@ class AuthPages:
         self._reg_btn = _star_btn(inner, "Create Account", self._handle_register, width=320)
         self._reg_btn.configure(state="disabled", fg_color="#3d1212")
         self._reg_btn.pack(pady=14)
-
 
        # Divider
         ctk.CTkFrame(inner, height=1, fg_color=BORDER_COLOR).pack(fill="x", pady=6)
