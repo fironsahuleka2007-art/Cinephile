@@ -14,6 +14,13 @@ from movieDetail import MovieDetailPage
 from watchlist import WatchlistPage
 from scraper import MovieScraper
 from styles import *
+from loading_screen import show_loading
+
+def launch_main_app():
+    app = MainApp()
+    app.mainloop()
+
+show_loading(duration_ms=8000, on_done=launch_main_app)
 
 try:
     from PIL import Image, ImageFilter, ImageEnhance, ImageTk
