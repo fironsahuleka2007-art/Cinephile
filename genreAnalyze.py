@@ -319,6 +319,19 @@ class GenreAnalyzePage(ctk.CTkFrame):
 
         # Ambil data yang masuk range
         valid_years = sorted([y for y in self.all_years if s_year <= int(y) <= e_year], reverse=True)
+
+        # ── TEKS PERINGATAN JIKA MELEBIHI 28 TAHUN ──
+        if len(valid_years) > 32:
+            warning_lbl = ctk.CTkLabel(
+                self.graph_display, 
+                text="⚠️ Range exceeds 32 years! Only showing the 32 most recent years.", 
+                font=("Trebuchet MS", 12, "bold"), 
+                text_color="#FF8C00", 
+                anchor="w"
+            )
+            warning_lbl.pack(fill="x", pady=(0, 12), anchor="w")
+            valid_years = valid_years[:32]
+
         if not valid_years: return
 
         # Ambil max count untuk skala grafik (supaya bar terpanjang pas di kontainer)
@@ -364,19 +377,34 @@ class GenreAnalyzePage(ctk.CTkFrame):
                     btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
 
     def create_orange_banner(self):
-        banner = ctk.CTkFrame(self.body, fg_color="#FF8C00", height=160)
-        banner.pack(fill="x", pady=20)
+        banner = ctk.CTkFrame(self.body, fg_color="#FF8C00",
+                            corner_radius=20, height=200)
+        banner.pack(fill="x", padx=30, pady=(20, 30))
         banner.pack_propagate(False)
-        c = ctk.CTkFrame(banner, fg_color="transparent")
-        c.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(c, text="Ready for a movie marathon?", font=("Georgia", 30, "italic"), text_color="#111").pack()
-        ctk.CTkButton(c, text="Open Watchlist", fg_color="#111", corner_radius=4, font=("Trebuchet MS", 13, "bold"), command=lambda: self.app.show_page("watchlist")).pack(pady=18)
+        ctx = ctk.CTkFrame(banner, fg_color="transparent")
+        ctx.place(relx=0.5, rely=0.5, anchor="center")
+        ctk.CTkLabel(
+            ctx, text="Manage your watchlist now!",
+            font=("Trebuchet MS", 24, "bold"),
+            text_color="#111"
+        ).pack()
+        ctk.CTkButton(
+            ctx, text="GO TO WATCHLIST",
+            fg_color="#111", text_color="white",
+            font=("Trebuchet MS", 14, "bold"),
+            width=240, height=48, corner_radius=10,
+            command=lambda: self.app.show_page("watchlist")
+        ).pack(pady=18)
 
     def create_footer(self):
         footer = ctk.CTkFrame(self.body, fg_color="#0A0A0A", corner_radius=0, height=180)
         footer.pack(fill="x", pady=(20, 0))
         footer.pack_propagate(False)
-        ctk.CTkLabel(footer, text="Cinephile", font=("Helvetica", 55, "bold"), text_color=TEXT_WHITE).place(relx=0.05, rely=0.5, anchor="w")
+        ctk.CTkLabel(
+            footer, text="CINEPHILE",
+            font=("Trebuchet MS", 55, "bold"),
+            text_color=TEXT_WHITE
+        ).place(relx=0.05, rely=0.5, anchor="w")
         ctk.CTkLabel(footer, text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.", font=("Trebuchet MS", 12), text_color=TEXT_GRAY, justify="right").place(relx=0.95, rely=0.5, anchor="e")
 
     def _on_search_typing(self, event):

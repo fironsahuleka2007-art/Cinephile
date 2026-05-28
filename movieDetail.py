@@ -425,12 +425,25 @@ class MovieDetailPage(ctk.CTkFrame):
                         pass
 
         # 6. BANNER FOOTER
-        # FIX: tombol diubah ke Watchlist, karena Dashboard sudah ada di navbar atas
-        banner = ctk.CTkFrame(self.scroll, fg_color="#FF8C00", corner_radius=0, height=120)
-        banner.pack(fill="x", pady=(50, 0))
+        banner = ctk.CTkFrame(content_frame, fg_color="#FF8C00",
+                    corner_radius=20, height=200)
+        banner.pack(fill="x", pady=(20, 30))
         banner.pack_propagate(False)
-        ctk.CTkLabel(banner, text="Ready to track more movies?",
-                     font=("Georgia", 24, "italic"), text_color="black").pack(pady=(20, 5))
-        ctk.CTkButton(banner, text="Go to Watchlist", fg_color="#1A1A1A",
-                      text_color="white", font=("Trebuchet MS", 13, "bold"),
-                      command=lambda: self.app.show_page("watchlist")).pack()
+        
+        banner_content = ctk.CTkFrame(banner, fg_color="transparent")
+        banner_content.place(relx=0.5, rely=0.5, anchor="center")
+        
+        ctk.CTkLabel(
+            banner_content, text="Manage your watchlist now!",
+            font=("Trebuchet MS", 24, "bold"),
+            text_color="#111"
+        ).pack()
+        
+        ctk.CTkButton(
+            banner_content, text="GO TO WATCHLIST",
+            fg_color="#111", text_color="white",
+            font=("Trebuchet MS", 14, "bold"),
+            width=240, height=48, corner_radius=10,
+            command=lambda: self.app.show_page("watchlist")
+        ).pack(pady=18)
+
