@@ -427,7 +427,8 @@ class ProfilePage(ctk.CTkFrame):
             return
         self.change_pw_popup = ctk.CTkToplevel(self)
         self.change_pw_popup.title("Change Password")
-        self.change_pw_popup.geometry("450x570")
+        # Diperbesar sedikit tinggi layarnya (570 -> 620) agar tombolnya dipastikan tidak tenggelam/terpotong
+        self.change_pw_popup.geometry("450x620")
         self.change_pw_popup.configure(fg_color="#1A1A1A")
         self.change_pw_popup.update_idletasks()
         x = self.app.winfo_x() + (self.app.winfo_width() // 2) - (self.change_pw_popup.winfo_width() // 2)
@@ -462,8 +463,9 @@ class ProfilePage(ctk.CTkFrame):
         self.crit_pop_num = ctk.CTkLabel(crit_frame, text="• At least 1 Number (0-9)", text_color=TEXT_GRAY, font=("Inter", 11))
         self.crit_pop_num.pack(anchor="w", padx=15, pady=(0, 5))
 
+        # UPDATE: State "disabled" dihapus. Tombol selalu aktif, verifikasi dihandle saat tombol dipencet.
         self.submit_pw_btn = ctk.CTkButton(pop_container, text="Update Password", fg_color=ACCENT, hover_color="#e74c3c", height=45, corner_radius=10, 
-                                            state="disabled", font=("Inter", 13, "bold"), text_color="white", command=self._save_secure_password)
+                                            font=("Inter", 13, "bold"), text_color="white", command=self._save_secure_password)
         self.submit_pw_btn.pack(fill="x", pady=20)
 
     def _validate_new_password_realtime(self, event):
@@ -472,25 +474,39 @@ class ProfilePage(ctk.CTkFrame):
         v_upper = bool(re.search(r'[A-Z]', pwd))
         v_num = bool(re.search(r'\d', pwd))
         COLOR_VALID = "#2ecc71"
+        
+        # UI Teks Tetap Update Warnanya Secara Realtime
         self.crit_pop_len.configure(text_color=COLOR_VALID if v_len else TEXT_GRAY)
         self.crit_pop_upper.configure(text_color=COLOR_VALID if v_upper else TEXT_GRAY)
         self.crit_pop_num.configure(text_color=COLOR_VALID if v_num else TEXT_GRAY)
         self.is_new_pw_valid = all([v_len, v_upper, v_num])
-        self.submit_pw_btn.configure(state="normal" if self.is_new_pw_valid else "disabled")
+        # Note: Logika mematikan tombol dicabut agar user tetap bisa klik untuk tahu error-nya apa.
 
     def _save_secure_password(self):
         old_pw = self.old_pw_entry.get()
         new_pw = self.new_pw_entry.get()
         conf_pw = self.conf_pw_entry.get()
-        if not old_pw: return messagebox.showwarning("Input", "Masukkan sandi lama.")
-        if not self.is_new_pw_valid: return 
-        if new_pw != conf_pw: return messagebox.showerror("Error", "Kata sandi baru tidak cocok dengan konfirmasi.")
-        if old_pw == new_pw: return messagebox.showwarning("Input", "Sandi baru tidak boleh sama dengan sandi lama.")
+        
+        # Validasi Jelas pakai MessageBox jika ada yang terlewat
+        if not old_pw: 
+            return messagebox.showwarning("Input Required", "Please enter your old password. ")
+        
+        if not self.is_new_pw_valid: 
+            return messagebox.showwarning("Security Warning", "New password does not meet the requirements:\nMinimum 8 characters, 1 uppercase letter, and 1 number.") 
+            
+        if new_pw != conf_pw: 
+            return messagebox.showerror("Mismatch", "New password does not match confirmation.")
+            
+        if old_pw == new_pw: 
+            return messagebox.showwarning("Input", "New password cannot be the same as the old password.")
+            
+        # Eksekusi ubah sandi
         ok, msg = self.db.change_password_secure(self.username, old_pw, new_pw)
         if ok:
             messagebox.showinfo("Success", msg)
             self.change_pw_popup.destroy()
-        else: messagebox.showerror("Error", msg)
+        else: 
+            messagebox.showerror("Error", msg)
 
     def _save_general_profile(self):
         fn = self.vars["full_name"].get().strip()
@@ -498,20 +514,20 @@ class ProfilePage(ctk.CTkFrame):
         bio = self.vars["bio"].get().strip()
         gen = self.gender_var.get()
         dob = self.dob_var.get().strip()
-        if not fn or not em or not dob: return messagebox.showwarning("Input", "Full Name, Email, dan DOB wajib diisi.")
-        if not re.match(r'^\d{2}-\d{2}-\d{4}$', dob): return messagebox.showwarning("Input", "Format DOB salah. Gunakan DD-MM-YYYY (misal: 17-08-1945)")
+        if not fn or not em or not dob: return messagebox.showwarning("Input", "Full Name, Email, and DOB are required.")
+        if not re.match(r'^\d{2}-\d{2}-\d{4}$', dob): return messagebox.showwarning("Input", "Invalid DOB format. Please use DD-MM-YYYY (e.g., 17-08-1945)")
         ok, msg = self.db.update_profile_info(self.username, fn, em, bio, gen, dob)
         messagebox.showinfo("Profile", msg)
         self.user_data = self.db.get_user_info(self.username)
         self._load_avatar_image() 
 
     def _logout(self):
-        if messagebox.askyesno("Confirm", "Logout dari akun?"):
+        if messagebox.askyesno("Confirm", "Logout from account?"):
             if os.path.exists("session.json"): os.remove("session.json")
             self.app.show_page("login")
 
     def _delete_account(self):
-        if messagebox.askyesno("⚠️ DANGER", "Hapus akun secara permanen? Semua data watchlist & review akan hilang."):
+        if messagebox.askyesno("⚠️ DANGER", "Permanently delete account? All watchlist & review data will be lost."):
             path = self.user_data.get("avatar_path")
             if path and os.path.exists(path):
                 try: os.remove(path)

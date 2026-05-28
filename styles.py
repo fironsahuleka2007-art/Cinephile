@@ -27,7 +27,7 @@ ENTRY_STYLE = {
     "border_width": 2, "text_color": "white", "font": ("Inter", 13)
 }
 
-ACCENT       = "#8d2827"
+ACCENT       = "#7A1C1C"
 ACCENT_HOVER = "#b03535"
 BG_DARK      = "#352c46"
 BG_CARD      = "#1e1828"
