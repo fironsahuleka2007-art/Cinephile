@@ -320,17 +320,17 @@ class GenreAnalyzePage(ctk.CTkFrame):
         # Ambil data yang masuk range
         valid_years = sorted([y for y in self.all_years if s_year <= int(y) <= e_year], reverse=True)
 
-        # ── TEKS PERINGATAN JIKA MELEBIHI 28 TAHUN ──
-        if len(valid_years) > 32:
+        # ── TEKS PERINGATAN JIKA MELEBIHI 20 TAHUN ──
+        if len(valid_years) > 20:
             warning_lbl = ctk.CTkLabel(
                 self.graph_display, 
-                text="⚠️ Range exceeds 32 years! Only showing the 32 most recent years.", 
+                text="⚠️ Range exceeds 20 years! Only showing the 20 most recent years.", 
                 font=("Trebuchet MS", 12, "bold"), 
                 text_color="#FF8C00", 
                 anchor="w"
             )
             warning_lbl.pack(fill="x", pady=(0, 12), anchor="w")
-            valid_years = valid_years[:32]
+            valid_years = valid_years[:20]
 
         if not valid_years: return
 
