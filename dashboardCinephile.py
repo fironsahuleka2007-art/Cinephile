@@ -884,7 +884,7 @@ class DashboardPage(ctk.CTkFrame):
         ).place(relx=0.05, rely=0.5, anchor="w")
         ctk.CTkLabel(
             footer,
-            text="©2026 CINEPHILE Archive\nCurating cinematic excellence for your personal collection.",
+            text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.",
             font=("Trebuchet MS", 12),
             text_color="#AAAAAA",
             justify="right"

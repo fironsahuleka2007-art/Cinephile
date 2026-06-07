@@ -115,8 +115,8 @@ class WelcomeScreen(tk.Frame):
             fill="#666666", tags="content",
         )
         self._id_wb = self.canvas.create_text(
-            550, 340, text="Welcome back,",
-            font=("Georgia", 42, "bold"), fill="#FFFFFF", tags="content",
+            550, 340, text="Welcome",
+            font=("Georgia", 55, "bold"), fill="#FFFFFF", tags="content",
         )
         self._id_user = self.canvas.create_text(
             550, 408, text=self.username,
@@ -134,9 +134,9 @@ class WelcomeScreen(tk.Frame):
         x1, y1 = bx - bw // 2, by - bh // 2
         x2, y2 = bx + bw // 2, by + bh // 2
         self._btn_bbox = (x1, y1, x2, y2)
-        self._btn_rect = self._rounded_rect(x1, y1, x2, y2, r, fill="#b03535", outline="")
+        self._btn_rect = self._rounded_rect(x1, y1, x2, y2, r, fill="#7A1C1C", outline="")
         self._btn_text = self.canvas.create_text(
-            bx, by, text="▶   Lanjutkan menonton",
+            bx, by, text="▶   Find Your Movie",
             font=("Trebuchet MS", 14, "bold"), fill="white",
             tags="content",
         )
@@ -157,11 +157,11 @@ class WelcomeScreen(tk.Frame):
         return self.canvas.create_polygon(points, smooth=True, tags="content", **kw)
 
     def _btn_enter(self, event):
-        self.canvas.itemconfig(self._btn_rect, fill="#C62828")
+        self.canvas.itemconfig(self._btn_rect, fill="#b03535")
         self.canvas.config(cursor="hand2")
 
     def _btn_leave(self, event):
-        self.canvas.itemconfig(self._btn_rect, fill="#b03535")
+        self.canvas.itemconfig(self._btn_rect, fill="#7A1C1C")
         self.canvas.config(cursor="")
 
     def _btn_click(self, event):
@@ -422,7 +422,7 @@ class MainApp(ctk.CTk):
             self.movie_list = hasil
             with open(self.db_path, "w", encoding="utf-8") as f:
                 json.dump(self.movie_list, f, indent=4)
-            print("✅ Database Ready!")
+            print("Database Ready!")
             _precache_posters(self.movie_list)
 
     def show_page(self, page_name, data=None):

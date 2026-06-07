@@ -2,8 +2,10 @@ import os
 import json
 import customtkinter as ctk
 import math
-from PIL import Image, ImageFilter, ImageEnhance
+from PIL import Image, ImageFilter, ImageEnhance, ImageOps, ImageDraw
 import random
+
+from watchlist import ACCENT
 
 
 class MovieDetailPage(ctk.CTkFrame):
@@ -13,22 +15,45 @@ class MovieDetailPage(ctk.CTkFrame):
         self.movie = movie_data if movie_data else {}
         self.star_buttons = []
         self.selected_stars = 0
-        self._more_movies = None  # FIX: cache sample movies
+        self._more_movies = None
 
         # FIX: init image cache on app level
         if not hasattr(self.app, '_img_cache'):
             self.app._img_cache = {}
 
+        self._load_user_data()
+        self._build_ui()
+
+    def _load_user_data(self):
         self.username = "Guest"
+        self.user_data = {}
         try:
             if os.path.exists("session.json"):
                 with open("session.json", "r") as f:
-                    data = json.load(f)
-                    self.username = data.get("username", data.get("active_user", "Guest"))
-        except:
+                    self.username = json.load(f).get("active_user", "Guest")
+            if os.path.exists("users.json"):
+                with open("users.json", "r") as f:
+                    self.user_data = json.load(f).get(self.username, {})
+        except Exception:
             pass
 
-        self._build_ui()
+    def _get_round_avatar(self, image_path, size=(40, 40)):
+        try:
+            mask = Image.new('L', size, 0)
+            draw = ImageDraw.Draw(mask)
+            draw.ellipse((0, 0) + size, fill=255)
+            img = Image.open(image_path).convert("RGBA")
+            img = ImageOps.fit(img, size, centering=(0.5, 0.5))
+            img.putalpha(mask)
+            return ctk.CTkImage(img, size=size)
+        except Exception:
+            return None
+
+    # ── METHOD YANG HILANG — INI PENYEBAB ERROR ───────────────────
+    def _build_ui(self):
+        self.scroll = ctk.CTkScrollableFrame(self, fg_color="#141414", corner_radius=0)
+        self.scroll.pack(fill="both", expand=True)
+        self._build_nav()
 
     # FIX: helper untuk load image dengan cache
     def _load_image(self, path, size):
@@ -147,55 +172,88 @@ class MovieDetailPage(ctk.CTkFrame):
         self.add_btn.configure(text=f"✓ Saved as {status}", fg_color="#28a745", hover_color="#218838")
 
     def _build_nav(self):
-        nav = ctk.CTkFrame(self, fg_color="#111111", height=60, corner_radius=0)
+        nav = ctk.CTkFrame(self.scroll, fg_color="#111111", corner_radius=0, height=75, border_width=0)
         nav.pack(fill="x", side="top")
         nav.pack_propagate(False)
 
-        ctk.CTkLabel(nav, text="CINEPHILE", font=("Trebuchet MS", 20, "bold"),
-                     text_color="#E53935").pack(side="left", padx=30)
+        # ── KIRI: Avatar + Username ──────────────────────────────────────
+        left_frame = ctk.CTkFrame(nav, fg_color="transparent")
+        left_frame.pack(side="left", padx=(20, 0))
 
-        user_frame = ctk.CTkFrame(nav, fg_color="transparent")
-        user_frame.pack(side="right", padx=30)
-        ctk.CTkLabel(user_frame, text=self.username, font=("Trebuchet MS", 12, "bold"),
-                     text_color="#FFFFFF").pack(side="right")
-        ctk.CTkLabel(user_frame, text="👤", font=("Arial", 16)).pack(side="right", padx=10)
+        avatar_path = self.user_data.get("avatar_path", "")
+        if avatar_path and os.path.exists(avatar_path):
+            img_round = self._get_round_avatar(avatar_path)
+            self.p_img = ctk.CTkLabel(left_frame, image=img_round, text="", cursor="hand2")
+        else:
+            self.p_img = ctk.CTkLabel(left_frame, text="👤", font=("Arial", 24), text_color="white", cursor="hand2")
+        self.p_img.pack(side="left")
 
-        center_frame = ctk.CTkFrame(nav, fg_color="transparent")
-        center_frame.pack(side="left", fill="both", expand=True)
+        self.p_name = ctk.CTkLabel(left_frame, text=f"  {self.username}", font=("Trebuchet MS", 15, "bold"), text_color="white", cursor="hand2")
+        self.p_name.pack(side="left")
 
-        pill = ctk.CTkFrame(center_frame, fg_color="#1E1E1E", height=40, corner_radius=20)
-        pill.place(relx=0.5, rely=0.5, anchor="center")
+        def go_to_profile(e=None):
+            self.app.show_page("profile")
 
-        nav_items = [
-            ("Home",           "dashboard",    70),
-            ("Genre Analysis", "genreanalyze", 110),
-            ("Movie Table",    "movietable",   92),
-            ("Watchlist",      "watchlist",    80),
+        self.p_img.bind("<Button-1>", go_to_profile)
+        self.p_name.bind("<Button-1>", go_to_profile)
+
+        # ── KANAN: Search bar ────────────────────────────────────────────
+        right_frame = ctk.CTkFrame(nav, fg_color="transparent")
+        right_frame.pack(side="right", padx=(0, 20))
+
+        self.entry_s = ctk.CTkEntry(
+            right_frame, placeholder_text="🔍  Search movie...", width=210, height=38,
+            fg_color="#222222", border_color="#333333", corner_radius=20,
+            font=("Trebuchet MS", 12), text_color="white", border_width=1
+        )
+        self.entry_s.pack(side="left", padx=(0, 8))
+        self.entry_s.bind("<KeyRelease>", self._on_search_typing)
+
+        self.btn_s = ctk.CTkButton(
+            right_frame, text="Search", width=80, height=38, fg_color=ACCENT,
+            hover_color="#7A1C1C", corner_radius=20,
+            font=("Trebuchet MS", 12, "bold"), text_color="white",
+            command=lambda: self.app.handle_local_search(self.entry_s.get()) if hasattr(self.app, "handle_local_search") else None
+        )
+        self.btn_s.pack(side="left")
+
+        # ── TENGAH: Menu pill ────────────────────────────────────────────
+        menu_items = [
+            ("Home",          "dashboard"),
+            ("Genre Analyze", "genreanalyze"),
+            ("Movie Table",   "movietable"),
+            ("Watchlist",     "watchlist"),
         ]
 
-        for i, (text, page, w) in enumerate(nav_items):
-            padx_left  = 6 if i == 0 else 2
-            padx_right = 6 if i == len(nav_items) - 1 else 2
+        pill = ctk.CTkFrame(nav, fg_color="#2E2E2E", bg_color="#111111", corner_radius=25, height=46, border_width=0)
+        pill.place(relx=0.5, rely=0.5, anchor="center")
+        pill.pack_propagate(True)
+
+        for i, (txt, pg) in enumerate(menu_items):
+            is_active = False  # tidak ada tab aktif di movie detail
+            p_left = 15 if i == 0 else 5
+            p_right = 15 if i == len(menu_items) - 1 else 5
+
             btn = ctk.CTkButton(
-                pill, text=text, width=w, height=32,
-                fg_color="transparent", text_color="#AAAAAA",
-                font=("Trebuchet MS", 11, "bold"),
-                corner_radius=20, hover_color="#3A3A3A",
-                command=lambda p=page: self.app.show_page(p)
+                pill, text=txt, width=110, height=32,
+                fg_color="transparent",
+                hover_color="#444444",
+                bg_color="transparent", corner_radius=20,
+                font=("Trebuchet MS", 12, "bold"), text_color="white",
+                command=lambda p=pg: self.app.show_page(p) if p else None
             )
-            btn.pack(side="left", padx=(padx_left, padx_right), pady=4)
+            btn.pack(side="left", padx=(p_left, p_right), pady=7)
 
-    def _build_ui(self):
-        self._build_nav()
+        # ── Dropdown search hasil ────────────────────────────────────────
+        self.drop_box = ctk.CTkFrame(self, fg_color="#1E1E1E", border_color="#444",
+                                     border_width=1, corner_radius=10, width=280)
 
-        self.scroll = ctk.CTkScrollableFrame(self, fg_color="#141414", corner_radius=0)
-        self.scroll.pack(fill="both", expand=True)
 
         # ── DATA FILM ─────────────────────────────────────────────
         title         = self.movie.get("title", "Unknown Title")
         year          = self.movie.get("year", "N/A")
         rating_val    = self.movie.get("rating", "N/A")
-        votes_val     = self.movie.get("votes", "0")   # FIX: ambil votes dari data film
+        votes_val     = self.movie.get("votes", "0")
         poster_path   = self.movie.get("poster_local", "")
         raw_genre     = self.movie.get("genre", "General")
         genres        = [g.strip() for g in raw_genre.split(",")] if isinstance(raw_genre, str) else ["Action"]
@@ -208,7 +266,6 @@ class MovieDetailPage(ctk.CTkFrame):
 
         if poster_path and os.path.exists(poster_path):
             try:
-                # FIX: resize ke ukuran lebih kecil sebelum blur → jauh lebih cepat
                 target_w, target_h = 800, 227
                 bg_img = Image.open(poster_path).convert("RGB")
 
@@ -224,7 +281,6 @@ class MovieDetailPage(ctk.CTkFrame):
                 bg_img = bg_img.filter(ImageFilter.GaussianBlur(radius=12))
                 bg_img = ImageEnhance.Brightness(bg_img).enhance(0.25)
 
-                # FIX: tetap display di ukuran 1200x340, tapi proses di 800x227
                 self._hero_bg = ctk.CTkImage(light_image=bg_img, dark_image=bg_img,
                                              size=(1200, 340))
                 bg_label = ctk.CTkLabel(hero, text="", image=self._hero_bg)
@@ -237,7 +293,6 @@ class MovieDetailPage(ctk.CTkFrame):
 
         if poster_path and os.path.exists(poster_path):
             try:
-                # FIX: pakai cache untuk poster thumb
                 self._poster_thumb = self._load_image(poster_path, size=(160, 240))
                 ctk.CTkLabel(hero_content, text="", image=self._poster_thumb).pack(side="left")
             except:
@@ -305,7 +360,6 @@ class MovieDetailPage(ctk.CTkFrame):
         ctk.CTkLabel(chart_frame, text="Ratings Distribution",
                      font=("Helvetica", 24, "bold"), text_color="white").pack(anchor="w", pady=(0, 20))
 
-        # FIX: pass votes_val ke generate chart, terima total_votes juga
         ratings_data, total_votes = self._generate_dynamic_chart(rating_val, votes_val)
 
         for score in sorted(ratings_data.keys(), reverse=True):
@@ -315,11 +369,9 @@ class MovieDetailPage(ctk.CTkFrame):
             ctk.CTkLabel(row, text=str(score), font=("Helvetica", 14),
                          text_color="white", width=30).pack(side="left")
             fill_width = max(5, int(value * 450))
-            # FIX: corner_radius 5 → 2 (lebih ringan di render)
             ctk.CTkFrame(row, fg_color="#C00000", height=24,
                          width=fill_width, corner_radius=2).pack(side="left", padx=10)
 
-        # FIX: tampilkan total orang yang sudah rating di bawah chart
         votes_display = f"{total_votes:,}" if total_votes > 0 else "N/A"
         if votes_display:
             ctk.CTkLabel(
@@ -408,7 +460,6 @@ class MovieDetailPage(ctk.CTkFrame):
         all_movies = getattr(self.app, "movie_list", [])
         other_movies = [m for m in all_movies if m.get("title") != title]
 
-        # FIX: sample sekali saja, disimpan di self._more_movies biar ga random ulang
         if other_movies:
             if self._more_movies is None:
                 self._more_movies = random.sample(other_movies, min(len(other_movies), 4))
@@ -416,7 +467,6 @@ class MovieDetailPage(ctk.CTkFrame):
                 m_path = m_data.get("poster_local", "")
                 if m_path and os.path.exists(m_path):
                     try:
-                        # FIX: pakai cache untuk thumbnail "More Stories"
                         m_img = self._load_image(m_path, size=(140, 200))
                         btn = ctk.CTkLabel(posters_container, text="", image=m_img, cursor="hand2")
                         btn.pack(side="left", padx=(0, 20))
@@ -429,16 +479,16 @@ class MovieDetailPage(ctk.CTkFrame):
                     corner_radius=20, height=200)
         banner.pack(fill="x", pady=(20, 30))
         banner.pack_propagate(False)
-        
+
         banner_content = ctk.CTkFrame(banner, fg_color="transparent")
         banner_content.place(relx=0.5, rely=0.5, anchor="center")
-        
+
         ctk.CTkLabel(
             banner_content, text="Manage your watchlist now!",
             font=("Trebuchet MS", 24, "bold"),
             text_color="#111"
         ).pack()
-        
+
         ctk.CTkButton(
             banner_content, text="GO TO WATCHLIST",
             fg_color="#111", text_color="white",
@@ -447,3 +497,39 @@ class MovieDetailPage(ctk.CTkFrame):
             command=lambda: self.app.show_page("watchlist")
         ).pack(pady=18)
 
+    def _on_search_typing(self, event):
+        query = self.entry_s.get().lower().strip()
+        if not query:
+            self.drop_box.place_forget()
+            return
+        all_movies = getattr(self.app, "movie_list", [])
+        matches = [m for m in all_movies if query in m.get("title", "").lower()][:5]
+
+        for w in self.drop_box.winfo_children():
+            w.destroy()
+
+        if matches:
+            self.drop_box.place(relx=1.0, x=-330, y=75)
+            self.drop_box.lift()
+            for m in matches:
+                item_f = ctk.CTkFrame(self.drop_box, fg_color="transparent", cursor="hand2")
+                item_f.pack(fill="x", padx=5, pady=2)
+                p_path = m.get("poster_local", "")
+                if p_path and os.path.exists(p_path):
+                    try:
+                        img_s = ctk.CTkImage(Image.open(p_path), size=(30, 45))
+                        ctk.CTkLabel(item_f, image=img_s, text="").pack(side="left", padx=5)
+                    except Exception:
+                        pass
+                ctk.CTkLabel(
+                    item_f, text=m.get("title", "Unknown"),
+                    font=("Trebuchet MS", 12), text_color="white", anchor="w"
+                ).pack(side="left", fill="x")
+                item_f.bind("<Button-1>", lambda e, item=m: self._go_to_search_detail(item))
+        else:
+            self.drop_box.place_forget()
+
+    def _go_to_search_detail(self, movie):
+        self.drop_box.place_forget()
+        self.entry_s.delete(0, 'end')
+        self.app.show_page("moviedetail", data=movie)
