@@ -377,6 +377,7 @@ class MainApp(ctk.CTk):
         self.scraper = MovieScraper()
         self.current_page_instance = None
         self.username = "guest"
+        self.is_admin = False  # Tambah inisialisasi default
         self._welcome = None
 
         self._load_local_data()
@@ -396,6 +397,7 @@ class MainApp(ctk.CTk):
 
         if active_user:
             self.username = active_user
+            self._update_admin_status(active_user)  # Muat status admin saat auto-login aplikasi dibuka
             self.show_page("dashboard")
         else:
             self.show_page("login")
@@ -424,6 +426,39 @@ class MainApp(ctk.CTk):
                 json.dump(self.movie_list, f, indent=4)
             print("Database Ready!")
             _precache_posters(self.movie_list)
+
+    def _update_admin_status(self, username):
+        """Mengecek dan mensinkronisasikan status admin user dari session.json atau users.json"""
+        self.is_admin = False
+        
+        # 1. Cek dari session.json terlebih dahulu
+        if os.path.exists("session.json"):
+            try:
+                with open("session.json", "r", encoding="utf-8") as f:
+                    sess = json.load(f)
+                    if sess.get("active_user") == username:
+                        self.is_admin = sess.get("is_admin", False)
+                        if self.is_admin:
+                            return
+            except Exception:
+                pass
+
+        # 2. Cadangan: Cek dari users.json jika ada database user lokal
+        if os.path.exists("users.json"):
+            try:
+                with open("users.json", "r", encoding="utf-8") as f:
+                    users = json.load(f)
+                    if isinstance(users, dict) and username in users:
+                        u_data = users[username]
+                        if isinstance(u_data, dict):
+                            self.is_admin = u_data.get("is_admin", False)
+                    elif isinstance(users, list):
+                        for u in users:
+                            if isinstance(u, dict) and u.get("username") == username:
+                                self.is_admin = u.get("is_admin", False)
+                                break
+            except Exception:
+                pass
 
     def show_page(self, page_name, data=None):
         if self._welcome and self._welcome.winfo_exists():
@@ -460,6 +495,7 @@ class MainApp(ctk.CTk):
     # ── WELCOME TRANSITION (dengan WelcomeScreen + parallax poster) ──────────
     def show_welcome_transition(self, username):
         self.username = username
+        self._update_admin_status(username)  # Muat status admin segera setelah login berhasil
         self.container.pack_forget()
 
         if self._welcome and self._welcome.winfo_exists():
@@ -557,6 +593,7 @@ class MainApp(ctk.CTk):
             except Exception:
                 pass
         self.username = "guest"
+        self.is_admin = False  # Reset status admin menjadi False saat logout
         self.show_page("login")
 
     def on_closing(self):
