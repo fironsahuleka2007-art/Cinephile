@@ -827,7 +827,7 @@ class WatchlistPage(ctk.CTkFrame):
     def _open_diary_popup(self, movie):
         popup = ctk.CTkToplevel(self)
         popup.title("Log Entry")
-        popup.geometry("300x560")
+        popup.geometry("360x650")
         popup.attributes("-topmost", True)
         popup.configure(fg_color=BG_MAIN)
 
