@@ -14,6 +14,13 @@ from movieDetail import MovieDetailPage
 from watchlist import WatchlistPage
 from scraper import MovieScraper
 from styles import *
+from loading_screen import show_loading
+
+def launch_main_app():
+    app = MainApp()
+    app.mainloop()
+
+show_loading(duration_ms=8000, on_done=launch_main_app)
 
 try:
     from PIL import Image, ImageFilter, ImageEnhance, ImageTk
@@ -21,12 +28,10 @@ try:
 except ImportError:
     PIL_AVAILABLE = False
 
-
 _POSTER_W = 130
 _POSTER_H = 195
 _STRIP_W  = 44
 _N = 24
-
 _GRID = [
     (0.00, 0.00, 0.6),  (0.00, 0.25, 0.9),  (0.00, 0.50, 0.7),  (0.00, 0.75, 1.0),
     (0.17, 0.12, 1.0),  (0.17, 0.37, 0.55), (0.17, 0.62, 1.05), (0.17, 0.87, 0.8),
@@ -64,25 +69,20 @@ def _precache_posters(movie_list):
 
 # ══════════════════════════════════════════════════════════════ WELCOME SCREEN
 class WelcomeScreen(tk.Frame):
-
     def __init__(self, master, app, username):
         super().__init__(master, bg="#0D0D0D")
         self.app      = app
         self.username = username
-
         self._cx = 550.0; self._cy = 425.0
         self._mx = 550.0; self._my = 425.0
         self._tx = 550.0; self._ty = 425.0
-
         self._poster_items = []
         self._tk_images    = []
         self._drawn        = False
         self._loop_id      = None
         self._exit_id      = None
         self._fade_overlay = None
-
-        self._btn_bbox = (435, 510, 665, 558)
-
+        self._btn_bbox     = (435, 510, 665, 558)
         self._build()
         self._load_posters()
         self._parallax_loop()
@@ -94,13 +94,10 @@ class WelcomeScreen(tk.Frame):
         self.canvas.bind("<Motion>",    self._on_motion)
         self.canvas.bind("<Configure>", self._on_resize)
         self.canvas.bind("<Button-1>",  self._on_click)
-
         self._strip_l = self._make_strip()
         self._strip_l.place(x=0, y=0, width=_STRIP_W, relheight=1.0)
-
         self._strip_r = self._make_strip()
         self._strip_r.place(relx=1.0, x=-_STRIP_W, y=0, width=_STRIP_W, relheight=1.0)
-
         self._build_content()
 
     def _make_strip(self):
@@ -118,14 +115,13 @@ class WelcomeScreen(tk.Frame):
             fill="#666666", tags="content",
         )
         self._id_wb = self.canvas.create_text(
-            550, 340, text="Welcome back,",
-            font=("Georgia", 42, "bold"), fill="#FFFFFF", tags="content",
+            550, 340, text="Welcome",
+            font=("Georgia", 55, "bold"), fill="#FFFFFF", tags="content",
         )
         self._id_user = self.canvas.create_text(
             550, 408, text=self.username,
             font=("Georgia", 50, "bold"), fill="#E8A020", tags="content",
         )
-
         stats = self._get_stats()
         self._stats_id = self.canvas.create_text(
             550, 466,
@@ -133,16 +129,14 @@ class WelcomeScreen(tk.Frame):
             font=("Trebuchet MS", 13), fill="#BBBBBB",
             tags="content",
         )
-
         bx, by = 550, 534
         bw, bh, r = 230, 48, 24
         x1, y1 = bx - bw // 2, by - bh // 2
         x2, y2 = bx + bw // 2, by + bh // 2
         self._btn_bbox = (x1, y1, x2, y2)
-
-        self._btn_rect = self._rounded_rect(x1, y1, x2, y2, r, fill="#b03535", outline="")
+        self._btn_rect = self._rounded_rect(x1, y1, x2, y2, r, fill="#7A1C1C", outline="")
         self._btn_text = self.canvas.create_text(
-            bx, by, text="▶   Lanjutkan menonton",
+            bx, by, text="▶   Find Your Movie",
             font=("Trebuchet MS", 14, "bold"), fill="white",
             tags="content",
         )
@@ -163,11 +157,11 @@ class WelcomeScreen(tk.Frame):
         return self.canvas.create_polygon(points, smooth=True, tags="content", **kw)
 
     def _btn_enter(self, event):
-        self.canvas.itemconfig(self._btn_rect, fill="#C62828")
+        self.canvas.itemconfig(self._btn_rect, fill="#b03535")
         self.canvas.config(cursor="hand2")
 
     def _btn_leave(self, event):
-        self.canvas.itemconfig(self._btn_rect, fill="#b03535")
+        self.canvas.itemconfig(self._btn_rect, fill="#7A1C1C")
         self.canvas.config(cursor="")
 
     def _btn_click(self, event):
@@ -186,12 +180,10 @@ class WelcomeScreen(tk.Frame):
         self._tx = self._mx = self._cx
         self._ty = self._my = self._cy
         cx = int(self._cx)
-
         self.canvas.coords(self._id_tag,   cx, h * 0.33)
         self.canvas.coords(self._id_wb,    cx, h * 0.40)
         self.canvas.coords(self._id_user,  cx, h * 0.49)
         self.canvas.coords(self._stats_id, cx, h * 0.56)
-
         bx, by = cx, int(h * 0.64)
         bw, bh, r = 230, 48, 24
         x1, y1 = bx - bw // 2, by - bh // 2
@@ -207,7 +199,6 @@ class WelcomeScreen(tk.Frame):
         ]
         self.canvas.coords(self._btn_rect, *points)
         self.canvas.coords(self._btn_text, bx, by)
-
         for item in self._poster_items:
             item["bx"] = item["rx"] * w + item["jx"]
             item["by"] = item["ry"] * h + item["jy"]
@@ -241,7 +232,6 @@ class WelcomeScreen(tk.Frame):
         while len(pool) < _N:
             pool = pool * 2
         pool = pool[:_N]
-
         imgs = []
         for m in pool:
             try:
@@ -252,7 +242,6 @@ class WelcomeScreen(tk.Frame):
             except Exception:
                 img = Image.new("RGB", (_POSTER_W, _POSTER_H), (20, 20, 20))
             imgs.append(img)
-
         self.after(0, lambda i=imgs: self._draw_when_ready(i))
 
     def _draw_when_ready(self, imgs, attempt=0):
@@ -272,17 +261,14 @@ class WelcomeScreen(tk.Frame):
             jy = random.randint(-4, 4)
             bx = rx * w + jx
             by = ry * h + jy
-
             tk_img = ImageTk.PhotoImage(pil_img)
             self._tk_images.append(tk_img)
             cid = self.canvas.create_image(bx, by, image=tk_img, anchor="nw")
             self.canvas.tag_lower(cid)
-
             self._poster_items.append({
                 "id": cid, "bx": bx, "by": by,
                 "rx": rx, "ry": ry, "jx": jx, "jy": jy, "depth": depth,
             })
-
         self.canvas.tag_raise("content")
         self.canvas.tag_raise(self._btn_rect)
         self.canvas.tag_raise(self._btn_text)
@@ -317,92 +303,51 @@ class WelcomeScreen(tk.Frame):
 
     # ------------------------------------------------------------------ EXIT TRANSITION
     def _go(self):
-        """Tombol diklik — mulai animasi fade-out."""
         if not self.winfo_exists():
             return
-        # Hentikan parallax loop
         if self._loop_id:
             try:
                 self.after_cancel(self._loop_id)
             except Exception:
                 pass
         self._loop_id = None
-
-        # Nonaktifkan tombol agar tidak double-click
         self.canvas.unbind("<Button-1>")
-
-        # Buat overlay hitam di atas semua konten
         w = self.winfo_width() or 1100
         h = self.winfo_height() or 850
         self._fade_overlay = self.canvas.create_rectangle(
             0, 0, w, h,
-            fill="#000000",
-            stipple="gray12",
-            outline="",
+            fill="#000000", stipple="gray12", outline="",
             tags="fade_overlay"
         )
         self.canvas.tag_raise("fade_overlay")
-
-        # Mulai animasi fade-out (step 0 dari 20)
         self._run_fadeout(step=0, total=20)
 
     def _run_fadeout(self, step, total):
-        """Animasi fade-out WelcomeScreen ke hitam, lalu pindah ke dashboard."""
         if not self.winfo_exists():
             return
-
-        # Stipple map: makin banyak step, makin gelap
-        stipple_stages = [
-            "",         # step 0-2:  hampir tidak terlihat
-            "gray12",   # step 3-5
-            "gray25",   # step 6-8
-            "gray50",   # step 9-11
-            "gray75",   # step 12-14
-            "",         # step 15+: overlay penuh (fill solid)
-        ]
-        # Pilih stipple sesuai progress
         progress = step / total
         if progress < 0.15:
-            stipple = ""
-            fill = "#000000"
-            # Naikkan opacity window sedikit untuk efek awal
-            try:
-                self.app.wm_attributes("-alpha", 1.0)
-            except Exception:
-                pass
+            stipple = ""; fill = "#000000"
         elif progress < 0.30:
-            stipple = "gray12"
-            fill = "#000000"
+            stipple = "gray12"; fill = "#000000"
         elif progress < 0.45:
-            stipple = "gray25"
-            fill = "#000000"
+            stipple = "gray25"; fill = "#000000"
         elif progress < 0.60:
-            stipple = "gray50"
-            fill = "#000000"
+            stipple = "gray50"; fill = "#000000"
         elif progress < 0.75:
-            stipple = "gray75"
-            fill = "#000000"
+            stipple = "gray75"; fill = "#000000"
         else:
-            stipple = ""
-            fill = "#000000"
-
+            stipple = ""; fill = "#000000"
         try:
-            self.canvas.itemconfig(
-                self._fade_overlay,
-                fill=fill,
-                stipple=stipple
-            )
-            # Resize overlay mengikuti canvas
+            self.canvas.itemconfig(self._fade_overlay, fill=fill, stipple=stipple)
             cw = self.canvas.winfo_width()
             ch = self.canvas.winfo_height()
             self.canvas.coords(self._fade_overlay, 0, 0, cw, ch)
         except Exception:
             pass
-
         if step < total:
             self._exit_id = self.after(18, lambda: self._run_fadeout(step + 1, total))
         else:
-            # Fade out selesai → pindah ke dashboard
             self.after(60, lambda: self.app._do_welcome_to_dashboard(self))
 
     # ------------------------------------------------------------------ DESTROY
@@ -431,22 +376,15 @@ class MainApp(ctk.CTk):
         self.db_path = "data_film.json"
         self.scraper = MovieScraper()
         self.current_page_instance = None
-        self.is_admin  = False
-        self.username  = "guest"
-        self._welcome  = None
+        self.username = "guest"
+        self._welcome = None
 
         self._load_local_data()
 
         self.container = ctk.CTkFrame(self, fg_color="transparent")
         self.container.pack(fill="both", expand=True)
+
         self.auth = AuthPages(self.container, self)
-        
-        active_user = None
-        if os.path.exists("session.json"):
-            try:
-                with open("session.json", "r", encoding="utf-8") as f:
-                    active_user = json.load(f).get("active_user")
-            except: pass
 
         active_user = None
         if os.path.exists("session.json"):
@@ -471,6 +409,7 @@ class MainApp(ctk.CTk):
                 self.movie_list = []
         else:
             self.movie_list = []
+
         if self.movie_list:
             threading.Thread(target=_precache_posters,
                              args=(self.movie_list,), daemon=True).start()
@@ -483,7 +422,7 @@ class MainApp(ctk.CTk):
             self.movie_list = hasil
             with open(self.db_path, "w", encoding="utf-8") as f:
                 json.dump(self.movie_list, f, indent=4)
-            print("✅ Database Ready!")
+            print("Database Ready!")
             _precache_posters(self.movie_list)
 
     def show_page(self, page_name, data=None):
@@ -513,22 +452,19 @@ class MainApp(ctk.CTk):
         elif page_name == "moviedetail":
             self.current_page_instance = MovieDetailPage(self.container, self, movie_data=data)
         elif page_name == "watchlist":
-            # FIX UTAMA: Kembalikan ke format original agar tidak crash positional argument!
-            # Halaman WatchlistPage di dalam filenya nanti tinggal baca 'self.app.username'
             self.current_page_instance = WatchlistPage(self.container, self)
 
         if self.current_page_instance and hasattr(self.current_page_instance, "pack"):
             self.current_page_instance.pack(fill="both", expand=True)
 
+    # ── WELCOME TRANSITION (dengan WelcomeScreen + parallax poster) ──────────
     def show_welcome_transition(self, username):
-        """Tampilkan WelcomeScreen dengan fade-in dari login."""
         self.username = username
         self.container.pack_forget()
 
         if self._welcome and self._welcome.winfo_exists():
             self._welcome.destroy()
 
-        # Mulai dari transparan
         try:
             self.wm_attributes("-alpha", 0.0)
         except Exception:
@@ -538,15 +474,12 @@ class MainApp(ctk.CTk):
         self._welcome.place(x=0, y=0, relwidth=1.0, relheight=1.0)
         self._welcome.lift()
 
-        # Jalankan fade-in WelcomeScreen
         self.after(80, lambda: self._fadein_welcome(step=0, total=15))
 
     def _fadein_welcome(self, step, total):
-        """Fade-in halus saat WelcomeScreen pertama kali muncul."""
         if not self._welcome or not self._welcome.winfo_exists():
             return
         progress = step / total
-        # Ease-in-out cubic
         if progress < 0.5:
             alpha = 4 * progress ** 3
         else:
@@ -565,8 +498,6 @@ class MainApp(ctk.CTk):
                 pass
 
     def _do_welcome_to_dashboard(self, welcome_widget):
-        """Selesai fade-out WelcomeScreen → fade-in Dashboard."""
-        # Hancurkan welcome screen
         try:
             welcome_widget.place_forget()
         except Exception:
@@ -577,13 +508,11 @@ class MainApp(ctk.CTk):
             pass
         self._welcome = None
 
-        # Reset alpha ke 0 untuk fade-in dashboard
         try:
             self.wm_attributes("-alpha", 0.0)
         except Exception:
             pass
 
-        # Pasang container dan render dashboard
         try:
             self.container.pack_forget()
         except Exception:
@@ -592,13 +521,10 @@ class MainApp(ctk.CTk):
         self.update_idletasks()
         self.show_page("dashboard")
 
-        # Jalankan fade-in dashboard
         self.after(40, lambda: self._fadein_dashboard(step=0, total=22))
 
     def _fadein_dashboard(self, step, total):
-        """Fade-in dashboard dengan easing ease-out cubic."""
         progress = step / total
-        # Ease-out cubic: starts fast, slows down at end
         alpha = 1 - (1 - progress) ** 3
         alpha = max(0.0, min(1.0, alpha))
         try:
@@ -617,51 +543,6 @@ class MainApp(ctk.CTk):
         print(f"Toast: {message}")
         if target:
             self.show_page(target)
-
-    def show_welcome_transition(self, username):
-        # Kunci username yang sukses login ke Core Application
-        self.username = username
-        # self._check_admin_status()  # ← CEK ADMIN STATUS SETELAH LOGIN
-
-        self.username = username 
-        
-        for widget in self.container.winfo_children():
-            widget.destroy()
-            
-        welcome_frame = ctk.CTkFrame(self.container, fg_color=BG_MAIN)
-        welcome_frame.place(relwidth=1, relheight=1)
-        
-        self.welcome_lbl = ctk.CTkLabel(welcome_frame, text=f"Welcome back,\n{username}", font=("Arial Black", 46, "bold"), text_color="white", justify="center")
-        self.welcome_lbl.place(relx=0.5, rely=0.55, anchor="center") 
-        
-        self.text_y = 0.55
-        self._animate_text_up()
-        
-        self.after(2000, lambda: self._slide_up_dashboard(welcome_frame))
-
-    def _animate_text_up(self):
-        if hasattr(self, 'welcome_lbl') and self.welcome_lbl.winfo_exists():
-            if self.text_y > 0.48:
-                self.text_y -= 0.001
-                self.welcome_lbl.place(rely=self.text_y)
-                self.after(16, self._animate_text_up)
-
-    def _slide_up_dashboard(self, welcome_frame):
-        self.current_page_instance = DashboardPage(self.container, self)
-        self.current_page_instance.place(relwidth=1, relheight=1, rely=1.0, relx=0)
-        self.slide_y = 1.0
-        self._animate_slide(welcome_frame)
-
-    def _animate_slide(self, welcome_frame):
-        if self.slide_y > 0.005: 
-            self.slide_y += (0.0 - self.slide_y) * 0.08 
-            self.current_page_instance.place(rely=self.slide_y)
-            self.after(16, lambda: self._animate_slide(welcome_frame))
-        else:
-            self.current_page_instance.place(rely=0)
-            welcome_frame.destroy()
-            self.current_page_instance.place_forget()
-            self.current_page_instance.pack(fill="both", expand=True)
 
     def handle_local_search(self, query):
         if not query:

@@ -2,7 +2,7 @@
     "FironFariz08": {
         "full_name": "Firon Fariz",
         "email": "fironsahuleka2007@gmail.com",
-        "password": "12345678",
+        "password": "Firon080507",
         "avatar_path": "avatars\\FironFariz08.jpg",
         "bio": "",
         "gender": "Male",
@@ -14,6 +14,15 @@
         "password": "Pibi10022002",
         "gender": "Male",
         "dob": "10-02-2002",
+        "bio": "",
+        "avatar_path": null
+    },
+    "BudionoSiregar20": {
+        "full_name": "Budiono Siregar",
+        "email": "budionogaming@gmail.com",
+        "password": "Budiono123",
+        "gender": "Male",
+        "dob": "08-05-2008",
         "bio": "",
         "avatar_path": null
     }
