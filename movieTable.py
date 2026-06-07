@@ -48,6 +48,7 @@ class MovieFormPopup(ctk.CTkToplevel):
         ("Duration",   "runtime",  False),
         ("Language",   "language", False),
         ("Country",    "country",  False),
+        ("Platform",   "platform", False),
         ("Synopsis",   "synopsis", True),
     ]
 
@@ -198,20 +199,21 @@ class MovieFormPopup(ctk.CTkToplevel):
 #  POPUP: Admin Action Menu
 # ─────────────────────────────────────────────────────────────────────────────
 class AdminActionPopup(ctk.CTkToplevel):
-    def __init__(self, master, app, on_add, on_delete):
+    def __init__(self, master, app, on_add, on_edit, on_delete):
         super().__init__(master)
         self.app       = app
         self.on_add    = on_add
+        self.on_edit   = on_edit
         self.on_delete = on_delete
 
         self.title("Admin Panel")
-        self.geometry("380x280")
+        self.geometry("380x340")
         self.configure(fg_color="#1A1A1A")
         self.resizable(False, False)
 
         self.update_idletasks()
         x = app.winfo_x() + (app.winfo_width()  // 2) - 190
-        y = app.winfo_y() + (app.winfo_height() // 2) - 140
+        y = app.winfo_y() + (app.winfo_height() // 2) - 170
         self.geometry(f"+{x}+{y}")
         self.attributes("-topmost", True)
         self.grab_set()
@@ -233,6 +235,12 @@ class AdminActionPopup(ctk.CTkToplevel):
                       font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
                       command=self._do_add).pack(fill="x", pady=(0, 10))
 
+        ctk.CTkButton(btn_frame, text="✏️  Edit Movie",
+                      height=48, corner_radius=10,
+                      fg_color="#2E6B34", hover_color="#3A8641",
+                      font=("Trebuchet MS", 13, "bold"), text_color=TEXT_WHITE,
+                      command=self._do_edit).pack(fill="x", pady=(0, 10))
+
         ctk.CTkButton(btn_frame, text="🗑  Delete Movie",
                       height=48, corner_radius=10,
                       fg_color="#AA2222", hover_color="#CC3333",
@@ -248,6 +256,10 @@ class AdminActionPopup(ctk.CTkToplevel):
     def _do_add(self):
         self.destroy()
         self.on_add()
+
+    def _do_edit(self):
+        self.destroy()
+        self.on_edit()
 
     def _do_delete(self):
         self.destroy()
@@ -410,6 +422,50 @@ class DeleteMoviePopup(ctk.CTkToplevel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+#  POPUP: Pilih Film untuk Diedit
+# ─────────────────────────────────────────────────────────────────────────────
+class EditMoviePickerPopup(DeleteMoviePopup):
+    def __init__(self, master, app, movie_list, on_select):
+        self.on_select = on_select
+        super().__init__(master, app, movie_list, on_delete=None)
+        self.title("Pilih Film untuk Diedit")
+
+    def _build(self):
+        super()._build()
+        for widget in self.winfo_children():
+            if isinstance(widget, ctk.CTkLabel) and "Select a Movie" in widget.cget("text"):
+                widget.configure(text="✏️  Select a Movie to Edit")
+
+    def _render_batch(self, movies, start, batch=30):
+        end = min(start + batch, len(movies))
+        for movie in movies[start:end]:
+            row = ctk.CTkFrame(self._list_frame, fg_color="#222", corner_radius=8)
+            row.pack(fill="x", pady=3, padx=6)
+
+            ctk.CTkButton(row, text="✏️ Edit", width=90, height=34,
+                          fg_color="#2E6B34", hover_color="#3A8641",
+                          corner_radius=8, font=("Trebuchet MS", 11, "bold"),
+                          text_color=TEXT_WHITE,
+                          command=lambda m=movie: self._select_movie(m)
+                          ).pack(side="right", padx=10, pady=10)
+
+            ctk.CTkLabel(row,
+                         text=f"{movie.get('title', 'Unknown')}  ({movie.get('year', '?')})",
+                         font=("Trebuchet MS", 12, "bold"), text_color=TEXT_WHITE,
+                         anchor="w", wraplength=370, justify="left"
+                         ).pack(side="left", padx=12, pady=10, fill="x", expand=True)
+
+            row.bind("<Enter>", self._bind_scroll)
+
+        if end < len(movies):
+            self.after(0, lambda: self._render_batch(movies, end, batch))
+
+    def _select_movie(self, movie):
+        self.destroy()
+        self.on_select(movie)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 #  MAIN PAGE
 # ─────────────────────────────────────────────────────────────────────────────
 class MovietablePage(ctk.CTkFrame):
@@ -544,6 +600,7 @@ class MovietablePage(ctk.CTkFrame):
             AdminActionPopup(
                 self, self.app,
                 on_add=self._open_add_movie,
+                on_edit=self._open_edit_picker,
                 on_delete=self._open_delete_picker
             )
         else:
@@ -981,6 +1038,17 @@ class MovietablePage(ctk.CTkFrame):
     def _open_add_movie(self):
         MovieFormPopup(self, self.app, movie_data=None, on_save=self._do_add_movie)
 
+    def _open_edit_picker(self):
+        EditMoviePickerPopup(self, self.app,
+                             movie_list=self.all_movies,
+                             on_select=self._open_edit_form)
+
+    def _open_edit_form(self, selected_movie):
+        self._movie_being_edited = selected_movie
+        MovieFormPopup(self, self.app, 
+                       movie_data=selected_movie, 
+                       on_save=self._do_save_edited_movie)
+
     def _open_delete_picker(self):
         DeleteMoviePopup(self, self.app,
                          movie_list=self.all_movies,
@@ -992,6 +1060,23 @@ class MovietablePage(ctk.CTkFrame):
         _write_db(db)
         self._reload_movie_list(db)
         messagebox.showinfo("Success", f"'{new_data.get('title')}' has been added successfully!")
+
+    def _do_save_edited_movie(self, updated_data):
+        db = _read_db()
+        index_to_update = -1
+        for i, m in enumerate(db):
+            if (m.get("title") == self._movie_being_edited.get("title") and 
+                m.get("year") == self._movie_being_edited.get("year")):
+                index_to_update = i
+                break
+        
+        if index_to_update != -1:
+            db[index_to_update] = updated_data
+            _write_db(db)
+            self._reload_movie_list(db)
+            messagebox.showinfo("Success", f"'{updated_data.get('title')}' has been updated successfully!")
+        else:
+            messagebox.showerror("Error", "Movie not found in database.")
 
     def _do_delete_movie(self, movie):
         db = _read_db()
