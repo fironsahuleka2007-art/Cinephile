@@ -120,11 +120,11 @@ class GenreAnalyzePage(ctk.CTkFrame):
         self.right_col.pack(side="right", fill="both", expand=True, padx=(40, 0), anchor="n")
 
         self.create_genre_graphics(parent=self.left_col)
+        self.create_top_recommendations(parent=self.left_col)
         self.create_overview_section(parent=self.right_col)
         self.create_trend_section(parent=self.right_col)
 
         # Bagian Bawah
-        self.create_top_recommendations(parent=self.body)
         self.create_orange_banner()
         self.create_footer()
 
@@ -185,7 +185,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         pill.pack_propagate(True) 
 
         for i, (txt, pg) in enumerate(menu_items):
-            is_active = (txt == "Genre Analyze")  # <- UBAH DI SINI AGAR GENRE YANG MENYALA
+            is_active = (txt == "Genre Analyze")  
             p_left = 15 if i == 0 else 5
             p_right = 15 if i == len(menu_items) - 1 else 5
             
@@ -320,17 +320,17 @@ class GenreAnalyzePage(ctk.CTkFrame):
         # Ambil data yang masuk range
         valid_years = sorted([y for y in self.all_years if s_year <= int(y) <= e_year], reverse=True)
 
-        # ── TEKS PERINGATAN JIKA MELEBIHI 28 TAHUN ──
-        if len(valid_years) > 32:
+        # ── TEKS PERINGATAN JIKA MELEBIHI 20 TAHUN ──
+        if len(valid_years) > 20:
             warning_lbl = ctk.CTkLabel(
                 self.graph_display, 
-                text="⚠️ Range exceeds 32 years! Only showing the 32 most recent years.", 
+                text="⚠️ Range exceeds 20 years! Only showing the 20 most recent years.", 
                 font=("Trebuchet MS", 12, "bold"), 
                 text_color="#FF8C00", 
                 anchor="w"
             )
             warning_lbl.pack(fill="x", pady=(0, 12), anchor="w")
-            valid_years = valid_years[:32]
+            valid_years = valid_years[:20]
 
         if not valid_years: return
 
