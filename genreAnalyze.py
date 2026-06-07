@@ -120,11 +120,11 @@ class GenreAnalyzePage(ctk.CTkFrame):
         self.right_col.pack(side="right", fill="both", expand=True, padx=(40, 0), anchor="n")
 
         self.create_genre_graphics(parent=self.left_col)
+        self.create_top_recommendations(parent=self.left_col)
         self.create_overview_section(parent=self.right_col)
         self.create_trend_section(parent=self.right_col)
 
         # Bagian Bawah
-        self.create_top_recommendations(parent=self.body)
         self.create_orange_banner()
         self.create_footer()
 
@@ -185,7 +185,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         pill.pack_propagate(True) 
 
         for i, (txt, pg) in enumerate(menu_items):
-            is_active = (txt == "Genre Analyze")  # <- UBAH DI SINI AGAR GENRE YANG MENYALA
+            is_active = (txt == "Genre Analyze")  
             p_left = 15 if i == 0 else 5
             p_right = 15 if i == len(menu_items) - 1 else 5
             
