@@ -473,6 +473,7 @@ class DashboardPage(ctk.CTkFrame):
         )
         self.body.pack(fill="both", expand=True)
         self._build_hero()
+        self.after(300, self._delayed_hero_load)  # ← tambah ini
         self._build_insights_section()
         self._build_trending_now()
         self._build_top_10_list()
@@ -884,7 +885,7 @@ class DashboardPage(ctk.CTkFrame):
         ).place(relx=0.05, rely=0.5, anchor="w")
         ctk.CTkLabel(
             footer,
-            text="©2026 Cinephile Archive\nCurating cinematic excellence for your personal collection.",
+            text="©2026 CINEPHILE Archive\nCurating cinematic excellence for your personal collection.",
             font=("Trebuchet MS", 12),
             text_color="#AAAAAA",
             justify="right"
@@ -927,3 +928,13 @@ class DashboardPage(ctk.CTkFrame):
                 self.notif_frame.destroy()
             except Exception:
                 pass
+                
+    def _delayed_hero_load(self):
+        if not self.winfo_exists():
+            return
+        movies = getattr(self.app, "movie_list", [])
+        if not movies:
+            self.after(300, self._delayed_hero_load)
+            return
+        if hasattr(self, "hero_parallax") and self.hero_parallax.winfo_exists():
+            self.hero_parallax._load_hero_posters()
