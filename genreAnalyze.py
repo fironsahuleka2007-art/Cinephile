@@ -363,17 +363,17 @@ class GenreAnalyzePage(ctk.CTkFrame):
             cat_frame = ctk.CTkFrame(recom_container, fg_color="transparent")
             cat_frame.pack(fill="x", pady=(0, 45))
             ctk.CTkLabel(cat_frame, text=name, font=("Helvetica", 36, "bold"), text_color=TEXT_WHITE).pack(anchor="w")
-            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 14), text_color=TEXT_GRAY, wraplength=450, justify="left").pack(anchor="w", pady=(10, 20))
+            ctk.CTkLabel(cat_frame, text=self.get_genre_description(name), font=("Trebuchet MS", 14), text_color=TEXT_GRAY, wraplength=600, justify="left").pack(anchor="w", pady=(10, 20))
             
             p_frame = ctk.CTkFrame(cat_frame, fg_color="transparent")
             p_frame.pack(anchor="w")
             matches = [m for m in movie_list if name in [g.strip() for g in m.get("genre", "").split(",")]]
-            for m_data in matches[:4]:
+            for m_data in matches[:5]:
                 path = m_data.get("poster_local", "")
                 if path and os.path.exists(path):
                     img = ctk.CTkImage(Image.open(path), size=(120, 175))
                     btn = ctk.CTkLabel(p_frame, text="", image=img, cursor="hand2")
-                    btn.pack(side="left", padx=(0, 15))
+                    btn.pack(side="left", padx=(0, 18))
                     btn.bind("<Button-1>", lambda e, d=m_data: self.app.show_page("moviedetail", data=d))
 
     def create_orange_banner(self):
