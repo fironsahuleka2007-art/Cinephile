@@ -185,7 +185,7 @@ class GenreAnalyzePage(ctk.CTkFrame):
         pill.pack_propagate(True) 
 
         for i, (txt, pg) in enumerate(menu_items):
-            is_active = (txt == "Genre Analyze")  # <- UBAH DI SINI AGAR GENRE YANG MENYALA
+            is_active = (txt == "Genre Analyze")  
             p_left = 15 if i == 0 else 5
             p_right = 15 if i == len(menu_items) - 1 else 5
             
