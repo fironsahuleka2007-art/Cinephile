@@ -120,11 +120,11 @@ class GenreAnalyzePage(ctk.CTkFrame):
         self.right_col.pack(side="right", fill="both", expand=True, padx=(40, 0), anchor="n")
 
         self.create_genre_graphics(parent=self.left_col)
+        self.create_top_recommendations(parent=self.left_col)
         self.create_overview_section(parent=self.right_col)
         self.create_trend_section(parent=self.right_col)
 
         # Bagian Bawah
-        self.create_top_recommendations(parent=self.body)
         self.create_orange_banner()
         self.create_footer()
 
